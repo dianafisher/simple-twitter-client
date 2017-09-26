@@ -1,6 +1,6 @@
 # Project 3 - *SimpleTwitterClient*
 
-**Name of your app** is a basic twitter app to read and compose tweets from the [Twitter API](https://apps.twitter.com/).
+**SimpleTwitterClient** is a basic twitter app to read and compose tweets from the [Twitter API](https://apps.twitter.com/).
 
 Time spent: **X** hours spent in total
 
@@ -48,7 +48,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-Copyright [2017] [Diana Fisher]
+Copyright 2017 Diana Fisher
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
