@@ -35,6 +35,7 @@ class User: NSObject {
     
     // hidden class variable
     static var _currentUser: User?
+    static var userDidLogoutNotification = "UserDidLogout"
     
     class var currentUser: User? {
         get {

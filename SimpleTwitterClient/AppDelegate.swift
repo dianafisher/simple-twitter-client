@@ -22,8 +22,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Go straight into the tweets screen and skip login
             
             print("There is a current user")
+            
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+            window?.rootViewController = vc
+            
         } else {
             print("Nobody home")
+        }
+        
+        // Register to receive logout notifications
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil, queue: OperationQueue.main) { (note: Notification) in
+            // switch back to the login page
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateInitialViewController()
+            
+            self.window?.rootViewController = vc
         }
         
         return true
