@@ -47,13 +47,16 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func currentAccount() {
+    func currentAccount(success: @escaping (User) ->(), failure: @escaping (Error) -> ()) {
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             print("account: \(String(describing: response))")
             
             let userDictionary = response as! NSDictionary
             
             let user = User(dictionary: userDictionary)
+          
+            success(user)
+            
             print("name: \(String(describing: user.name))")
 //            print("name: \(user.name)")
 //            print("screenname: \(user.screenname)")
@@ -63,6 +66,8 @@ class TwitterClient: BDBOAuth1SessionManager {
             
         }, failure: { (task: URLSessionDataTask?, error: Error) in
             print("Error: \(error.localizedDescription)")
+            
+            failure(error)
         })
     }
     
@@ -195,11 +200,25 @@ class TwitterClient: BDBOAuth1SessionManager {
         fetchAccessToken(withPath: "https://api.twitter.com/oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken: BDBOAuth1Credential!) in
             print("I got the access token! 👻")
             
-            // invoke loginSuccess
-            self.loginSuccess?()
+            self.currentAccount(success: { (user: User) in
+                
+                // Set the current user
+                User.currentUser = user
+
+                // Invoke loginSuccess
+                self.loginSuccess?()
+                
+            }, failure: { (error: Error) in
+                
+                // Invoke login failure
+                self.loginFailure?(error)
+            })
+            
             
         }, failure: { (error: Error!) in
             print("Error: \(error.localizedDescription)")
+            
+            // Invoke login failure
             self.loginFailure?(error)
         })
         

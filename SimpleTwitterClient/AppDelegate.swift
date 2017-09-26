@@ -17,6 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if User.currentUser != nil {
+            // Go straight into the tweets screen and skip login
+            
+            print("There is a current user")
+        } else {
+            print("Nobody home")
+        }
+        
         return true
     }
 
