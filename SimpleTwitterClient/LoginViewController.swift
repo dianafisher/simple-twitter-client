@@ -28,43 +28,15 @@ class LoginViewController: UIViewController {
     
     @IBAction func onLoginPressed(_ sender: Any) {
         
-        let twitterClient = BDBOAuth1SessionManager(baseURL: baseUrl, consumerKey: consumerKey, consumerSecret: consumerSecret)
+        let client = TwitterClient.sharedInstance
         
-        // Logout to clear the keychain from previous sessions
-        twitterClient?.deauthorize()
-        
-        guard let callbackURL = URL(string:"simpletwitterclient://oauth") else {
-            print("something went wrong creating the callback url")
-            return
-        }
-        
-        // Fetch the request token to prove we are who we say we are.
-        twitterClient?.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: callbackURL, scope: nil, success: { (requestToken: BDBOAuth1Credential!) in
-            print("I got a token! 🎉")
+        client?.login(success: {
+            print("I've logged in! 🎉")
             
-            let str = "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken.token!)"
-            print(str)
-            guard let url = URL(string: str) else {
-                print("something went wrong creating the authorize url")
-                return
-            }
-            
-            // Open the URL in Safari
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: { (success: Bool) in
-                    if success {
-                        print("YAY!")
-                    }
-                })
-            } else {
-                UIApplication.shared.open(url)
-            }
-            
-            
-            
-        }, failure: { (error:Error!) in
-            print("error: \(error.localizedDescription)")
+        }, failure: { (error: Error) in
+            print("Error: \(error.localizedDescription)")
         })
+        
         
     }
 
