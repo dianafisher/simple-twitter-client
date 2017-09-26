@@ -12,7 +12,7 @@ class TweetsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var tweets: [Tweet]?
+    var tweets: [Tweet]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
