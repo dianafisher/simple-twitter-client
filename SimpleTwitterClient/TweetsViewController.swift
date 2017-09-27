@@ -18,6 +18,13 @@ class TweetsViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.dataSource = self
+        
+        // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        // Set estimatedRowHeight to improve performance of loading the tableView
+        tableView.estimatedRowHeight = 150
+
 
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet]) in
             print("I got the tweets!")
@@ -64,9 +71,13 @@ extension TweetsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath)
-        let tweet = tweets?[indexPath.row]
-        cell.textLabel?.text = tweet?.text ?? ""
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
+        cell.tweet = tweets[indexPath.row]
+        
+//        if indexPath.row == 0 {
+            print(tweets[indexPath.row])
+//        }
+        
         return cell
     }
 }

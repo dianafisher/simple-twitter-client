@@ -17,6 +17,12 @@ class User: NSObject {
     
     var dictionary: NSDictionary?
     
+    override var description: String {
+        
+        let str = "User --> name: \(name ?? "none")), screename: \(screenname ?? "none"), profileUrl: \(String(describing: profileUrl)))<--"
+        return str
+    }
+    
     init(dictionary: NSDictionary) {
         
         self.dictionary = dictionary

@@ -10,15 +10,35 @@ import UIKit
 
 class Tweet: NSObject {
     
+    var user: User?
     var text: String?
     var timestamp: Date
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
+    var profileImageUrl: URL?
+    
+    var data: NSDictionary
+    
+    override var description: String {
+        
+        let str = "--> user: \(String(describing: user)), text: \(text ?? "no text"), retweetCount: \(retweetCount), favoritesCount: \(favoritesCount))<--"
+        return str
+    }
     
     init(dictionary: NSDictionary) {
-        text = dictionary["text"] as? String
         
-//        retweetCount = dictionary["retweet_count"] as! Int  // will crash if retweet_count does not exist
+        data = dictionary
+        
+//        print(dictionary)
+        
+        let userDictionary = dictionary["user"] as? NSDictionary
+        if let dict = userDictionary {
+            user = User(dictionary: dict)
+        } else {
+            user = nil
+        }
+        
+        text = dictionary["text"] as? String
         
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoritesCount = (dictionary["favourites_count"] as? Int) ?? 0
@@ -33,6 +53,13 @@ class Tweet: NSObject {
             timestamp = Date()
         }
         
+        let profileImageUrlString = dictionary["profile_image_url"] as? String
+        if profileImageUrlString != nil {
+            profileImageUrl = URL(string: profileImageUrlString!)
+        } else {
+            profileImageUrl = nil
+        }
+        
     }
     
     class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet] {
@@ -44,4 +71,7 @@ class Tweet: NSObject {
         }
         return tweets
     }
+        
 }
+
+
