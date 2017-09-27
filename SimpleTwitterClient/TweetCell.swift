@@ -25,7 +25,13 @@ class TweetCell: UITableViewCell {
             let user = tweet.user
             if user != nil {
                 nameLabel.text = user?.name
-                screenNameLabel.text = user?.screenname                
+                if let screenname = user?.screenname {
+                    screenNameLabel.text = "@\(screenname)"
+                } else {
+                    screenNameLabel.text = "@"
+                }
+                
+                timestampLabel.text = tweet.formattedTimestamp
                 
                 if let profileImageUrl = user?.profileUrl
                 {

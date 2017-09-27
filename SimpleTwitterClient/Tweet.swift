@@ -13,6 +13,7 @@ class Tweet: NSObject {
     var user: User?
     var text: String?
     var timestamp: Date
+    var formattedTimestamp: String?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
     var profileImageUrl: URL?
@@ -49,6 +50,11 @@ class Tweet: NSObject {
             let formatter = DateFormatter()
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
             timestamp = formatter.date(from: timestampString)!
+            print(timestamp)
+            print(timestamp.timeAgoSinceNow ?? "NONE")
+            
+            formattedTimestamp = timestamp.timeAgoSinceNow
+//            log.info("timestamp: \(timestamp)")
         } else {
             timestamp = Date()
         }
@@ -74,4 +80,34 @@ class Tweet: NSObject {
         
 }
 
+extension Date {
+    var timeAgoSinceNow: String? {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.maximumUnitCount = 1
+        formatter.allowedUnits = [.day, .hour, .minute, .second]
+        
+        guard let timeString = formatter.string(from: self, to: Date()) else {
+            return nil
+        }
+        
+        let components = timeString.components(separatedBy: " ")
+        let number = components[0]
+        let time = components[1]
+
+        print("number: \(number), time: \(time)")
+        
+        let startIndex = time.startIndex
+        let endIndex = time.index(startIndex, offsetBy: 1)
+        let c = time.substring(to: endIndex)
+        
+        print("c: \(c)")
+        
+        let result = "\(number)\(c)"
+        
+        print("\(timeString) ago")
+        
+        return result
+    }
+}
 

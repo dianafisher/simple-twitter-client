@@ -50,7 +50,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             
             
         }, failure: { (task: URLSessionDataTask?, error: Error) in
-            print("Error: \(error.localizedDescription)")
+            log.error("Error: \(error.localizedDescription)")
             
             failure(error)
         })
@@ -71,12 +71,12 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         // Fetch the request token to prove we are who we say we are.
         fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: callbackURL, scope: nil, success: { (requestToken: BDBOAuth1Credential!) in
-            print("I got a token! 🎉")
+            log.verbose("I got a token! 🎉")
             
             let str = "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken.token!)"
-            print(str)
+            log.verbose(str)
             guard let url = URL(string: str) else {
-                print("something went wrong creating the authorize url")
+                log.error("something went wrong creating the authorize url")
                 return
             }
             
@@ -94,7 +94,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             
             
         }, failure: { (error:Error!) in
-            print("error: \(error.localizedDescription)")
+            log.error("error: \(error.localizedDescription)")
             self.loginFailure!(error)
         })
         
@@ -116,7 +116,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         let requestToken = BDBOAuth1Credential(queryString: url.query)
         
         fetchAccessToken(withPath: "https://api.twitter.com/oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken: BDBOAuth1Credential!) in
-            print("I got the access token! 👻")
+            log.verbose("I got the access token! 👻")
             
             self.currentAccount(success: { (user: User) in
                 
@@ -134,7 +134,7 @@ class TwitterClient: BDBOAuth1SessionManager {
             
             
         }, failure: { (error: Error!) in
-            print("Error: \(error.localizedDescription)")
+            log.error("Error: \(error.localizedDescription)")
             
             // Invoke login failure
             self.loginFailure?(error)
