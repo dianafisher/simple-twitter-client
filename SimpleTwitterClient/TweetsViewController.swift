@@ -8,6 +8,10 @@
 
 import UIKit
 
+private let detailsSegueIdentifier = "DetailsSegue"
+private let composeSegueIdentifier = "ComposeSegue"
+private let tweetCellIdentifier = "TweetCell"
+
 class TweetsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -49,10 +53,7 @@ class TweetsViewController: UIViewController {
     @IBAction func onLogoutPressed(_ sender: Any) {
         TwitterClient.sharedInstance?.logout()
     }
-    
-    @IBAction func composeTweetPressed(_ sender: Any) {
         
-    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -60,12 +61,16 @@ class TweetsViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        let cell = sender as! UITableViewCell
-        let indexPath = tableView.indexPath(for: cell)
-        let tweet = tweets?[indexPath!.row]
+        if segue.identifier == detailsSegueIdentifier {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPath(for: cell)
+            let tweet = tweets?[indexPath!.row]
+            
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.tweet = tweet
+        }
         
-        let detailViewController = segue.destination as! DetailViewController
-        detailViewController.tweet = tweet
+        
         
     }
 
@@ -81,7 +86,7 @@ extension TweetsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: tweetCellIdentifier, for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
         
 //        if indexPath.row == 0 {

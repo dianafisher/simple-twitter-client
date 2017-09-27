@@ -17,6 +17,11 @@ class User: NSObject {
     
     var dictionary: NSDictionary?
     
+    // hidden class variable
+    static var _currentUser: User?
+    static let userDidLogoutNotification = "UserDidLogout"
+ 
+    
     override var description: String {
         
         let str = "User --> name: \(name ?? "none")), screename: \(screenname ?? "none"), profileUrl: \(String(describing: profileUrl)))<--"
@@ -39,10 +44,7 @@ class User: NSObject {
         
     }
     
-    // hidden class variable
-    static var _currentUser: User?
-    static var userDidLogoutNotification = "UserDidLogout"
-    
+   
     class var currentUser: User? {
         get {
             if _currentUser == nil {

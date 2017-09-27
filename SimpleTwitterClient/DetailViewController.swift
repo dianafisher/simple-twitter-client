@@ -8,6 +8,9 @@
 
 import UIKit
 
+private let tweetDetailCellIdentifier = "TweetDetailCell"
+private let tweetStatsCellIdentifier = "TweetStatsCell"
+
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -59,11 +62,11 @@ extension DetailViewController: UITableViewDataSource {
         
         let section = indexPath.section
         if section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetDetailCell", for: indexPath) as! TweetDetailCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: tweetDetailCellIdentifier, for: indexPath) as! TweetDetailCell
             cell.tweet = tweet
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetStatsCell", for: indexPath) as! TweetStatsCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: tweetStatsCellIdentifier, for: indexPath) as! TweetStatsCell
             cell.tweet = tweet
             return cell
         }
