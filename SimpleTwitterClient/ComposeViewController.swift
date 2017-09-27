@@ -84,11 +84,7 @@ class ComposeViewController: UIViewController {
 }
 
 extension ComposeViewController: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-                
-    }
-    
+        
     func textViewDidChange(_ textView: UITextView) {
 
         // Determine whether or not to hide the placeholder label
@@ -106,7 +102,7 @@ extension ComposeViewController: UITextViewDelegate {
         
         // Disable the tweet button if the character remaining count goes below zero.
         tweetButton.isEnabled = (remainingCount >= 0)
-                
+        
         // Update the count label text
         characterCountLabel.text = "\(remainingCount)"
         
