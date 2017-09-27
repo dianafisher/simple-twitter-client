@@ -50,6 +50,9 @@ class TweetsViewController: UIViewController {
         TwitterClient.sharedInstance?.logout()
     }
     
+    @IBAction func composeTweetPressed(_ sender: Any) {
+        
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

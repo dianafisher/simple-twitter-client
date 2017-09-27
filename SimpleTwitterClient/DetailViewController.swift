@@ -47,15 +47,26 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetDetailCell", for: indexPath) as! TweetDetailCell
-        cell.tweet = tweet
+        let section = indexPath.section
+        if section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetDetailCell", for: indexPath) as! TweetDetailCell
+            cell.tweet = tweet
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetStatsCell", for: indexPath) as! TweetStatsCell
+            cell.tweet = tweet
+            return cell
+        }
         
-        return cell
     }
 }

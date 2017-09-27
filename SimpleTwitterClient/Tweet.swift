@@ -16,14 +16,14 @@ class Tweet: NSObject {
     var timeAgoSinceNowString: String?
     var formattedDateString: String?
     var retweetCount: Int = 0
-    var favoritesCount: Int = 0
+    var favoriteCount: Int = 0
     var profileImageUrl: URL?
     
     var data: NSDictionary
     
     override var description: String {
         
-        let str = "--> user: \(String(describing: user)), text: \(text ?? "no text"), retweetCount: \(retweetCount), favoritesCount: \(favoritesCount))<--"
+        let str = "--> user: \(user?.name ?? "none")), text: \(text ?? "no text"), retweetCount: \(retweetCount), favoriteCount: \(favoriteCount))<--"
         return str
     }
     
@@ -31,7 +31,7 @@ class Tweet: NSObject {
         
         data = dictionary
         
-//        print(dictionary)
+        print(dictionary)
         
         let userDictionary = dictionary["user"] as? NSDictionary
         if let dict = userDictionary {
@@ -43,7 +43,7 @@ class Tweet: NSObject {
         text = dictionary["text"] as? String
         
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
-        favoritesCount = (dictionary["favourites_count"] as? Int) ?? 0
+        favoriteCount = (dictionary["favorite_count"] as? Int) ?? 0
         formattedDateString = ""
         
         let timestampString = dictionary["created_at"] as? String
@@ -61,7 +61,7 @@ class Tweet: NSObject {
             log.info("formatted: \(formatted)")
             formattedDateString = formatted
             timeAgoSinceNowString = timestamp.timeAgoSinceNow
-//            log.info("timestamp: \(timestamp)")
+
         } else {
             timestamp = Date()
         }
@@ -103,18 +103,12 @@ extension Date {
         let components = timeString.components(separatedBy: " ")
         let number = components[0]
         let time = components[1]
-
-//        print("number: \(number), time: \(time)")
         
         let startIndex = time.startIndex
         let endIndex = time.index(startIndex, offsetBy: 1)
         let c = time.substring(to: endIndex)
         
-//        print("c: \(c)")
-        
         let result = "\(number)\(c)"
-        
-//        print("\(timeString) ago")
         
         return result
     }
