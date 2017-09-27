@@ -28,7 +28,7 @@ class TweetDetailCell: UITableViewCell {
                     screennameLabel.text = "@"
                 }
                 
-                timeStampLabel.text = tweet.formattedTimestamp
+                timeStampLabel.text = tweet.formattedDateString
                 
                 if let profileImageUrl = user?.profileUrl
                 {

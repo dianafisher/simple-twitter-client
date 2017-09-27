@@ -31,7 +31,7 @@ class TweetCell: UITableViewCell {
                     screenNameLabel.text = "@"
                 }
                 
-                timestampLabel.text = tweet.formattedTimestamp
+                timestampLabel.text = tweet.timeAgoSinceNowString
                 
                 if let profileImageUrl = user?.profileUrl
                 {

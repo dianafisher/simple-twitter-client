@@ -13,7 +13,8 @@ class Tweet: NSObject {
     var user: User?
     var text: String?
     var timestamp: Date
-    var formattedTimestamp: String?
+    var timeAgoSinceNowString: String?
+    var formattedDateString: String?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
     var profileImageUrl: URL?
@@ -43,6 +44,7 @@ class Tweet: NSObject {
         
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoritesCount = (dictionary["favourites_count"] as? Int) ?? 0
+        formattedDateString = ""
         
         let timestampString = dictionary["created_at"] as? String
         
@@ -51,9 +53,14 @@ class Tweet: NSObject {
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
             timestamp = formatter.date(from: timestampString)!
             print(timestamp)
-            print(timestamp.timeAgoSinceNow ?? "NONE")
+            print(timestamp.timeAgoSinceNow)
             
-            formattedTimestamp = timestamp.timeAgoSinceNow
+            formatter.dateFormat = "M/d/yy, HH:mm aaa"
+            let formatted = formatter.string(from: timestamp)
+            
+            log.info("formatted: \(formatted)")
+            formattedDateString = formatted
+            timeAgoSinceNowString = timestamp.timeAgoSinceNow
 //            log.info("timestamp: \(timestamp)")
         } else {
             timestamp = Date()
@@ -83,31 +90,31 @@ class Tweet: NSObject {
 extension Date {
     
     // A string to represent date in terms of how long ago it was - e.g. 5m for 5 minutes
-    var timeAgoSinceNow: String? {
+    var timeAgoSinceNow: String {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
         formatter.maximumUnitCount = 1
         formatter.allowedUnits = [.day, .hour, .minute, .second]
         
         guard let timeString = formatter.string(from: self, to: Date()) else {
-            return nil
+            return ""
         }
         
         let components = timeString.components(separatedBy: " ")
         let number = components[0]
         let time = components[1]
 
-        print("number: \(number), time: \(time)")
+//        print("number: \(number), time: \(time)")
         
         let startIndex = time.startIndex
         let endIndex = time.index(startIndex, offsetBy: 1)
         let c = time.substring(to: endIndex)
         
-        print("c: \(c)")
+//        print("c: \(c)")
         
         let result = "\(number)\(c)"
         
-        print("\(timeString) ago")
+//        print("\(timeString) ago")
         
         return result
     }
