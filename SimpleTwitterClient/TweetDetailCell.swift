@@ -1,24 +1,21 @@
 //
-//  TweetCell.swift
+//  TweetDetailCell.swift
 //  SimpleTwitterClient
 //
-//  Created by Diana Fisher on 9/25/17.
+//  Created by Diana Fisher on 9/27/17.
 //  Copyright © 2017 Diana Fisher. All rights reserved.
 //
 
 import UIKit
 
-class TweetCell: UITableViewCell {
+class TweetDetailCell: UITableViewCell {
 
-    @IBOutlet weak var profileImageView: UIImageView!
     
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var screenNameLabel: UILabel!
-    @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var tweetContentLabel: UILabel!
-    @IBOutlet weak var replyCountLabel: UILabel!
-    @IBOutlet weak var retweetCountLabel: UILabel!
-    @IBOutlet weak var favoriteCountLabel: UILabel!
+    @IBOutlet weak var screennameLabel: UILabel!
+    @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var timeStampLabel: UILabel!
     
     var tweet: Tweet! {
         didSet {
@@ -26,12 +23,12 @@ class TweetCell: UITableViewCell {
             if user != nil {
                 nameLabel.text = user?.name
                 if let screenname = user?.screenname {
-                    screenNameLabel.text = "@\(screenname)"
+                    screennameLabel.text = "@\(screenname)"
                 } else {
-                    screenNameLabel.text = "@"
+                    screennameLabel.text = "@"
                 }
                 
-                timestampLabel.text = tweet.formattedTimestamp
+                timeStampLabel.text = tweet.formattedTimestamp
                 
                 if let profileImageUrl = user?.profileUrl
                 {
@@ -51,13 +48,12 @@ class TweetCell: UITableViewCell {
                 
             }
             
-            tweetContentLabel.text = tweet.text
+            tweetTextLabel.text = tweet.text
             
             
             
         }
     }
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -66,6 +62,7 @@ class TweetCell: UITableViewCell {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
         
+        nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
         
     }
 

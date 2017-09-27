@@ -19,6 +19,7 @@ class TweetsViewController: UIViewController {
         
         tableView.dataSource = self
         
+        
         // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -48,16 +49,22 @@ class TweetsViewController: UIViewController {
     @IBAction func onLogoutPressed(_ sender: Any) {
         TwitterClient.sharedInstance?.logout()
     }
-
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)
+        let tweet = tweets?[indexPath!.row]
+        
+        let detailViewController = segue.destination as! DetailViewController
+        detailViewController.tweet = tweet
+        
     }
-    */
 
 }
 
@@ -81,3 +88,4 @@ extension TweetsViewController: UITableViewDataSource {
         return cell
     }
 }
+

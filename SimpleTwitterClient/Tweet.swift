@@ -81,6 +81,8 @@ class Tweet: NSObject {
 }
 
 extension Date {
+    
+    // A string to represent date in terms of how long ago it was - e.g. 5m for 5 minutes
     var timeAgoSinceNow: String? {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
