@@ -27,15 +27,15 @@ class TweetsViewController: UIViewController {
 
 
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet]) in
-            print("I got the tweets!")
-            print(tweets.count)
+            log.info("I got the tweets!")
+            log.info(tweets.count)
 //            for tweet in tweets {
 //                print(tweet.text ?? "none")
 //            }
             self.tweets = tweets
             self.tableView.reloadData()
         }, failure: { (error:Error) in
-            print(error.localizedDescription)
+            log.error(error.localizedDescription)
         })
         // Do any additional setup after loading the view.
     }
@@ -75,7 +75,7 @@ extension TweetsViewController: UITableViewDataSource {
         cell.tweet = tweets[indexPath.row]
         
 //        if indexPath.row == 0 {
-            print(tweets[indexPath.row])
+            log.info(tweets[indexPath.row])
 //        }
         
         return cell

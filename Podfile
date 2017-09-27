@@ -8,4 +8,5 @@ target 'SimpleTwitterClient' do
   # Pods for SimpleTwitterClient
   pod ‘AFNetworking’
   pod 'BDBOAuth1Manager’
+  pod 'SwiftyBeaver'
 end

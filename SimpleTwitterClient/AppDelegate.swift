@@ -8,6 +8,9 @@
 
 import UIKit
 import BDBOAuth1Manager
+import SwiftyBeaver
+
+let log = SwiftyBeaver.self
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,17 +22,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // Add log destination
+        let console = ConsoleDestination()  // log to Xcode Console
+//        console.minLevel = .info // just log .info, .warning & .error
+        log.addDestination(console)
+        
         if User.currentUser != nil {
             // Go straight into the tweets screen and skip login
             
-            print("There is a current user")
+            log.verbose("There is a current user")
             
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
             window?.rootViewController = vc
             
         } else {
-            print("Nobody home")
+            log.verbose("Nobody home")
         }
         
         // Register to receive logout notifications
