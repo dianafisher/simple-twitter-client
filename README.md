@@ -14,7 +14,7 @@ The following **required** functionality is completed:
 - [x] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.  In other words, design the custom cell with the proper Auto Layout settings.  You will also need to augment the model classes.
 - [x] User can pull to refresh.
 - [x] User can compose a new tweet by tapping on a compose button.
-- [ ] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
+- [x] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 
 The following **optional** features are implemented:
 
@@ -29,6 +29,9 @@ The following **additional** features are implemented:
 
 - [x] Placeholder text in compose text area as in real Twitter app.
 - [x] Countdown text turns red when there are less than 20 characters remaining.
+- [x] Round profile image like in actual twitter client.
+- [x] Profile image appears in compose/retweet view.
+- [x] Placeholder text in compose/retweet view.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

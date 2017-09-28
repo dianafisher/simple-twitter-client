@@ -10,10 +10,11 @@ import UIKit
 
 class ComposeViewController: UIViewController {
     
-    @IBOutlet weak var characterCountLabel: UILabel!    
     @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var placeHolderTextLabel: UILabel!
-    @IBOutlet weak var tweetButton: UIButton!
+    @IBOutlet weak var tweetButton: UIBarButtonItem!
+    @IBOutlet var toolbar: UIToolbar!
+    @IBOutlet weak var characterCountButtonItem: UIBarButtonItem!
     
     var isReply: Bool = false
     var replyToTweet: Tweet?
@@ -21,6 +22,9 @@ class ComposeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        // Add the toolbar as an accessory view to the textview
+        tweetTextView.inputAccessoryView = toolbar
         
         if let user = User.currentUser {
             if let profileImageUrl = user.profileUrl
@@ -53,10 +57,12 @@ class ComposeViewController: UIViewController {
         
         
         if isReply {
-            tweetButton.setTitle("Reply", for: UIControlState.normal)
+            tweetButton.title = "Reply"
+//            tweetButton.setTitle("Reply", for: UIControlState.normal)
             placeHolderTextLabel.text = "Tweet your reply"
         } else {
-            tweetButton.setTitle("Tweet", for: UIControlState.normal)
+            tweetButton.title = "Tweet"
+//            tweetButton.setTitle("Tweet", for: UIControlState.normal)
             placeHolderTextLabel.text = "What's happening?"
         }
         
@@ -139,14 +145,16 @@ extension ComposeViewController: UITextViewDelegate {
         
         // Change the count label color to red if there are less than 20 characters remaining
         if remainingCount < 20 {
-            characterCountLabel.textColor = UIColor.red
+            characterCountButtonItem.tintColor = UIColor.red
+        } else {
+            characterCountButtonItem.tintColor = UIColor.darkGray
         }
         
         // Disable the tweet button if the character remaining count goes below zero.
         tweetButton.isEnabled = (remainingCount >= 0)
         
         // Update the count label text
-        characterCountLabel.text = "\(remainingCount)"
+        characterCountButtonItem.title = "\(remainingCount)"
         
     }
 }
