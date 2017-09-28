@@ -10,6 +10,8 @@ import UIKit
 
 class TweetOptionsCell: UITableViewCell {
 
+    var tweet: Tweet!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -22,14 +24,42 @@ class TweetOptionsCell: UITableViewCell {
     }
 
     @IBAction func replyButtonPressed(_ sender: Any) {
-        print("reply!")
+//        if let tweet = tweet {
+//            if let tweetId = tweet.idString {
+//                let username = tweet.user?.name ?? ""
+//                
+//                TwitterClient.sharedInstance?.replyToTweet(tweetId: tweetId, username: username, status: <#T##String#>, success: <#T##(Bool) -> ()#>, failure: <#T##(Error) -> ()#>)
+//            }
+//        }
     }
     
     
     @IBAction func retweetButtonPressed(_ sender: Any) {
+        if let tweet = tweet {
+            if let tweetId = tweet.idString {
+                TwitterClient.sharedInstance?.retweet(tweetId: tweetId, success: { (success) in
+                    if (success) {
+                        print("YAY! I retweeted")
+                    }
+                }, failure: { (error: Error) in
+                    print("Error: \(error.localizedDescription)")
+                })
+            }            
+        }
     }
     
     @IBAction func favoriteButtonPressed(_ sender: Any) {
+        if let tweet = tweet {
+            if let tweetId = tweet.idString {
+                TwitterClient.sharedInstance?.likeTweet(tweetId: tweetId, success: { (success) in
+                    if (success) {
+                        print("YAY! I liked someting")
+                    }
+                }, failure: { (error: Error) in
+                    print("Error: \(error.localizedDescription)")
+                })
+            }
+        }
     }
     
     @IBAction func messageButtonPressed(_ sender: Any) {

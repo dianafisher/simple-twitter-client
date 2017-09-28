@@ -75,10 +75,23 @@ class ComposeViewController: UIViewController {
             TwitterClient.sharedInstance?.composetTweet(status: statusText, success: { (flag: Bool) in
                 
             }, failure: { (error: Error) in
-                
+                log.error(error.localizedDescription)
             })
         }
+    }
+    
+    func showErrorAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            // handle response
+        }
+        
+        alertController.addAction(okAction)        
+        present(alertController, animated: true) {
+            
+        }
+
     }
     
     /*

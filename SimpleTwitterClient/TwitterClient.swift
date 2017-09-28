@@ -41,13 +41,29 @@ class TwitterClient: BDBOAuth1SessionManager {
         let postUrlString = "1.1/statuses/retweet/\(tweetId).json"
         log.info("postUrlString: \(postUrlString)")
         
-        log.verbose("isAuthorized: \(self.isAuthorized)")
-        log.verbose(self.requestSerializer.oAuthParameters())
+        post(postUrlString, parameters: nil, progress: nil,
+             success: { (task: URLSessionDataTask, response: Any?) in
+                
+                log.verbose(response ?? "No Response")
+                success(true)
+                
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error: \(error.localizedDescription)")
+            
+            failure(error)
+        })
+    }
+    
+    func unretweet(tweetId: String, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        let postUrlString = "1.1/statuses/unretweet/\(tweetId).json"
+        log.info("postUrlString: \(postUrlString)")
         
         post(postUrlString, parameters: nil, progress: nil,
              success: { (task: URLSessionDataTask, response: Any?) in
                 
-                log.info(response ?? "No Response")
+                log.verbose(response ?? "No Response")
+                success(true)
                 
         }, failure: { (task: URLSessionDataTask?, error: Error) in
             log.error("Error: \(error.localizedDescription)")
@@ -60,20 +76,86 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         let params: NSDictionary = ["status": status]
         
-        log.verbose("isAuthorized: \(self.isAuthorized)")
-        log.verbose(self.requestSerializer.oAuthParameters())
-        
         post("1.1/statuses/update.json", parameters: params, progress: nil,
              success: { (task: URLSessionDataTask, response: Any?) in
             
-                log.info(response ?? "No Response")
+                log.verbose(response ?? "No Response")
+                success(true)
             
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error: \(error.localizedDescription)")
+            failure(error)
+        })
+    }
+    
+    func replyToTweet(tweetId: String, username: String, status: String, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        // Prepend the username to the status with @username
+        let formattedStatus = "@\(username) \(status)"
+        log.verbose(formattedStatus)
+        
+        let params: NSDictionary = ["status": formattedStatus, "in_reply_to_status_id": tweetId]
+        
+        post("1.1/statuses/update.json", parameters: params, progress: nil,
+             success: { (task: URLSessionDataTask, response: Any?) in
+                
+                log.verbose(response ?? "No Response")
+                success(true)
+                
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error: \(error.localizedDescription)")
+            failure(error)
+        })
+    }
+    
+    func deleteTweet(tweetId: String, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        let postUrlString = "1.1/statuses/destroy/\(tweetId).json"
+        log.info("postUrlString: \(postUrlString)")
+        
+        post(postUrlString, parameters: nil, progress: nil,
+             success: { (task: URLSessionDataTask, response: Any?) in
+                
+                log.verbose(response ?? "No Response")
+                success(true)
+                
         }, failure: { (task: URLSessionDataTask?, error: Error) in
             log.error("Error: \(error.localizedDescription)")
             
             failure(error)
         })
     }
+
+    
+    func likeTweet(tweetId: String, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        let params: NSDictionary = ["id": tweetId]
+        
+        post("1.1/favorites/create.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            log.verbose(response ?? "No Response")
+            success(true)
+            
+        }) { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error: \(error.localizedDescription)")
+            failure(error)
+        }
+    }
+    
+    func unlikeTweet(tweetId: String, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        let params: NSDictionary = ["id": tweetId]
+        
+        post("1.1/favorites/destroy.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            log.verbose(response ?? "No Response")
+            success(true)
+            
+        }) { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error: \(error.localizedDescription)")
+            failure(error)
+        }
+    }
+
+    
     
     func currentAccount(success: @escaping (User) ->(), failure: @escaping (Error) -> ()) {
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in

@@ -104,8 +104,8 @@
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2,245" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KA9-dX-u3B">
-                                                    <rect key="frame" x="84" y="127.5" width="33" height="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KA9-dX-u3B">
+                                                    <rect key="frame" x="84" y="127" width="7.5" height="15.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -137,29 +137,29 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="retweet" translatesAutoresizingMaskIntoConstraints="NO" id="Z2I-1j-IJr">
-                                                    <rect key="frame" x="133" y="126.5" width="19" height="15"/>
+                                                    <rect key="frame" x="107.5" y="126.5" width="19" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="19" id="Qtf-9C-PPH"/>
                                                         <constraint firstAttribute="height" constant="15" id="e72-76-a5s"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favorite" translatesAutoresizingMaskIntoConstraints="NO" id="bfW-Qn-stY">
-                                                    <rect key="frame" x="199.5" y="126.5" width="16" height="15"/>
+                                                    <rect key="frame" x="174" y="126.5" width="16" height="15"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="188K" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IKX-8c-uN6">
-                                                    <rect key="frame" x="219.5" y="128" width="31" height="15"/>
+                                                    <rect key="frame" x="194" y="128" width="31" height="15"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="103K" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LIH-pz-bEX">
-                                                    <rect key="frame" x="156" y="126.5" width="31" height="15"/>
+                                                    <rect key="frame" x="130.5" y="126.5" width="31" height="15"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message" translatesAutoresizingMaskIntoConstraints="NO" id="KDd-vJ-mbJ">
-                                                    <rect key="frame" x="266.5" y="127" width="17" height="15"/>
+                                                    <rect key="frame" x="241" y="127" width="17" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="17" id="Fuy-p9-rny"/>
                                                         <constraint firstAttribute="height" constant="15" id="K8U-2S-T8P"/>
@@ -413,7 +413,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="76" height="43.5"/>
                                                             <state key="normal" image="reply"/>
                                                             <connections>
-                                                                <action selector="replyButtonPressed:" destination="QEb-NN-wBH" eventType="touchUpInside" id="lhl-Ih-f5h"/>
+                                                                <segue destination="HP0-lp-bI2" kind="presentation" identifier="ReplySegue" id="T13-cK-ryU"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5dB-bF-7IU">
@@ -562,7 +562,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hi8-PD-wLH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1913.0434782608697" y="884.51086956521749"/>
+            <point key="canvasLocation" x="2199" y="948"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Czb-45-poS">
@@ -593,4 +593,7 @@
         <image name="retweet_small" width="17" height="10"/>
         <image name="twitter_logo" width="100" height="100"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="T13-cK-ryU"/>
+    </inferredMetricsTieBreakers>
 </document>
