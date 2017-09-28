@@ -38,6 +38,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         let postUrlString = "1.1/statuses/retweet/\(tweetId).json"
         log.info("postUrlString: \(postUrlString)")
         
+        log.verbose("isAuthorized: \(self.isAuthorized)")
         log.verbose(self.requestSerializer.oAuthParameters())
         
         post(postUrlString, parameters: nil, progress: nil,
@@ -52,14 +53,11 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func composetTweet(success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+    func composetTweet(status: String, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
         
-        let params: NSDictionary = ["status": "Testing twitter client"]
+        let params: NSDictionary = ["status": status]
         
-        log.info("authorized: \(self.isAuthorized)")
-        
-        //status=Maybe%20he%27ll%20finally%20find%20his%20keys.%20%23peterfalk
-        
+        log.verbose("isAuthorized: \(self.isAuthorized)")
         log.verbose(self.requestSerializer.oAuthParameters())
         
         post("1.1/statuses/update.json", parameters: params, progress: nil,

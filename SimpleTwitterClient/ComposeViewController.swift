@@ -70,17 +70,15 @@ class ComposeViewController: UIViewController {
     
     @IBAction func tweetButtonPressed(_ sender: Any) {
         
-        TwitterClient.sharedInstance?.retweet(tweetId: "913183544590999552",
-                                              success: { (flag: Bool) in
-        },
-                                              failure: { (error: Error) in
-        })
+        if let statusText = tweetTextView.text {
+                        
+            TwitterClient.sharedInstance?.composetTweet(status: statusText, success: { (flag: Bool) in
+                
+            }, failure: { (error: Error) in
+                
+            })
+        }
         
-//        TwitterClient.sharedInstance?.composetTweet(success: { (flag: Bool) in
-//            
-//        }, failure: { (error: Error) in
-//            
-//        })
     }
     
     /*

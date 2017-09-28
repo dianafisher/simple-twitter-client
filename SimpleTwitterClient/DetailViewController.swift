@@ -51,7 +51,7 @@ class DetailViewController: UIViewController {
 extension DetailViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,11 +65,30 @@ extension DetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: tweetDetailCellIdentifier, for: indexPath) as! TweetDetailCell
             cell.tweet = tweet
             return cell
+        } else if section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: tweetStatsCellIdentifier, for: indexPath) as! TweetStatsCell
+            cell.tweet = tweet
+            return cell
+        } else if section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetOptionsCell", for: indexPath) as! TweetOptionsCell
+            return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: tweetStatsCellIdentifier, for: indexPath) as! TweetStatsCell
             cell.tweet = tweet
             return cell
         }
         
+    }
+    
+}
+
+extension DetailViewController: UITableViewDelegate {
+       
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section > 0 {
+            return 60.0
+        } else {
+            return 270.0
+        }
     }
 }
