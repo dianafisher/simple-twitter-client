@@ -19,10 +19,28 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var replyCountLabel: UILabel!
     @IBOutlet weak var retweetCountLabel: UILabel!
     @IBOutlet weak var favoriteCountLabel: UILabel!
+    @IBOutlet weak var retweetedLabel: UILabel!
+    @IBOutlet weak var retweetedImageView: UIImageView!
     
     var tweet: Tweet! {
         didSet {
-            let user = tweet.user
+            
+            var displayedTweet: Tweet = tweet
+            
+            // Is this a retweet?
+            if tweet.retweet != nil {
+                retweetedLabel.isHidden = false
+                retweetedImageView.isHidden = false
+                
+                displayedTweet = tweet.retweet!
+                let retweeter = tweet.user?.name ?? ""
+                retweetedLabel.text = "\(retweeter) retweeted"
+            } else {
+                retweetedLabel.isHidden = true
+                retweetedImageView.isHidden = true
+            }
+            
+            let user = displayedTweet.user
             if user != nil {
                 nameLabel.text = user?.name
                 if let screenname = user?.screenname {
@@ -31,7 +49,7 @@ class TweetCell: UITableViewCell {
                     screenNameLabel.text = "@"
                 }
                 
-                timestampLabel.text = tweet.timeAgoSinceNowString
+                timestampLabel.text = displayedTweet.timeAgoSinceNowString
                 
                 if let profileImageUrl = user?.profileUrl
                 {
@@ -51,10 +69,12 @@ class TweetCell: UITableViewCell {
                 
             }
             
-            tweetContentLabel.text = tweet.text
+            print("displayedTweet: \(displayedTweet)")
             
-            retweetCountLabel.text = "\(tweet.retweetCount)"
-            favoriteCountLabel.text = "\(tweet.favoriteCount)"
+            tweetContentLabel.text = displayedTweet.text
+            
+            retweetCountLabel.text = "\(displayedTweet.retweetCount)"
+            favoriteCountLabel.text = "\(displayedTweet.favoriteCount)"
             
         }
     }

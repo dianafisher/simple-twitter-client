@@ -11,17 +11,30 @@ import UIKit
 class Tweet: NSObject {
     
     var user: User?
+    var retweet: Tweet?
+    var entities: [Entity]?
+    
     var idString: String?
     var text: String?
-    var timestamp: Date
     var timeAgoSinceNowString: String?
     var formattedDateString: String?
+    var quotedCount: Int = 0
     var retweetCount: Int = 0
     var replyCount: Int = 0
     var favoriteCount: Int = 0
     var profileImageUrl: URL?
+    var timestamp: Date
+    var inReplyToStatusIdString: String?
+    var inReplyToUserIdString: String?
+    var inReplyToScreenName: String?
+    var quotedStatusId: String?
     
-    var data: NSDictionary
+    var quotedTweet: Tweet?
+    var retweetedTweet: Tweet?
+    
+    var favorited: Bool = false
+    var retweeted: Bool = false
+    
     
     override var description: String {
         
@@ -30,8 +43,6 @@ class Tweet: NSObject {
     }
     
     init(dictionary: NSDictionary) {
-        
-        data = dictionary
         
         print(dictionary)
         
@@ -51,21 +62,19 @@ class Tweet: NSObject {
         favoriteCount = (dictionary["favorite_count"] as? Int) ?? 0
         formattedDateString = ""
         
-        let timestampString = dictionary["created_at"] as? String
+        let retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
+        if let dict = retweetedStatus {
+            retweet = Tweet(dictionary: dict)
+            print("Retweeted: \(retweet?.text ?? "None")")
+        } else {
+            retweet = nil
+        }
         
-        if let timestampString = timestampString {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
-            timestamp = formatter.date(from: timestampString)!
-            print(timestamp)
-            print(timestamp.timeAgoSinceNow)
-            
-            formatter.dateFormat = "M/d/yy, HH:mm aaa"
-            let formatted = formatter.string(from: timestamp)
-            
-            log.info("formatted: \(formatted)")
-            formattedDateString = formatted
-            timeAgoSinceNowString = timestamp.timeAgoSinceNow
+        let timestampString = dictionary["created_at"] as? String
+                
+        if let timestampString = timestampString {            
+            timestamp = Utils.dateFromTimestamp(timestamp: timestampString)
+            timeAgoSinceNowString = Utils.timeAgoSinceNowString(fromDate: timestamp)
 
         } else {
             timestamp = Date()
@@ -76,6 +85,22 @@ class Tweet: NSObject {
             profileImageUrl = URL(string: profileImageUrlString!)
         } else {
             profileImageUrl = nil
+        }
+        
+        let entitiesDictionary = dictionary["entities"] as? NSDictionary
+        if let dict = entitiesDictionary {
+            
+            let userMentionsArray = dict["user_mentions"] as? [NSDictionary]
+            let count = userMentionsArray?.count ?? 0
+            print("user mentions count: \(count)")
+            
+            let mentions = UserMention.userMentionWithArray(dictionaries: userMentionsArray!)
+            for m in mentions {
+                print("id: \(String(describing: m.idStr)), name: \(String(describing: m.name))")
+            }
+            
+        } else {
+            entities = nil
         }
         
     }
@@ -90,32 +115,5 @@ class Tweet: NSObject {
         return tweets
     }
         
-}
-
-extension Date {
-    
-    // A string to represent date in terms of how long ago it was - e.g. 5m for 5 minutes
-    var timeAgoSinceNow: String {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        formatter.maximumUnitCount = 1
-        formatter.allowedUnits = [.day, .hour, .minute, .second]
-        
-        guard let timeString = formatter.string(from: self, to: Date()) else {
-            return ""
-        }
-        
-        let components = timeString.components(separatedBy: " ")
-        let number = components[0]
-        let time = components[1]
-        
-        let startIndex = time.startIndex
-        let endIndex = time.index(startIndex, offsetBy: 1)
-        let c = time.substring(to: endIndex)
-        
-        let result = "\(number)\(c)"
-        
-        return result
-    }
 }
 

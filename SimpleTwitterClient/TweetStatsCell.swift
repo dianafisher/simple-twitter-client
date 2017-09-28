@@ -15,8 +15,18 @@ class TweetStatsCell: UITableViewCell {
     
     var tweet: Tweet! {
         didSet {
-            retweetCountLabel.text = "\(tweet.retweetCount)"
-            favoriteCountLabel.text = "\(tweet.favoriteCount)"
+            
+            // Is this a retweet?
+            if tweet.retweet != nil {
+                let retweet = tweet.retweet!
+                retweetCountLabel.text = "\(retweet.retweetCount)"
+                favoriteCountLabel.text = "\(retweet.favoriteCount)"
+            } else {
+                retweetCountLabel.text = "\(tweet.retweetCount)"
+                favoriteCountLabel.text = "\(tweet.favoriteCount)"
+            }
+            
+            
         }
     }
 

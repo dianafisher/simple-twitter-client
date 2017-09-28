@@ -14,6 +14,16 @@ class User: NSObject {
     var screenname: String?
     var profileUrl: URL?
     var tagline: String?
+    var location: String?
+    var url: URL?
+    var verified: Bool
+    var followersCount: Int = 0
+    var friendsCount: Int = 0
+    var listedCount: Int = 0
+    var favoritesCount: Int = 0
+    var statusesCount: Int = 0
+    
+    
     
     var dictionary: NSDictionary?
     
@@ -41,7 +51,20 @@ class User: NSObject {
         }
         
         tagline = dictionary["description"] as? String
+        location = dictionary["location"] as? String
         
+        let urlString = dictionary["url"] as? String
+        if let urlString = urlString {
+            url = URL(string: urlString)
+        }
+        
+        verified = (dictionary["verified"] as? Bool) ?? false
+        
+        followersCount = (dictionary["followers_count"] as? Int) ?? 0
+        friendsCount = (dictionary["friends_count"] as? Int) ?? 0
+        listedCount = (dictionary["listed_count"] as? Int) ?? 0
+        favoritesCount = (dictionary["favourites_count"] as? Int) ?? 0
+        statusesCount = (dictionary["statuses_count"] as? Int) ?? 0
     }
     
    

@@ -132,11 +132,7 @@ extension TweetsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tweetCellIdentifier, for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
-        
-//        if indexPath.row == 0 {
-//            log.info(tweets[indexPath.row])
-//        }
-        
+                
         return cell
     }
 }

@@ -16,10 +16,29 @@ class TweetDetailCell: UITableViewCell {
     @IBOutlet weak var screennameLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var timeStampLabel: UILabel!
+    @IBOutlet weak var retweetedLabel: UILabel!
+    @IBOutlet weak var retweetedImageView: UIImageView!
     
     var tweet: Tweet! {
         didSet {
-            let user = tweet.user
+            
+            var displayedTweet: Tweet = tweet
+            
+            // Is this a retweet?
+            if tweet.retweet != nil {
+                retweetedLabel.isHidden = false
+                retweetedImageView.isHidden = false
+                
+                displayedTweet = tweet.retweet!
+                let retweeter = tweet.user?.name ?? ""
+                retweetedLabel.text = "\(retweeter) retweeted"
+            } else {
+                retweetedLabel.isHidden = true
+                retweetedImageView.isHidden = true
+            }
+
+            
+            let user = displayedTweet.user
             if user != nil {
                 nameLabel.text = user?.name
                 if let screenname = user?.screenname {
@@ -28,7 +47,7 @@ class TweetDetailCell: UITableViewCell {
                     screennameLabel.text = "@"
                 }
                 
-                timeStampLabel.text = tweet.formattedDateString
+                timeStampLabel.text = displayedTweet.formattedDateString
                 
                 if let profileImageUrl = user?.profileUrl
                 {

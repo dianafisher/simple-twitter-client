@@ -214,6 +214,8 @@
                                             <outlet property="profileImageView" destination="1Es-gu-nh6" id="PeK-HB-s6M"/>
                                             <outlet property="replyCountLabel" destination="KA9-dX-u3B" id="U9t-W3-sCB"/>
                                             <outlet property="retweetCountLabel" destination="LIH-pz-bEX" id="8yr-nV-HhX"/>
+                                            <outlet property="retweetedImageView" destination="K8N-YV-okm" id="hGN-lK-Ryr"/>
+                                            <outlet property="retweetedLabel" destination="3Rj-0F-hu9" id="MkM-6B-ZjN"/>
                                             <outlet property="screenNameLabel" destination="exN-bs-0gh" id="fnM-KB-3ST"/>
                                             <outlet property="timestampLabel" destination="7BG-sj-C8g" id="8Ab-Jr-Eab"/>
                                             <outlet property="tweetContentLabel" destination="6I1-5b-f1m" id="Pm1-3j-6BN"/>
@@ -343,6 +345,8 @@
                                         <connections>
                                             <outlet property="nameLabel" destination="c2q-4C-B4t" id="bfq-Py-9JK"/>
                                             <outlet property="profileImageView" destination="7jX-Vk-MfL" id="sc6-MN-dnl"/>
+                                            <outlet property="retweetedImageView" destination="QIv-HF-I4U" id="Iuz-kE-Re4"/>
+                                            <outlet property="retweetedLabel" destination="D3N-3O-gNG" id="u3B-EZ-joa"/>
                                             <outlet property="screennameLabel" destination="sew-kq-f4b" id="pH9-BW-ltZ"/>
                                             <outlet property="timeStampLabel" destination="HjU-2F-gT7" id="zs2-s0-Xzf"/>
                                             <outlet property="tweetTextLabel" destination="Gmg-d2-Yy5" id="Qmx-tq-ZZZ"/>
