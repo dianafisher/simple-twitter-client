@@ -20,7 +20,10 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     
     func homeTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
-        get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil,
+        
+        let params: NSDictionary = ["exclude_replies": false]
+        
+        get("1.1/statuses/home_timeline.json", parameters: params, progress: nil,
             success: { (task: URLSessionDataTask, response:Any?) in
                 
                 let dictionaries = response as! [NSDictionary]

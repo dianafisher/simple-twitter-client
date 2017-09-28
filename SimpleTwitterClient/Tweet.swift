@@ -17,6 +17,7 @@ class Tweet: NSObject {
     var timeAgoSinceNowString: String?
     var formattedDateString: String?
     var retweetCount: Int = 0
+    var replyCount: Int = 0
     var favoriteCount: Int = 0
     var profileImageUrl: URL?
     
@@ -45,6 +46,7 @@ class Tweet: NSObject {
         
         idString = dictionary["id_str"] as? String
         
+//        replyCount = (dictionary[""] as? Int) ?? 0
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoriteCount = (dictionary["favorite_count"] as? Int) ?? 0
         formattedDateString = ""

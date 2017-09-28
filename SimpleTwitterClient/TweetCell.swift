@@ -53,7 +53,8 @@ class TweetCell: UITableViewCell {
             
             tweetContentLabel.text = tweet.text
             
-            
+            retweetCountLabel.text = "\(tweet.retweetCount)"
+            favoriteCountLabel.text = "\(tweet.favoriteCount)"
             
         }
     }
