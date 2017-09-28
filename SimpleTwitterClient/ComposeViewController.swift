@@ -9,12 +9,15 @@
 import UIKit
 
 class ComposeViewController: UIViewController {
-
-    @IBOutlet weak var profileImageView: UIImageView!
+    
     @IBOutlet weak var characterCountLabel: UILabel!    
     @IBOutlet weak var tweetTextView: UITextView!
     @IBOutlet weak var placeHolderTextLabel: UILabel!
     @IBOutlet weak var tweetButton: UIButton!
+    
+    var isReply: Bool = false
+    var replyToTweet: Tweet?
+    var profileImageView: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +26,23 @@ class ComposeViewController: UIViewController {
             if let profileImageUrl = user.profileUrl
             {
                 let imageRequest = URLRequest(url: profileImageUrl)
+                let profileImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 32, height: 32))
+                
                 profileImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
-                    self.profileImageView.alpha = 0.0
-                    self.profileImageView.image = image
+                    profileImageView.alpha = 0.0
+                    profileImageView.image = image
+                    
                     UIView.animate(withDuration: 0.3, animations: {
-                        self.profileImageView.alpha = 1.0
+                        profileImageView.alpha = 1.0
                     })
+                    
+                    profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+                    profileImageView.clipsToBounds = true
+                    
+                    let profileItem: UIBarButtonItem = UIBarButtonItem.init(customView: profileImageView)
+                    self.navigationItem.leftBarButtonItem = profileItem
+                    
+                    
                 }, failure: { (imageRequest, imageResponse, error) in
                     print(error)
                 })
@@ -37,9 +51,15 @@ class ComposeViewController: UIViewController {
             }    
         }
         
-        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
-        profileImageView.clipsToBounds = true
-       
+        
+        if isReply {
+            tweetButton.setTitle("Reply", for: UIControlState.normal)
+            placeHolderTextLabel.text = "Tweet your reply"
+        } else {
+            tweetButton.setTitle("Tweet", for: UIControlState.normal)
+            placeHolderTextLabel.text = "What's happening?"
+        }
+        
         // Listen for changes to keyboard visibility so that we can adjust the text view accordingly.
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(handleKeyboardNotification(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -61,9 +81,8 @@ class ComposeViewController: UIViewController {
         log.info("Keyboard notification")
     }
     
-
-    @IBAction func closeButtonPressed(_ sender: Any) {
-        dismiss(animated: true) { 
+    @IBAction func closePressed(_ sender: Any) {
+        dismiss(animated: true) {
             
         }
     }

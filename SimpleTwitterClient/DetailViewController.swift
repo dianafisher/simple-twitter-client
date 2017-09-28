@@ -44,7 +44,13 @@ class DetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "ReplySegue" {
-            print("reply!")
+            
+            
+            let navVC = segue.destination as? UINavigationController
+            let vc = navVC?.topViewController as? ComposeViewController
+            
+            vc?.isReply = true
+            vc?.replyToTweet = tweet
         }
     }
 
