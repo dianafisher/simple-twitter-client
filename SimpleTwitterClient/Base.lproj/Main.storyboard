@@ -490,7 +490,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's happening?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZh-cL-7kK">
-                                <rect key="frame" x="13" y="116" width="299" height="24"/>
+                                <rect key="frame" x="13" y="108" width="299" height="24"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -505,7 +505,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jiS-VZ-ZDZ" firstAttribute="leading" secondItem="g61-xl-Wl8" secondAttribute="leading" constant="8" id="4p1-R9-3Zq"/>
-                            <constraint firstItem="oZh-cL-7kK" firstAttribute="top" secondItem="Oor-1K-lsa" secondAttribute="bottom" constant="28" id="H5n-QH-irr"/>
+                            <constraint firstItem="jiS-VZ-ZDZ" firstAttribute="top" secondItem="oZh-cL-7kK" secondAttribute="top" id="5bP-Ng-T3y"/>
                             <constraint firstItem="oZh-cL-7kK" firstAttribute="leading" secondItem="g61-xl-Wl8" secondAttribute="leading" constant="13" id="Qjz-kr-IdC"/>
                             <constraint firstItem="Oor-1K-lsa" firstAttribute="leading" secondItem="g61-xl-Wl8" secondAttribute="leading" constant="13" id="RyR-RS-cdV"/>
                             <constraint firstItem="EtF-qL-2nL" firstAttribute="top" secondItem="jiS-VZ-ZDZ" secondAttribute="bottom" constant="8" id="fC1-LE-6ax"/>
@@ -526,6 +526,7 @@
                     <connections>
                         <outlet property="characterCountButtonItem" destination="HpM-Es-swv" id="X8S-7n-xAG"/>
                         <outlet property="placeHolderTextLabel" destination="oZh-cL-7kK" id="RVf-Ay-2x1"/>
+                        <outlet property="replyingToLabel" destination="Oor-1K-lsa" id="WEt-Oe-kMH"/>
                         <outlet property="toolbar" destination="1ZS-rg-1i6" id="ISI-iP-4GZ"/>
                         <outlet property="tweetButton" destination="6VZ-qy-09s" id="8rI-J2-gQQ"/>
                         <outlet property="tweetTextView" destination="jiS-VZ-ZDZ" id="yv8-2f-uCY"/>

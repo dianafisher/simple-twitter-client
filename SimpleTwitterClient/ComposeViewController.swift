@@ -15,8 +15,8 @@ class ComposeViewController: UIViewController {
     @IBOutlet weak var tweetButton: UIBarButtonItem!
     @IBOutlet var toolbar: UIToolbar!
     @IBOutlet weak var characterCountButtonItem: UIBarButtonItem!
-    
-    var isReply: Bool = false
+    @IBOutlet weak var replyingToLabel: UILabel!
+        
     var replyToTweet: Tweet?
     var profileImageView: UIImageView?
     
@@ -25,6 +25,18 @@ class ComposeViewController: UIViewController {
     
         // Add the toolbar as an accessory view to the textview
         tweetTextView.inputAccessoryView = toolbar
+        
+        if replyToTweet != nil {
+            if let replyToUser = replyToTweet?.user?.screenname {
+                replyingToLabel.text = "↓ Replying to @\(replyToUser)"
+            }
+            
+            tweetButton.title = "Reply"
+            placeHolderTextLabel.text = "Tweet your reply"
+        } else {
+            tweetButton.title = "Tweet"
+            placeHolderTextLabel.text = "What's happening?"            
+        }
         
         if let user = User.currentUser {
             if let profileImageUrl = user.profileUrl
@@ -55,16 +67,6 @@ class ComposeViewController: UIViewController {
             }    
         }
         
-        
-        if isReply {
-            tweetButton.title = "Reply"
-//            tweetButton.setTitle("Reply", for: UIControlState.normal)
-            placeHolderTextLabel.text = "Tweet your reply"
-        } else {
-            tweetButton.title = "Tweet"
-//            tweetButton.setTitle("Tweet", for: UIControlState.normal)
-            placeHolderTextLabel.text = "What's happening?"
-        }
         
         // Listen for changes to keyboard visibility so that we can adjust the text view accordingly.
         let notificationCenter = NotificationCenter.default
