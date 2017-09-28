@@ -11,6 +11,7 @@ import BDBOAuth1Manager
 
 class TwitterClient: BDBOAuth1SessionManager {
 
+
     // Singleton instance
     static let sharedInstance = TwitterClient(baseURL: baseUrl, consumerKey: consumerKey, consumerSecret: consumerSecret)    
     
@@ -28,7 +29,48 @@ class TwitterClient: BDBOAuth1SessionManager {
                 success(tweets)
             
         }, failure: { (task:URLSessionDataTask?, error: Error) in
-            failure(error as Error)
+            failure(error)
+        })
+    }
+    
+    func retweet(tweetId: String, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        let postUrlString = "1.1/statuses/retweet/\(tweetId).json"
+        log.info("postUrlString: \(postUrlString)")
+        
+        log.verbose(self.requestSerializer.oAuthParameters())
+        
+        post(postUrlString, parameters: nil, progress: nil,
+             success: { (task: URLSessionDataTask, response: Any?) in
+                
+                log.info(response ?? "No Response")
+                
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error: \(error.localizedDescription)")
+            
+            failure(error)
+        })
+    }
+    
+    func composetTweet(success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        let params: NSDictionary = ["status": "Testing twitter client"]
+        
+        log.info("authorized: \(self.isAuthorized)")
+        
+        //status=Maybe%20he%27ll%20finally%20find%20his%20keys.%20%23peterfalk
+        
+        log.verbose(self.requestSerializer.oAuthParameters())
+        
+        post("1.1/statuses/update.json", parameters: params, progress: nil,
+             success: { (task: URLSessionDataTask, response: Any?) in
+            
+                log.info(response ?? "No Response")
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error: \(error.localizedDescription)")
+            
+            failure(error)
         })
     }
     
@@ -118,6 +160,9 @@ class TwitterClient: BDBOAuth1SessionManager {
         fetchAccessToken(withPath: "https://api.twitter.com/oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken: BDBOAuth1Credential!) in
             log.verbose("I got the access token! 👻")
             
+            self.requestSerializer.saveAccessToken(accessToken)
+            
+            
             self.currentAccount(success: { (user: User) in
                 
                 // Set the current user
@@ -141,6 +186,8 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
         
     }
+    
+    
 
     
 }

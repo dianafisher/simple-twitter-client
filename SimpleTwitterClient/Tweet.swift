@@ -11,6 +11,7 @@ import UIKit
 class Tweet: NSObject {
     
     var user: User?
+    var idString: String?
     var text: String?
     var timestamp: Date
     var timeAgoSinceNowString: String?
@@ -23,7 +24,7 @@ class Tweet: NSObject {
     
     override var description: String {
         
-        let str = "--> user: \(user?.name ?? "none")), text: \(text ?? "no text"), retweetCount: \(retweetCount), favoriteCount: \(favoriteCount))<--"
+        let str = "--> id: \(idString ?? "X"), user: \(user?.name ?? "none")), text: \(text ?? "no text"), retweetCount: \(retweetCount), favoriteCount: \(favoriteCount))<--"
         return str
     }
     
@@ -41,6 +42,8 @@ class Tweet: NSObject {
         }
         
         text = dictionary["text"] as? String
+        
+        idString = dictionary["id_str"] as? String
         
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoriteCount = (dictionary["favorite_count"] as? Int) ?? 0

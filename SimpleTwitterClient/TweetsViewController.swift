@@ -12,6 +12,9 @@ private let detailsSegueIdentifier = "DetailsSegue"
 private let composeSegueIdentifier = "ComposeSegue"
 private let tweetCellIdentifier = "TweetCell"
 
+// twitter blue = #1DA1F2
+
+
 class TweetsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -131,7 +134,7 @@ extension TweetsViewController: UITableViewDataSource {
         cell.tweet = tweets[indexPath.row]
         
 //        if indexPath.row == 0 {
-            log.info(tweets[indexPath.row])
+//            log.info(tweets[indexPath.row])
 //        }
         
         return cell
