@@ -76,7 +76,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="151"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QOf-Vg-jFZ" id="Fld-gW-Z0x">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="150.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="151"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Es-gu-nh6">
@@ -105,7 +105,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author &amp; speaker @RedQueenCoder wants to help demystifiy writing shaders" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6I1-5b-f1m">
-                                                    <rect key="frame" x="64" y="54.000000000000007" width="248" height="62.666666666666679"/>
+                                                    <rect key="frame" x="64" y="54.000000000000007" width="342" height="62.666666666666679"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -145,14 +145,23 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFp-It-s6Q">
                                                     <rect key="frame" x="64" y="122" width="16" height="22"/>
                                                     <state key="normal" image="reply"/>
+                                                    <connections>
+                                                        <action selector="replyButtonPressed:" destination="QOf-Vg-jFZ" eventType="touchUpInside" id="ekK-4c-qxC"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K48-m0-kTB">
                                                     <rect key="frame" x="100" y="122" width="19" height="22"/>
                                                     <state key="normal" image="retweet"/>
+                                                    <connections>
+                                                        <action selector="retweetButtonPressed:" destination="QOf-Vg-jFZ" eventType="touchUpInside" id="G0U-dJ-hpF"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oMp-mu-uJ6">
                                                     <rect key="frame" x="164" y="122" width="16" height="22"/>
                                                     <state key="normal" image="favorite"/>
+                                                    <connections>
+                                                        <action selector="favoriteButtonPressed:" destination="QOf-Vg-jFZ" eventType="touchUpInside" id="5PQ-LY-QqE"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -193,9 +202,12 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="favoriteButton" destination="oMp-mu-uJ6" id="T5x-pt-Scs"/>
                                             <outlet property="favoriteCountLabel" destination="IKX-8c-uN6" id="Lo4-5t-TPJ"/>
                                             <outlet property="nameLabel" destination="moN-Sp-OR8" id="yS9-ri-0Bt"/>
                                             <outlet property="profileImageView" destination="1Es-gu-nh6" id="PeK-HB-s6M"/>
+                                            <outlet property="replyButton" destination="eFp-It-s6Q" id="2rJ-CE-pJr"/>
+                                            <outlet property="retweetButton" destination="K48-m0-kTB" id="Y7q-l4-3pN"/>
                                             <outlet property="retweetCountLabel" destination="LIH-pz-bEX" id="8yr-nV-HhX"/>
                                             <outlet property="retweetedImageView" destination="K8N-YV-okm" id="hGN-lK-Ryr"/>
                                             <outlet property="retweetedLabel" destination="3Rj-0F-hu9" id="MkM-6B-ZjN"/>
@@ -256,7 +268,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="270"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nOl-tq-aHm" id="zmR-hb-NWi">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="269.66666666666669"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="270"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@rwenderlich" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sew-kq-f4b">
@@ -292,13 +304,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="9/27/17, 10:35 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjU-2F-gT7">
-                                                    <rect key="frame" x="8" y="240.66666666666669" width="304" height="21.000000000000057"/>
+                                                    <rect key="frame" x="8" y="240.66666666666669" width="398" height="21.000000000000057"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="#WWCode member &amp;amp; former @rmotr_com student, Cyn Armistead shares her career story. https://t.co/71kJl2ur20" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmg-d2-Yy5">
-                                                    <rect key="frame" x="8" y="85.999999999999986" width="304" height="146.66666666666663"/>
+                                                    <rect key="frame" x="8" y="85.999999999999986" width="398" height="146.66666666666663"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -339,7 +351,7 @@
                                         <rect key="frame" x="0.0" y="298" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3pF-dn-s4a" id="970-yi-4GT">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="59.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retweets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITz-I9-9p5">
@@ -390,7 +402,7 @@
                                         <rect key="frame" x="0.0" y="358" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QEb-NN-wBH" id="SdK-CO-7wg">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="59.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="NTd-c0-BhF">
@@ -584,6 +596,6 @@
         <image name="twitter_logo" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T13-cK-ryU"/>
+        <segue reference="5dd-It-CLW"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -7,13 +7,11 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 private let detailsSegueIdentifier = "DetailsSegue"
 private let composeSegueIdentifier = "ComposeSegue"
 private let tweetCellIdentifier = "TweetCell"
-
-// twitter blue = #1DA1F2
-
 
 class TweetsViewController: UIViewController {
 
@@ -101,7 +99,7 @@ class TweetsViewController: UIViewController {
                                                 self?.tableView.reloadData()
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -115,7 +113,7 @@ class TweetsViewController: UIViewController {
     }
     
     // MARK: - Logout action
-    
+        
     @IBAction func onLogoutPressed(_ sender: Any) {
         TwitterClient.sharedInstance?.logout()
     }
@@ -123,19 +121,23 @@ class TweetsViewController: UIViewController {
     // MARK: Network request
     
     func requestTweets() {
-        TwitterClient.sharedInstance?.homeTimeline(sinceId: nil, maxId: nil, success: { (tweets: [Tweet]) in
+        // Display HUD right before the request is made
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        TwitterClient.sharedInstance?.homeTimeline(sinceId: nil, maxId: nil, success: { [weak self] (tweets: [Tweet]) in
             log.info("I got the tweets!")
             log.info(tweets.count)
             
-            self.tweets = tweets
+            self?.tweets = tweets
             
-            self.lastLoadedTweetId = tweets.last?.idString
+            self?.lastLoadedTweetId = tweets.last?.idString
             
-            self.tableView.reloadData()
+            self?.tableView.reloadData()
             
             DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
-                self.loadingMoreView?.stopAnimating()
+                self?.refreshControl.endRefreshing()
+                self?.loadingMoreView?.stopAnimating()
+                MBProgressHUD.hide(for: self!.view, animated: true)
             }
             
         }, failure: { (error:Error) in
@@ -144,22 +146,25 @@ class TweetsViewController: UIViewController {
     }
     
     fileprivate func loadMoreData() {
+        // Display HUD right before the request is made
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         
-        TwitterClient.sharedInstance?.homeTimeline(sinceId: nil, maxId: lastLoadedTweetId, success: { (tweets: [Tweet]) in
+        TwitterClient.sharedInstance?.homeTimeline(sinceId: nil, maxId: lastLoadedTweetId, success: { [weak self] (tweets: [Tweet]) in
             log.info("I got more tweets!")
             log.info(tweets.count)
             
-            self.tweets.append(contentsOf: tweets)
+            self?.tweets.append(contentsOf: tweets)
             
-            self.lastLoadedTweetId = tweets.last?.idString
+            self?.lastLoadedTweetId = tweets.last?.idString
             
-            self.tableView.reloadData()
+            self?.tableView.reloadData()
             
-            self.isMoreDataLoading = false
+            self?.isMoreDataLoading = false
             
             DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
-                self.loadingMoreView?.stopAnimating()
+                self?.refreshControl.endRefreshing()
+                self?.loadingMoreView?.stopAnimating()
+                MBProgressHUD.hide(for: self!.view, animated: true)
             }
             
         }, failure: { (error:Error) in

@@ -8,6 +8,15 @@
 
 import UIKit
 
+@objc protocol TweetCellDelegate {
+    
+    @objc optional func tweetCell(_ tweetCell: TweetCell, didPressReplyButton tweet: Tweet)
+    @objc optional func tweetCell(_ tweetCell: TweetCell, didPressFavoriteButton tweet: Tweet)
+    @objc optional func tweetCell(_ tweetCell: TweetCell, replyToWasPressed tweet: Tweet)
+}
+
+
+
 class TweetCell: UITableViewCell {
 
     @IBOutlet weak var profileImageView: UIImageView!
@@ -21,6 +30,9 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var favoriteCountLabel: UILabel!
     @IBOutlet weak var retweetedLabel: UILabel!
     @IBOutlet weak var retweetedImageView: UIImageView!
+    @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
     
     var tweet: Tweet! {
         didSet {
@@ -95,5 +107,21 @@ class TweetCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    @IBAction func replyButtonPressed(_ sender: Any) {
+        log.verbose("Reply button pressed")
+//        delegate?.filtersViewController!(self, didUpdateSearchSettings: searchSettings!)
+//        delegate?.tweetCell!(self, didPressReplyButton, tweet)
+    }
+    
+    
+    @IBAction func retweetButtonPressed(_ sender: Any) {
+        log.verbose("Retweet button pressed")
+    }
+    
+    @IBAction func favoriteButtonPressed(_ sender: Any) {
+        log.verbose("Favorite button pressed")
+    }
+
 
 }

@@ -9,4 +9,5 @@ target 'SimpleTwitterClient' do
   pod ‘AFNetworking’
   pod 'BDBOAuth1Manager’
   pod 'SwiftyBeaver'
+  pod 'MBProgressHUD'
 end
