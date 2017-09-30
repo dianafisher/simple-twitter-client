@@ -10,9 +10,9 @@ import UIKit
 
 @objc protocol TweetCellDelegate {
     
-    @objc optional func tweetCell(_ tweetCell: TweetCell, didPressReplyButton tweet: Tweet)
-    @objc optional func tweetCell(_ tweetCell: TweetCell, didPressFavoriteButton tweet: Tweet)
-    @objc optional func tweetCell(_ tweetCell: TweetCell, replyToWasPressed tweet: Tweet)
+    @objc optional func tweetCell(_ tweetCell: TweetCell, doReplyTo tweet: Tweet)
+    @objc optional func tweetCell(_ tweetCell: TweetCell, doFavorite tweet: Tweet)
+    @objc optional func tweetCell(_ tweetCell: TweetCell, doRetweet tweet: Tweet)
 }
 
 
@@ -33,6 +33,8 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
+    
+    weak var delegate: TweetCellDelegate?
     
     var tweet: Tweet! {
         didSet {
@@ -110,17 +112,18 @@ class TweetCell: UITableViewCell {
     
     @IBAction func replyButtonPressed(_ sender: Any) {
         log.verbose("Reply button pressed")
-//        delegate?.filtersViewController!(self, didUpdateSearchSettings: searchSettings!)
-//        delegate?.tweetCell!(self, didPressReplyButton, tweet)
+        delegate?.tweetCell!(self, doReplyTo: tweet)
     }
     
     
     @IBAction func retweetButtonPressed(_ sender: Any) {
         log.verbose("Retweet button pressed")
+        delegate?.tweetCell!(self, doRetweet: tweet)
     }
     
     @IBAction func favoriteButtonPressed(_ sender: Any) {
         log.verbose("Favorite button pressed")
+        delegate?.tweetCell!(self, doFavorite: tweet)
     }
 
 

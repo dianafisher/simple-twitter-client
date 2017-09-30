@@ -207,7 +207,7 @@ extension TweetsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tweetCellIdentifier, for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
-                
+        cell.delegate = self
         return cell
     }
 }
@@ -250,6 +250,33 @@ extension TweetsViewController: UIScrollViewDelegate {
             }
             
         }
+    }
+}
+
+extension TweetsViewController: TweetCellDelegate {
+    
+    func tweetCell(_ tweetCell: TweetCell, doReplyTo tweet: Tweet) {
+        
+        // show the compose controller
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let navVC = storyboard.instantiateViewController(withIdentifier: "ComposeNavController") as? UINavigationController
+        
+        let vc = navVC?.topViewController as? ComposeViewController
+        if vc != nil {
+            vc!.replyToTweet = tweet
+            present(navVC!, animated: true, completion: { 
+                
+            })
+        }
+        
+    }
+    
+    func tweetCell(_ tweetCell: TweetCell, doRetweet tweet: Tweet) {
+        
+    }
+    
+    func tweetCell(_ tweetCell: TweetCell, doFavorite tweet: Tweet) {
+        
     }
 }
 
