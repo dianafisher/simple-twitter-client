@@ -34,6 +34,7 @@ class ComposeViewController: UIViewController {
             tweetButton.title = "Reply"
             placeHolderTextLabel.text = "Tweet your reply"
         } else {
+            replyingToLabel.text = ""
             tweetButton.title = "Tweet"
             placeHolderTextLabel.text = "What's happening?"            
         }

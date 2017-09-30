@@ -19,9 +19,17 @@ class TwitterClient: BDBOAuth1SessionManager {
     var loginFailure: ((Error) -> ())?
     
     
-    func homeTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+    func homeTimeline(sinceId: String?, maxId: String?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         
         let params: NSDictionary = ["exclude_replies": false]
+        
+        if maxId != nil {
+            params.setValue(maxId, forKey: "max_id")
+        }
+        
+        if sinceId != nil {
+            params.setValue(sinceId, forKey: "since_id")
+        }
         
         get("1.1/statuses/home_timeline.json", parameters: params, progress: nil,
             success: { (task: URLSessionDataTask, response:Any?) in
