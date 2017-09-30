@@ -472,36 +472,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jiS-VZ-ZDZ">
-                                <rect key="frame" x="8" y="108" width="304" height="452"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's happening?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZh-cL-7kK">
-                                <rect key="frame" x="13" y="108" width="299" height="24"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="↓ Replying to @WIRED" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oor-1K-lsa">
                                 <rect key="frame" x="13" y="72" width="140" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="What's happening?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ju1-Sg-9qQ">
+                                <rect key="frame" x="8" y="98" width="304" height="450"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's happening?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZh-cL-7kK">
+                                <rect key="frame" x="13" y="106" width="299" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jiS-VZ-ZDZ" firstAttribute="leading" secondItem="g61-xl-Wl8" secondAttribute="leading" constant="8" id="4p1-R9-3Zq"/>
-                            <constraint firstItem="jiS-VZ-ZDZ" firstAttribute="top" secondItem="oZh-cL-7kK" secondAttribute="top" id="5bP-Ng-T3y"/>
+                            <constraint firstItem="Ju1-Sg-9qQ" firstAttribute="leading" secondItem="g61-xl-Wl8" secondAttribute="leading" constant="8" id="KKd-gy-gr6"/>
                             <constraint firstItem="oZh-cL-7kK" firstAttribute="leading" secondItem="g61-xl-Wl8" secondAttribute="leading" constant="13" id="Qjz-kr-IdC"/>
+                            <constraint firstItem="Ju1-Sg-9qQ" firstAttribute="top" secondItem="Oor-1K-lsa" secondAttribute="bottom" constant="10" id="Ry2-rF-rDQ"/>
                             <constraint firstItem="Oor-1K-lsa" firstAttribute="leading" secondItem="g61-xl-Wl8" secondAttribute="leading" constant="13" id="RyR-RS-cdV"/>
-                            <constraint firstItem="EtF-qL-2nL" firstAttribute="top" secondItem="jiS-VZ-ZDZ" secondAttribute="bottom" constant="8" id="fC1-LE-6ax"/>
-                            <constraint firstItem="jiS-VZ-ZDZ" firstAttribute="top" secondItem="Oor-1K-lsa" secondAttribute="bottom" constant="20" id="oKw-C4-gC0"/>
+                            <constraint firstAttribute="trailing" secondItem="Ju1-Sg-9qQ" secondAttribute="trailing" constant="8" id="TaA-H1-dai"/>
+                            <constraint firstItem="oZh-cL-7kK" firstAttribute="top" secondItem="Oor-1K-lsa" secondAttribute="bottom" constant="18" id="YcS-Ky-Q2l"/>
                             <constraint firstAttribute="trailing" secondItem="oZh-cL-7kK" secondAttribute="trailing" constant="8" id="q8e-QW-ei4"/>
                             <constraint firstItem="Oor-1K-lsa" firstAttribute="top" secondItem="YGt-dc-1za" secondAttribute="bottom" constant="8" id="rXX-Eu-GHP"/>
-                            <constraint firstAttribute="trailing" secondItem="jiS-VZ-ZDZ" secondAttribute="trailing" constant="8" id="uHN-0E-Jjw"/>
+                            <constraint firstItem="EtF-qL-2nL" firstAttribute="top" secondItem="Ju1-Sg-9qQ" secondAttribute="bottom" constant="20" id="zMQ-hs-4TI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4Tk-rQ-4Se">
@@ -518,7 +518,7 @@
                         <outlet property="replyingToLabel" destination="Oor-1K-lsa" id="WEt-Oe-kMH"/>
                         <outlet property="toolbar" destination="1ZS-rg-1i6" id="ISI-iP-4GZ"/>
                         <outlet property="tweetButton" destination="6VZ-qy-09s" id="8rI-J2-gQQ"/>
-                        <outlet property="tweetTextView" destination="jiS-VZ-ZDZ" id="yv8-2f-uCY"/>
+                        <outlet property="tweetTextView" destination="Ju1-Sg-9qQ" id="UhI-Yq-Djf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hi8-PD-wLH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -532,7 +532,11 @@
                         <barButtonItem title="140" id="HpM-Es-swv">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
-                        <barButtonItem title="Tweet" id="6VZ-qy-09s"/>
+                        <barButtonItem title="Tweet" id="6VZ-qy-09s">
+                            <connections>
+                                <action selector="tweetReplyButtonPressed:" destination="HP0-lp-bI2" id="WtE-mh-tVQ"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                 </toolbar>
             </objects>
@@ -586,6 +590,6 @@
         <image name="twitter_logo" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5dd-It-CLW"/>
+        <segue reference="T13-cK-ryU"/>
     </inferredMetricsTieBreakers>
 </document>

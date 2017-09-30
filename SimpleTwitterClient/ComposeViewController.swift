@@ -96,10 +96,9 @@ class ComposeViewController: UIViewController {
         }
     }
     
-    @IBAction func tweetButtonPressed(_ sender: Any) {
-        
+    @IBAction func tweetReplyButtonPressed(_ sender: Any) {
         if let statusText = tweetTextView.text {
-                        
+            
             TwitterClient.sharedInstance?.composetTweet(status: statusText, success: { (flag: Bool) in
                 
             }, failure: { (error: Error) in
@@ -107,7 +106,7 @@ class ComposeViewController: UIViewController {
             })
         }
     }
-    
+        
     func showErrorAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
