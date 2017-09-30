@@ -42,6 +42,7 @@ class ComposeViewController: UIViewController {
         if let user = User.currentUser {
             if let profileImageUrl = user.profileUrl
             {
+                // Place the user's profile image in the left bar button item.
                 let imageRequest = URLRequest(url: profileImageUrl)
                 let profileImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 32, height: 32))
                 
@@ -91,19 +92,30 @@ class ComposeViewController: UIViewController {
     }
     
     @IBAction func closePressed(_ sender: Any) {
-        dismiss(animated: true) {
-            
-        }
+        dismiss(animated: true) { }
     }
     
     @IBAction func tweetReplyButtonPressed(_ sender: Any) {
         if let statusText = tweetTextView.text {
             
-            TwitterClient.sharedInstance?.composetTweet(status: statusText, success: { (flag: Bool) in
+            if replyToTweet != nil {
                 
-            }, failure: { (error: Error) in
-                log.error(error.localizedDescription)
-            })
+                let tweet = replyToTweet!
+                let screenname = tweet.user?.screenname ?? ""
+                
+                TwitterClient.sharedInstance?.replyToTweet(tweetId: tweet.idString!, username: screenname, status: statusText, success: { (success: Bool) in
+                    
+                }, failure: { (error: Error) in
+                    log.error(error.localizedDescription)
+                })
+                
+            } else {
+                TwitterClient.sharedInstance?.composetTweet(status: statusText, success: { (success: Bool) in
+                    
+                }, failure: { (error: Error) in
+                    log.error(error.localizedDescription)
+                })
+            }
         }
     }
         
