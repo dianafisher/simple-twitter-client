@@ -45,7 +45,7 @@ class Tweet: NSObject {
     
     init(dictionary: NSDictionary) {
         
-        print(dictionary)
+        log.verbose(dictionary)
         
         let userDictionary = dictionary["user"] as? NSDictionary
         if let dict = userDictionary {
@@ -65,8 +65,7 @@ class Tweet: NSObject {
         
         let retweetedStatus = dictionary["retweeted_status"] as? NSDictionary
         if let dict = retweetedStatus {
-            retweet = Tweet(dictionary: dict)
-            print("Retweeted: \(retweet?.text ?? "None")")
+            retweet = Tweet(dictionary: dict)            
         } else {
             retweet = nil
         }
@@ -93,11 +92,11 @@ class Tweet: NSObject {
             
             let userMentionsArray = dict["user_mentions"] as? [NSDictionary]
             let count = userMentionsArray?.count ?? 0
-            print("user mentions count: \(count)")
+            log.verbose("user mentions count: \(count)")
             
             let mentions = UserMention.userMentionWithArray(dictionaries: userMentionsArray!)
             for m in mentions {
-                print("id: \(String(describing: m.idStr)), name: \(String(describing: m.name))")
+                log.verbose("id: \(String(describing: m.idStr)), name: \(String(describing: m.name))")
             }
             
         } else {

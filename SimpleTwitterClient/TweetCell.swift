@@ -11,11 +11,7 @@ import UIKit
 @objc protocol TweetCellDelegate {
     
     @objc optional func tweetCell(_ tweetCell: TweetCell, doReplyTo tweet: Tweet)
-    @objc optional func tweetCell(_ tweetCell: TweetCell, doFavorite tweet: Tweet)
-    @objc optional func tweetCell(_ tweetCell: TweetCell, doRetweet tweet: Tweet)
 }
-
-
 
 class TweetCell: UITableViewCell {
 
@@ -75,7 +71,7 @@ class TweetCell: UITableViewCell {
                             self.profileImageView.alpha = 1.0
                         })
                     }, failure: { (imageRequest, imageResponse, error) in
-                        print(error)
+                        log.error(error)
                     })
                 } else {
                     // TODO: Use placeholder image
@@ -83,7 +79,7 @@ class TweetCell: UITableViewCell {
                 
             }
             
-            print("displayedTweet: \(displayedTweet)")
+            log.verbose("displayedTweet: \(displayedTweet)")
             
             tweetContentLabel.text = displayedTweet.text
             
@@ -111,19 +107,39 @@ class TweetCell: UITableViewCell {
     }
     
     @IBAction func replyButtonPressed(_ sender: Any) {
-        log.verbose("Reply button pressed")
+        
         delegate?.tweetCell!(self, doReplyTo: tweet)
     }
     
     
     @IBAction func retweetButtonPressed(_ sender: Any) {
-        log.verbose("Retweet button pressed")
-        delegate?.tweetCell!(self, doRetweet: tweet)
+        
+        if let tweetId = tweet.idString {
+            TwitterClient.sharedInstance?.retweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                
+                // update the retweets count for this tweet
+                self?.retweetCountLabel.text = "\(updatedTweet.retweetCount)"
+                
+            }, failure: { (error: Error) in
+                log.error("Error: \(error.localizedDescription)")
+            })
+        }
     }
     
     @IBAction func favoriteButtonPressed(_ sender: Any) {
-        log.verbose("Favorite button pressed")
-        delegate?.tweetCell!(self, doFavorite: tweet)
+        
+        if let tweet = tweet {
+            if let tweetId = tweet.idString {
+                TwitterClient.sharedInstance?.likeTweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    // update the favorites count for this tweet
+                    self?.favoriteCountLabel.text = "\(updatedTweet.favoriteCount)"
+                    
+                }, failure: { (error: Error) in
+                    log.verbose("Error: \(error.localizedDescription)")
+                })
+            }
+        }
     }
 
 

@@ -11,7 +11,10 @@ import MBProgressHUD
 
 private let detailsSegueIdentifier = "DetailsSegue"
 private let composeSegueIdentifier = "ComposeSegue"
+
 private let tweetCellIdentifier = "TweetCell"
+
+private let composeNavigationControllerIdentifier = "ComposeNavController"
 
 class TweetsViewController: UIViewController {
 
@@ -189,8 +192,6 @@ class TweetsViewController: UIViewController {
             detailViewController.tweet = tweet
         }
         
-        
-        
     }
 
 }
@@ -259,7 +260,7 @@ extension TweetsViewController: TweetCellDelegate {
         
         // show the compose controller
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let navVC = storyboard.instantiateViewController(withIdentifier: "ComposeNavController") as? UINavigationController
+        let navVC = storyboard.instantiateViewController(withIdentifier: composeNavigationControllerIdentifier) as? UINavigationController
         
         let vc = navVC?.topViewController as? ComposeViewController
         if vc != nil {
@@ -268,15 +269,24 @@ extension TweetsViewController: TweetCellDelegate {
                 
             })
         }
-        
     }
+}
+
+extension TweetsViewController: TweetOptionsCellDelegate {
     
-    func tweetCell(_ tweetCell: TweetCell, doRetweet tweet: Tweet) {
+    func tweetOptionsCell(_ tweetOptionsCell: TweetOptionsCell, doReplyTo tweet: Tweet) {
         
-    }
-    
-    func tweetCell(_ tweetCell: TweetCell, doFavorite tweet: Tweet) {
+        // show the compose controller
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let navVC = storyboard.instantiateViewController(withIdentifier: composeNavigationControllerIdentifier) as? UINavigationController
         
+        let vc = navVC?.topViewController as? ComposeViewController
+        if vc != nil {
+            vc!.replyToTweet = tweet
+            present(navVC!, animated: true, completion: {
+                
+            })
+        }
     }
 }
 

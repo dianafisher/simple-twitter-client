@@ -8,9 +8,16 @@
 
 import UIKit
 
+@objc protocol TweetOptionsCellDelegate {
+    
+    @objc optional func tweetOptionsCell(_ tweetOptionsCell: TweetOptionsCell, doReplyTo tweet: Tweet)
+}
+
 class TweetOptionsCell: UITableViewCell {
 
     var tweet: Tweet!
+    
+    weak var delegate: TweetOptionsCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,44 +31,34 @@ class TweetOptionsCell: UITableViewCell {
     }
 
     @IBAction func replyButtonPressed(_ sender: Any) {
-//        if let tweet = tweet {
-//            if let tweetId = tweet.idString {
-//                let username = tweet.user?.name ?? ""
-//                
-//                TwitterClient.sharedInstance?.replyToTweet(tweetId: tweetId, username: username, status: <#T##String#>, success: <#T##(Bool) -> ()#>, failure: <#T##(Error) -> ()#>)
-//            }
-//        }
+        delegate?.tweetOptionsCell!(self, doReplyTo: tweet)
     }
     
     
     @IBAction func retweetButtonPressed(_ sender: Any) {
-        if let tweet = tweet {
-            if let tweetId = tweet.idString {
-                TwitterClient.sharedInstance?.retweet(tweetId: tweetId, success: { (success) in
-                    if (success) {
-                        print("YAY! I retweeted")
-                    }
+        if let tweetId = tweet.idString {
+            TwitterClient.sharedInstance?.retweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                
+                
                 }, failure: { (error: Error) in
-                    print("Error: \(error.localizedDescription)")
-                })
-            }            
+                    log.error("Error: \(error.localizedDescription)")
+            })
         }
     }
     
     @IBAction func favoriteButtonPressed(_ sender: Any) {
         if let tweet = tweet {
             if let tweetId = tweet.idString {
-                TwitterClient.sharedInstance?.likeTweet(tweetId: tweetId, success: { (success) in
-                    if (success) {
-                        print("YAY! I liked someting")
-                    }
-                }, failure: { (error: Error) in
-                    print("Error: \(error.localizedDescription)")
+                TwitterClient.sharedInstance?.likeTweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                                        
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
                 })
             }
         }
     }
     
     @IBAction func messageButtonPressed(_ sender: Any) {
+        // Do nothing..
     }
 }

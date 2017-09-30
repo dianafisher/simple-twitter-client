@@ -59,7 +59,7 @@ class TweetDetailCell: UITableViewCell {
                             self.profileImageView.alpha = 1.0
                         })
                     }, failure: { (imageRequest, imageResponse, error) in
-                        print(error)
+                        log.error(error)
                     })
                 } else {
                     // TODO: Use placeholder image
