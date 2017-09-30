@@ -36,6 +36,8 @@ class TweetsViewController: UIViewController {
         setupLoadingMoreView()
         
         requestTweets()
+        
+        registerForNotifications()
     }
     
     func setupTableView() {
@@ -81,6 +83,23 @@ class TweetsViewController: UIViewController {
         insets.bottom += InfiniteScrollActivityView.defaultHeight
         tableView.contentInset = insets
 
+    }
+    
+    func registerForNotifications() {
+        // Register to receive new tweet notifications
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Tweet.tweetsDidUpdateNotification),
+                                               object: nil, queue: OperationQueue.main) { [weak self] (notification: Notification) in
+                                                
+                                                let tweet = notification.userInfo!["tweet"] as! Tweet
+                                                
+                                                log.verbose("A new tweet! 🎉")
+                                                
+                                                // Add the new tweet to the beginning of the tweets array.                                                
+                                                self?.tweets.insert(tweet, at: 0)
+                                                
+                                                // Reload the table view
+                                                self?.tableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {

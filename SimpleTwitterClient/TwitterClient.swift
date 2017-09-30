@@ -88,6 +88,14 @@ class TwitterClient: BDBOAuth1SessionManager {
              success: { (task: URLSessionDataTask, response: Any?) in
             
                 log.verbose(response ?? "No Response")
+                
+                let dictionary = response as! NSDictionary
+                let tweet = Tweet(dictionary: dictionary)
+                
+                // Send notification that there is a new Tweet
+                let notificationName = NSNotification.Name(rawValue: Tweet.tweetsDidUpdateNotification)
+                NotificationCenter.default.post(name: notificationName, object: nil, userInfo: ["tweet": tweet])
+                
                 success(true)
             
         }, failure: { (task: URLSessionDataTask?, error: Error) in
@@ -108,6 +116,14 @@ class TwitterClient: BDBOAuth1SessionManager {
              success: { (task: URLSessionDataTask, response: Any?) in
                 
                 log.verbose(response ?? "No Response")
+                
+                let dictionary = response as! NSDictionary
+                let tweet = Tweet(dictionary: dictionary)
+                
+                // Send notification that there is a new Tweet
+                let notificationName = NSNotification.Name(rawValue: Tweet.tweetsDidUpdateNotification)
+                NotificationCenter.default.post(name: notificationName, object: nil, userInfo: ["tweet": tweet])
+                
                 success(true)
                 
         }, failure: { (task: URLSessionDataTask?, error: Error) in

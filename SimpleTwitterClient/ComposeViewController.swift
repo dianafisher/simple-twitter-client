@@ -86,7 +86,6 @@ class ComposeViewController: UIViewController {
     // MARK: - Keyboard Event Notifications
     
     func handleKeyboardNotification(_ notification: Notification) {
-//        let userInfo = notification.userInfo
         
         log.info("Keyboard notification")
     }

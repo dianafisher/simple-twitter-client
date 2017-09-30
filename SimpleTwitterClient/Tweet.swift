@@ -35,6 +35,7 @@ class Tweet: NSObject {
     var favorited: Bool = false
     var retweeted: Bool = false
     
+    static let tweetsDidUpdateNotification = "TweetDidUpdate"
     
     override var description: String {
         
