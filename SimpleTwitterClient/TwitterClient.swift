@@ -21,14 +21,14 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func homeTimeline(sinceId: String?, maxId: String?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         
-        let params: NSDictionary = ["exclude_replies": false]
+        var params: [String: Any?] = ["exclude_replies": false]
         
         if maxId != nil {
-            params.setValue(maxId, forKey: "max_id")
+            params["max_id"] = maxId
         }
         
         if sinceId != nil {
-            params.setValue(sinceId, forKey: "since_id")
+            params["since_id"] = sinceId
         }
         
         get("1.1/statuses/home_timeline.json", parameters: params, progress: nil,

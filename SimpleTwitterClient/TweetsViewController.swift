@@ -40,6 +40,7 @@ class TweetsViewController: UIViewController {
     
     func setupTableView() {
         tableView.dataSource = self
+        tableView.delegate = self
         
         // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -187,12 +188,17 @@ extension TweetsViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+extension TweetsViewController: UITableViewDelegate {
+    
+}
+
 // MARK: - UIScrollViewDelegate
 extension TweetsViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Handle scroll behavior
-        
+                
         if (!isMoreDataLoading) {
             // Calculate the position of one screen length before the bottom of the results
             let scrollViewContentHeight = tableView.contentSize.height
