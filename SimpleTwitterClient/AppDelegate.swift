@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Add log destination
         let console = ConsoleDestination()  // log to Xcode Console
-//        console.minLevel = .info // just log .info, .warning & .error
+        console.minLevel = .info // just log .info, .warning & .error
         log.addDestination(console)
         
         if User.currentUser != nil {

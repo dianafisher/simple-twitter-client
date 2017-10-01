@@ -90,16 +90,7 @@ class Tweet: NSObject {
     
         let entitiesDictionary = dictionary["entities"] as? NSDictionary
         if let dict = entitiesDictionary {
-            
-            let userMentionsArray = dict["user_mentions"] as? [NSDictionary]
-            let count = userMentionsArray?.count ?? 0
-            log.verbose("user mentions count: \(count)")
-            
-            let mentions = UserMention.userMentionWithArray(dictionaries: userMentionsArray!)
-            for m in mentions {
-                log.verbose("id: \(String(describing: m.idStr)), name: \(String(describing: m.name))")
-            }
-            
+                        
             // Parse media entities
             let mediaArray = dict["media"] as? [NSDictionary]
             if let array = mediaArray {
