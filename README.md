@@ -2,7 +2,7 @@
 
 **SimpleTwitterClient** is a basic twitter app to read and compose tweets from the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **45** hours spent in total
+Time spent: **36** hours spent in total
 
 ## User Stories
 
