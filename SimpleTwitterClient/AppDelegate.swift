@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // Handle openURL
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print(url.description)
+//        print(url.description)
                 
         let twitterClient = TwitterClient.sharedInstance
         twitterClient?.handleOpenUrl(url: url)

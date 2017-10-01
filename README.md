@@ -2,7 +2,7 @@
 
 **SimpleTwitterClient** is a basic twitter app to read and compose tweets from the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **X** hours spent in total
+Time spent: **45** hours spent in total
 
 ## User Stories
 
@@ -36,8 +36,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. The table cells that contain buttons to retweet/favorite/reply have very similar code.  It probably needs to be extracted into a base class and reused.
+2. The Twitter API was confusing at times.  It took me a while to get unretweet to work without needing to call the endpoint twice.
 
 ## Video Walkthrough
 
