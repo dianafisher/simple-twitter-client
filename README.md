@@ -31,7 +31,7 @@ The following **additional** features are implemented:
 - [x] Countdown text turns red when there are less than 20 characters remaining.
 - [x] Round profile image like in actual twitter client.
 - [x] Profile image appears in compose/retweet view.
-
+- [x] Media image displayed in timeline.
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):

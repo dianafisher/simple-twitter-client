@@ -29,6 +29,7 @@
 		DF0C69771F7D66A300AF1037 /* UrlEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C69761F7D66A300AF1037 /* UrlEntity.swift */; };
 		DF0C69791F7D69D300AF1037 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C69781F7D69D300AF1037 /* Entity.swift */; };
 		DF0C697B1F7DABDE00AF1037 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C697A1F7DABDE00AF1037 /* InfiniteScrollActivityView.swift */; };
+		DF0C697D1F80988C00AF1037 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C697C1F80988C00AF1037 /* Media.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		DF0C69761F7D66A300AF1037 /* UrlEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlEntity.swift; sourceTree = "<group>"; };
 		DF0C69781F7D69D300AF1037 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		DF0C697A1F7DABDE00AF1037 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
+		DF0C697C1F80988C00AF1037 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		E8D12E83E4FD9578B6D5F325 /* Pods_SimpleTwitterClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleTwitterClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -139,6 +141,7 @@
 			children = (
 				DF0C69781F7D69D300AF1037 /* Entity.swift */,
 				DF0C69741F7D665A00AF1037 /* Hashtag.swift */,
+				DF0C697C1F80988C00AF1037 /* Media.swift */,
 				DF0C69101F79B09F00AF1037 /* Tweet.swift */,
 				DF0C69761F7D66A300AF1037 /* UrlEntity.swift */,
 				DF0C690E1F79AD4E00AF1037 /* User.swift */,
@@ -312,6 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF0C697D1F80988C00AF1037 /* Media.swift in Sources */,
 				DF0C697B1F7DABDE00AF1037 /* InfiniteScrollActivityView.swift in Sources */,
 				DF0C69131F79B75000AF1037 /* TwitterClient.swift in Sources */,
 				DF0C696E1F7D554C00AF1037 /* UserMention.swift in Sources */,

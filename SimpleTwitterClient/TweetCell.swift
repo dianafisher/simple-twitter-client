@@ -31,13 +31,14 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var mediaImageView: UIImageView!
     
     weak var delegate: TweetCellDelegate?
     
     var tweet: Tweet! {
         didSet {
             
-            log.verbose("setting tweet data: \(tweet.debugDescription)")
+//            log.verbose("setting tweet data: \(tweet.debugDescription)")
             var displayedTweet: Tweet = tweet
             
             // Is this a retweet?
@@ -67,7 +68,7 @@ class TweetCell: UITableViewCell {
                 if let profileImageUrl = user?.profileUrl
                 {
                     let imageRequest = URLRequest(url: profileImageUrl)
-                    profileImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
+                    profileImageView.setImageWith(imageRequest, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), success: { (imageRequest, imageResponse, image) in
                         self.profileImageView.alpha = 0.0
                         self.profileImageView.image = image
                         UIView.animate(withDuration: 0.3, animations: {
@@ -80,10 +81,24 @@ class TweetCell: UITableViewCell {
                     // Use a placeholder image instead.
                     profileImageView.image = #imageLiteral(resourceName: "placeholder_profile")
                 }
-                
             }
             
-//            log.verbose("disp layedTweet: \(displayedTweet)")
+            if let mediaUrl = tweet.mediaUrl {
+                let imageRequest = URLRequest(url: mediaUrl)
+                mediaImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (request, response, image) in
+                    
+                    self.mediaImageView.alpha = 0.0
+                    self.mediaImageView.image = image
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.mediaImageView.alpha = 1.0
+//                        print("loaded image for \(String(describing: request.url))")
+                        self.mediaImageView.setNeedsDisplay()
+                    })
+                    
+                }, failure: { (request, response, error) in
+                    log.error(error)
+                })
+            }
             
             tweetContentLabel.text = displayedTweet.text
             
@@ -113,7 +128,8 @@ class TweetCell: UITableViewCell {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
         
-        
+        mediaImageView.clipsToBounds = true
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

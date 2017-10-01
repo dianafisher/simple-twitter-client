@@ -12,7 +12,6 @@ class Tweet: NSObject {
     
     var user: User?
     var retweet: Tweet?
-    var entities: [Entity]?
     
     var idString: String?
     var text: String?
@@ -32,7 +31,8 @@ class Tweet: NSObject {
     var hasRetweeted: Bool
     
     var quotedTweet: Tweet?
-    var retweetedTweet: Tweet?        
+    var retweetedTweet: Tweet?
+    var mediaUrl: URL?
     
     static let tweetsDidUpdateNotification = "TweetDidUpdate"
     
@@ -44,7 +44,7 @@ class Tweet: NSObject {
     
     init(dictionary: NSDictionary) {
         
-//        log.verbose(dictionary)
+        log.verbose(dictionary)
         
         let userDictionary = dictionary["user"] as? NSDictionary
         if let dict = userDictionary {
@@ -100,8 +100,12 @@ class Tweet: NSObject {
                 log.verbose("id: \(String(describing: m.idStr)), name: \(String(describing: m.name))")
             }
             
-        } else {
-            entities = nil
+            // Parse media entities
+            let mediaArray = dict["media"] as? [NSDictionary]
+            if let array = mediaArray {
+                let medias = Media.mediasWithArray(dictionaries: array)
+                mediaUrl = medias[0].url
+            }
         }
     }
     

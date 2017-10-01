@@ -109,7 +109,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func replyToTweet(tweetId: String, username: String, status: String, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+    func replyToTweet(tweetId: String, username: String, status: String, success: @escaping (Tweet) -> (), failure: @escaping (Error) -> ()) {
         
         // Prepend the username to the status with @username
         let formattedStatus = "@\(username) \(status)"
@@ -119,13 +119,11 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         post("1.1/statuses/update.json", parameters: params, progress: nil,
              success: { (task: URLSessionDataTask, response: Any?) in
-                
-                log.verbose(response ?? "No Response")
-                
+                                
                 let dictionary = response as! NSDictionary
                 let tweet = Tweet(dictionary: dictionary)
                 
-                success(true)
+                success(tweet)
                 
         }, failure: { (task: URLSessionDataTask?, error: Error) in
             log.error("Error: \(error.localizedDescription)")
@@ -174,7 +172,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         let params: NSDictionary = ["id": tweetId]
         
         post("1.1/favorites/destroy.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-                        
+            
             let dictionary = response as! NSDictionary
             let tweet = Tweet(dictionary: dictionary)
             

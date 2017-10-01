@@ -207,6 +207,7 @@ extension TweetsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tweetCellIdentifier, for: indexPath) as! TweetCell
+        cell.mediaImageView.image = nil
         cell.tweet = tweets[indexPath.row]
         cell.delegate = self
         return cell

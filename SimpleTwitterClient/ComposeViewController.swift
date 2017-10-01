@@ -103,7 +103,7 @@ class ComposeViewController: UIViewController {
                 let tweet = replyToTweet!
                 let screenname = tweet.user?.screenname ?? ""
                 
-                TwitterClient.sharedInstance?.replyToTweet(tweetId: tweet.idString!, username: screenname, status: statusText, success: { [weak self] (success: Bool) in
+                TwitterClient.sharedInstance?.replyToTweet(tweetId: tweet.idString!, username: screenname, status: statusText, success: { [weak self] (tweet: Tweet) in
                     // dismiss 
                     self?.dismiss(animated: true, completion: nil)
                 }, failure: { [weak self] (error: Error) in
