@@ -44,7 +44,7 @@ class Tweet: NSObject {
     
     init(dictionary: NSDictionary) {
         
-        log.verbose(dictionary)
+//        log.verbose(dictionary)
         
         let userDictionary = dictionary["user"] as? NSDictionary
         if let dict = userDictionary {

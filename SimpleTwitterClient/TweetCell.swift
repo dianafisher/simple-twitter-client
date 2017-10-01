@@ -100,7 +100,7 @@ class TweetCell: UITableViewCell {
                 })
             }
             
-            tweetContentLabel.text = displayedTweet.text
+            tweetContentLabel.text = tweet.text
             
             retweetCountLabel.text = "\(displayedTweet.retweetCount)"
             favoriteCountLabel.text = "\(displayedTweet.favoriteCount)"

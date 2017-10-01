@@ -52,7 +52,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         post(postUrlString, parameters: nil, progress: nil,
              success: { (task: URLSessionDataTask, response: Any?) in
                 
-//                log.verbose(response ?? "No Response")
+                log.verbose(response ?? "No Response")
                 let dictionary = response as! NSDictionary
                 let tweet = Tweet(dictionary: dictionary)
                                
@@ -73,6 +73,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         post(postUrlString, parameters: nil, progress: nil,
              success: { (task: URLSessionDataTask, response: Any?) in
                 
+                log.verbose(response ?? "No Response")
                 let dictionary = response as! NSDictionary
                 let tweet = Tweet(dictionary: dictionary)
                 
@@ -122,6 +123,10 @@ class TwitterClient: BDBOAuth1SessionManager {
                                 
                 let dictionary = response as! NSDictionary
                 let tweet = Tweet(dictionary: dictionary)
+                
+                // Send notification that there is a new Tweet
+                let notificationName = NSNotification.Name(rawValue: Tweet.tweetsDidUpdateNotification)
+                NotificationCenter.default.post(name: notificationName, object: nil, userInfo: ["tweet": tweet])
                 
                 success(tweet)
                 

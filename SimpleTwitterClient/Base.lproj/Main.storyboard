@@ -427,6 +427,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="103.66666666666667" height="43.666666666666671"/>
                                                             <state key="normal" image="reply"/>
                                                             <connections>
+                                                                <action selector="replyButtonPressed:" destination="QEb-NN-wBH" eventType="touchUpInside" id="x7O-G0-Phr"/>
                                                                 <segue destination="r0j-2L-flO" kind="presentation" identifier="ReplySegue" id="T13-cK-ryU"/>
                                                             </connections>
                                                         </button>
@@ -461,6 +462,12 @@
                                                 <constraint firstItem="NTd-c0-BhF" firstAttribute="top" secondItem="SdK-CO-7wg" secondAttribute="top" constant="8" id="gGO-hF-Xbz"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="favoriteButton" destination="Nv5-Oz-vqR" id="2mM-1D-Qrm"/>
+                                            <outlet property="messageButton" destination="1Nc-5E-nbs" id="PVn-FK-ve4"/>
+                                            <outlet property="replyButton" destination="OVZ-4p-iha" id="AMU-5B-2BX"/>
+                                            <outlet property="retweetButton" destination="5dB-bF-7IU" id="7Gm-7j-USi"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

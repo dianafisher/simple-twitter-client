@@ -281,9 +281,14 @@ extension TweetsViewController: TweetCellDelegate {
             
             // Determine if this is a retweet or an unretweet action.
             if tweet.hasRetweeted {
+                log.info("Calling unretweet on \(tweetId)")
                 
                 // Call the unretweet api
                 TwitterClient.sharedInstance?.unretweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    log.info("original tweet id: \(tweetId), updated tweet id: \(String(describing: updatedTweet.idString))")
+                    
+                    updatedTweet.hasRetweeted = false
                     
                     self?.tweets[row] = updatedTweet
                     
@@ -296,7 +301,10 @@ extension TweetsViewController: TweetCellDelegate {
                 })
                 
             } else {
+                log.info("Calling retweet on \(tweetId)")
                 TwitterClient.sharedInstance?.retweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    log.info("original tweet id: \(tweetId), updated tweet id: \(String(describing: updatedTweet.idString))")
                     
                     self?.tweets[row] = updatedTweet
                     
@@ -354,7 +362,7 @@ extension TweetsViewController: TweetCellDelegate {
 
 extension TweetsViewController: TweetOptionsCellDelegate {
     
-    func tweetOptionsCell(_ tweetOptionsCell: TweetOptionsCell, doReplyTo tweet: Tweet) {
+    func tweetOptionsCell(_ tweetOptionsCell: TweetOptionsCell, replyTo tweet: Tweet) {
         
         // show the compose controller
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -369,5 +377,6 @@ extension TweetsViewController: TweetOptionsCellDelegate {
         }
     }
 }
+
 
 
