@@ -268,15 +268,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="289" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ATn-0Y-Rq3">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="289" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ATn-0Y-Rq3">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TweetDetailCell" rowHeight="270" id="nOl-tq-aHm" customClass="TweetDetailCell" customModule="SimpleTwitterClient" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="270"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TweetDetailCell" rowHeight="472" id="nOl-tq-aHm" customClass="TweetDetailCell" customModule="SimpleTwitterClient" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="472"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nOl-tq-aHm" id="zmR-hb-NWi">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="270"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="472"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@rwenderlich" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sew-kq-f4b">
@@ -312,40 +312,47 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="9/27/17, 10:35 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjU-2F-gT7">
-                                                    <rect key="frame" x="8" y="240.66666666666669" width="398" height="21.000000000000057"/>
+                                                    <rect key="frame" x="8" y="442.66666666666669" width="398" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="#WWCode member &amp;amp; former @rmotr_com student, Cyn Armistead shares her career story. https://t.co/71kJl2ur20" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmg-d2-Yy5">
-                                                    <rect key="frame" x="8" y="85.999999999999986" width="398" height="146.66666666666663"/>
+                                                    <rect key="frame" x="8" y="86.000000000000014" width="398" height="105.33333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7s-cI-D3m">
+                                                    <rect key="frame" x="8" y="199.33333333333337" width="398" height="235.66666666666663"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="HjU-2F-gT7" secondAttribute="trailing" constant="8" id="Bmz-UA-YXe"/>
                                                 <constraint firstItem="D3N-3O-gNG" firstAttribute="top" secondItem="zmR-hb-NWi" secondAttribute="top" constant="8" id="NMH-oT-Izu"/>
                                                 <constraint firstItem="7jX-Vk-MfL" firstAttribute="top" secondItem="QIv-HF-I4U" secondAttribute="bottom" constant="4" id="Vhz-Tc-OnU"/>
+                                                <constraint firstItem="a7s-cI-D3m" firstAttribute="top" secondItem="Gmg-d2-Yy5" secondAttribute="bottom" constant="8" id="W7T-31-eOu"/>
                                                 <constraint firstItem="c2q-4C-B4t" firstAttribute="top" secondItem="7jX-Vk-MfL" secondAttribute="top" id="Wi8-mx-27m"/>
                                                 <constraint firstAttribute="bottom" secondItem="HjU-2F-gT7" secondAttribute="bottom" constant="8" id="Wol-Uc-sfm"/>
                                                 <constraint firstItem="Gmg-d2-Yy5" firstAttribute="top" secondItem="7jX-Vk-MfL" secondAttribute="bottom" constant="16" id="Zum-iG-Nne"/>
                                                 <constraint firstItem="D3N-3O-gNG" firstAttribute="centerY" secondItem="QIv-HF-I4U" secondAttribute="centerY" id="bMr-xB-Wii"/>
-                                                <constraint firstItem="HjU-2F-gT7" firstAttribute="top" secondItem="Gmg-d2-Yy5" secondAttribute="bottom" constant="8" id="bQW-jZ-NzR"/>
                                                 <constraint firstItem="Gmg-d2-Yy5" firstAttribute="leading" secondItem="zmR-hb-NWi" secondAttribute="leading" constant="8" id="ccA-fL-TlS"/>
                                                 <constraint firstItem="c2q-4C-B4t" firstAttribute="leading" secondItem="D3N-3O-gNG" secondAttribute="leading" id="e2C-rN-RvV"/>
                                                 <constraint firstItem="QIv-HF-I4U" firstAttribute="trailing" secondItem="7jX-Vk-MfL" secondAttribute="trailing" id="gvS-Hu-KJz"/>
                                                 <constraint firstItem="7jX-Vk-MfL" firstAttribute="leading" secondItem="zmR-hb-NWi" secondAttribute="leading" constant="8" id="hWn-Yh-O73"/>
                                                 <constraint firstItem="c2q-4C-B4t" firstAttribute="top" secondItem="D3N-3O-gNG" secondAttribute="bottom" constant="4" id="hwv-kC-JO0"/>
                                                 <constraint firstAttribute="trailing" secondItem="Gmg-d2-Yy5" secondAttribute="trailing" constant="8" id="kOy-Sa-0ef"/>
+                                                <constraint firstItem="a7s-cI-D3m" firstAttribute="leading" secondItem="zmR-hb-NWi" secondAttribute="leading" constant="8" id="kfa-3p-Osc"/>
                                                 <constraint firstItem="sew-kq-f4b" firstAttribute="leading" secondItem="D3N-3O-gNG" secondAttribute="leading" id="ne0-hv-UjB"/>
+                                                <constraint firstItem="HjU-2F-gT7" firstAttribute="top" secondItem="a7s-cI-D3m" secondAttribute="bottom" constant="8" id="qlI-6g-1KO"/>
                                                 <constraint firstItem="HjU-2F-gT7" firstAttribute="leading" secondItem="zmR-hb-NWi" secondAttribute="leading" constant="8" id="uRT-9v-KIB"/>
                                                 <constraint firstItem="sew-kq-f4b" firstAttribute="top" secondItem="c2q-4C-B4t" secondAttribute="bottom" constant="4" id="usW-s8-b3b"/>
+                                                <constraint firstAttribute="trailing" secondItem="a7s-cI-D3m" secondAttribute="trailing" constant="8" id="w4a-EU-fjm"/>
                                                 <constraint firstItem="c2q-4C-B4t" firstAttribute="leading" secondItem="7jX-Vk-MfL" secondAttribute="trailing" constant="4" id="wPF-zq-ihF"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="mediaImageView" destination="a7s-cI-D3m" id="8zU-6q-9Hz"/>
                                             <outlet property="nameLabel" destination="c2q-4C-B4t" id="bfq-Py-9JK"/>
                                             <outlet property="profileImageView" destination="7jX-Vk-MfL" id="sc6-MN-dnl"/>
                                             <outlet property="retweetedImageView" destination="QIv-HF-I4U" id="Iuz-kE-Re4"/>
@@ -356,7 +363,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetStatsCell" rowHeight="60" id="3pF-dn-s4a" customClass="TweetStatsCell" customModule="SimpleTwitterClient" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="298" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="500" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3pF-dn-s4a" id="970-yi-4GT">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -407,7 +414,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TweetOptionsCell" rowHeight="60" id="QEb-NN-wBH" customClass="TweetOptionsCell" customModule="SimpleTwitterClient" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="358" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="560" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QEb-NN-wBH" id="SdK-CO-7wg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -472,7 +479,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wQc-wB-Q0i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2723" y="137"/>
+            <point key="canvasLocation" x="2721.739130434783" y="136.95652173913044"/>
         </scene>
         <!--Compose View Controller-->
         <scene sceneID="X5I-nG-Dm2">
@@ -605,6 +612,6 @@
         <image name="twitter_logo" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5dd-It-CLW"/>
+        <segue reference="T13-cK-ryU"/>
     </inferredMetricsTieBreakers>
 </document>

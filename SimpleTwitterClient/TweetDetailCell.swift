@@ -18,6 +18,7 @@ class TweetDetailCell: UITableViewCell {
     @IBOutlet weak var timeStampLabel: UILabel!
     @IBOutlet weak var retweetedLabel: UILabel!
     @IBOutlet weak var retweetedImageView: UIImageView!
+    @IBOutlet weak var mediaImageView: UIImageView!
     
     var tweet: Tweet! {
         didSet {
@@ -69,7 +70,21 @@ class TweetDetailCell: UITableViewCell {
             
             tweetTextLabel.text = tweet.text
             
-            
+            if let mediaUrl = tweet.mediaUrl {
+                let imageRequest = URLRequest(url: mediaUrl)
+                mediaImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (request, response, image) in
+                    
+                    self.mediaImageView.alpha = 0.0
+                    self.mediaImageView.image = image
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.mediaImageView.alpha = 1.0                        
+                        self.mediaImageView.setNeedsDisplay()
+                    })
+                    
+                }, failure: { (request, response, error) in
+                    log.error(error)
+                })
+            }
             
         }
     }
@@ -82,6 +97,9 @@ class TweetDetailCell: UITableViewCell {
         profileImageView.clipsToBounds = true
         
         nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
+        tweetTextLabel.preferredMaxLayoutWidth = tweetTextLabel.frame.size.width
+        
+        mediaImageView.clipsToBounds = true
         
     }
 
