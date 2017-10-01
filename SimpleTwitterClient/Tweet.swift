@@ -28,24 +28,23 @@ class Tweet: NSObject {
     var inReplyToUserIdString: String?
     var inReplyToScreenName: String?
     var quotedStatusId: String?
+    var hasFavorited: Bool
+    var hasRetweeted: Bool
     
     var quotedTweet: Tweet?
-    var retweetedTweet: Tweet?
-    
-    var favorited: Bool = false
-    var retweeted: Bool = false
+    var retweetedTweet: Tweet?        
     
     static let tweetsDidUpdateNotification = "TweetDidUpdate"
     
     override var description: String {
         
-        let str = "--> id: \(idString ?? "X"), user: \(user?.name ?? "none")), text: \(text ?? "no text"), retweetCount: \(retweetCount), favoriteCount: \(favoriteCount))<--"
+        let str = "--> id: \(idString ?? "X"), user: \(user?.name ?? "none")), text: \(text ?? "no text"), retweetCount: \(retweetCount), favoriteCount: \(favoriteCount), hasRetweeted: \(hasRetweeted), hasFavorited: \(hasFavorited))<--"
         return str
     }
     
     init(dictionary: NSDictionary) {
         
-        log.verbose(dictionary)
+//        log.verbose(dictionary)
         
         let userDictionary = dictionary["user"] as? NSDictionary
         if let dict = userDictionary {
@@ -56,9 +55,11 @@ class Tweet: NSObject {
         
         text = dictionary["text"] as? String
         
+        hasFavorited = (dictionary["favorited"] as? Bool) ?? false
+        hasRetweeted = (dictionary["retweeted"] as? Bool) ?? false
+        
         idString = dictionary["id_str"] as? String
         
-//        replyCount = (dictionary[""] as? Int) ?? 0
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoriteCount = (dictionary["favorite_count"] as? Int) ?? 0
         formattedDateString = ""
@@ -86,7 +87,7 @@ class Tweet: NSObject {
         } else {
             profileImageUrl = nil
         }
-        
+    
         let entitiesDictionary = dictionary["entities"] as? NSDictionary
         if let dict = entitiesDictionary {
             
@@ -102,7 +103,6 @@ class Tweet: NSObject {
         } else {
             entities = nil
         }
-        
     }
     
     class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet] {

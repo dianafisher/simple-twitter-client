@@ -10,6 +10,9 @@ import UIKit
 
 private let tweetDetailCellIdentifier = "TweetDetailCell"
 private let tweetStatsCellIdentifier = "TweetStatsCell"
+private let tweetOptionsCellIdentifier = "TweetOptionsCell"
+
+private let replySegueIdentifier = "ReplySegue"
 
 class DetailViewController: UIViewController {
 
@@ -25,6 +28,7 @@ class DetailViewController: UIViewController {
         
         // Set estimatedRowHeight to improve performance of loading the tableView
         tableView.estimatedRowHeight = 270
+        
         // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -43,7 +47,7 @@ class DetailViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if segue.identifier == "ReplySegue" {
+        if segue.identifier == replySegueIdentifier {
                         
             let navVC = segue.destination as? UINavigationController
             let vc = navVC?.topViewController as? ComposeViewController
@@ -76,16 +80,11 @@ extension DetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: tweetStatsCellIdentifier, for: indexPath) as! TweetStatsCell
             cell.tweet = tweet
             return cell
-        } else if section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetOptionsCell", for: indexPath) as! TweetOptionsCell
-            cell.tweet = tweet
-            return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: tweetStatsCellIdentifier, for: indexPath) as! TweetStatsCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: tweetOptionsCellIdentifier, for: indexPath) as! TweetOptionsCell
             cell.tweet = tweet
             return cell
         }
-        
     }
     
 }

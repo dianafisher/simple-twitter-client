@@ -52,7 +52,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         post(postUrlString, parameters: nil, progress: nil,
              success: { (task: URLSessionDataTask, response: Any?) in
                 
-                log.verbose(response ?? "No Response")
+//                log.verbose(response ?? "No Response")
                 let dictionary = response as! NSDictionary
                 let tweet = Tweet(dictionary: dictionary)
                                
@@ -73,7 +73,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         post(postUrlString, parameters: nil, progress: nil,
              success: { (task: URLSessionDataTask, response: Any?) in
                 
-                log.verbose(response ?? "No Response")
                 let dictionary = response as! NSDictionary
                 let tweet = Tweet(dictionary: dictionary)
                 
@@ -158,7 +157,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         let params: NSDictionary = ["id": tweetId]
         
         post("1.1/favorites/create.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-            log.verbose(response ?? "No Response")
             
             let dictionary = response as! NSDictionary
             let tweet = Tweet(dictionary: dictionary)
@@ -176,8 +174,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         let params: NSDictionary = ["id": tweetId]
         
         post("1.1/favorites/destroy.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-            log.verbose(response ?? "No Response")
-            
+                        
             let dictionary = response as! NSDictionary
             let tweet = Tweet(dictionary: dictionary)
             

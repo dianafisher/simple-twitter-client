@@ -10,7 +10,9 @@ import UIKit
 
 @objc protocol TweetCellDelegate {
     
-    @objc optional func tweetCell(_ tweetCell: TweetCell, doReplyTo tweet: Tweet)
+    @objc optional func tweetCell(_ tweetCell: TweetCell, replyTo tweet: Tweet)
+    @objc optional func tweetCell(_ tweetCell: TweetCell, retweet tweet: Tweet)
+    @objc optional func tweetCell(_ tweetCell: TweetCell, favorite tweet: Tweet)
 }
 
 class TweetCell: UITableViewCell {
@@ -35,6 +37,7 @@ class TweetCell: UITableViewCell {
     var tweet: Tweet! {
         didSet {
             
+            log.verbose("setting tweet data: \(tweet.debugDescription)")
             var displayedTweet: Tweet = tweet
             
             // Is this a retweet?
@@ -74,21 +77,34 @@ class TweetCell: UITableViewCell {
                         log.error(error)
                     })
                 } else {
-                    // TODO: Use placeholder image
+                    // Use a placeholder image instead.
+                    profileImageView.image = #imageLiteral(resourceName: "placeholder_profile")
                 }
                 
             }
             
-            log.verbose("displayedTweet: \(displayedTweet)")
+//            log.verbose("disp layedTweet: \(displayedTweet)")
             
             tweetContentLabel.text = displayedTweet.text
             
             retweetCountLabel.text = "\(displayedTweet.retweetCount)"
             favoriteCountLabel.text = "\(displayedTweet.favoriteCount)"
             
+            // Set the favorited image
+            if (tweet.hasFavorited) {
+                favoriteButton.setImage(#imageLiteral(resourceName: "heart_red"), for: UIControlState.normal)
+            } else {
+                favoriteButton.setImage(#imageLiteral(resourceName: "heart"), for: UIControlState.normal)
+            }
+            
+            // Set the retweeted image
+            if (tweet.hasRetweeted) {
+                retweetButton.setImage(#imageLiteral(resourceName: "retweet_aqua"), for: UIControlState.normal)
+            } else {
+                retweetButton.setImage(#imageLiteral(resourceName: "retweet"), for: UIControlState.normal)
+            }
         }
     }
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -108,39 +124,18 @@ class TweetCell: UITableViewCell {
     
     @IBAction func replyButtonPressed(_ sender: Any) {
         
-        delegate?.tweetCell!(self, doReplyTo: tweet)
+        delegate?.tweetCell!(self, replyTo: tweet)
     }
     
     
     @IBAction func retweetButtonPressed(_ sender: Any) {
         
-        if let tweetId = tweet.idString {
-            TwitterClient.sharedInstance?.retweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
-                
-                // update the retweets count for this tweet
-                self?.retweetCountLabel.text = "\(updatedTweet.retweetCount)"
-                
-            }, failure: { (error: Error) in
-                log.error("Error: \(error.localizedDescription)")
-            })
-        }
+        delegate?.tweetCell!(self, retweet: tweet)
     }
     
     @IBAction func favoriteButtonPressed(_ sender: Any) {
         
-        if let tweet = tweet {
-            if let tweetId = tweet.idString {
-                TwitterClient.sharedInstance?.likeTweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
-                    
-                    // update the favorites count for this tweet
-                    self?.favoriteCountLabel.text = "\(updatedTweet.favoriteCount)"
-                    
-                }, failure: { (error: Error) in
-                    log.verbose("Error: \(error.localizedDescription)")
-                })
-            }
-        }
+        delegate?.tweetCell!(self, favorite: tweet)
     }
-
-
+    
 }

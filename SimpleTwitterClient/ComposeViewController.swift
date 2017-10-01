@@ -65,7 +65,8 @@ class ComposeViewController: UIViewController {
                     print(error)
                 })
             } else {
-                // TODO: Use placeholder image
+                // User a placeholder image instead
+                profileImageView?.image = #imageLiteral(resourceName: "placeholder_profile")
             }    
         }
         

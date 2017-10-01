@@ -79,7 +79,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="151"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Es-gu-nh6">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Es-gu-nh6">
                                                     <rect key="frame" x="8" y="27" width="48" height="48"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="48" id="TIN-3z-w0v"/>
@@ -158,7 +158,7 @@
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oMp-mu-uJ6">
                                                     <rect key="frame" x="164" y="122" width="16" height="22"/>
-                                                    <state key="normal" image="favorite"/>
+                                                    <state key="normal" image="heart"/>
                                                     <connections>
                                                         <action selector="favoriteButtonPressed:" destination="QOf-Vg-jFZ" eventType="touchUpInside" id="5PQ-LY-QqE"/>
                                                     </connections>
@@ -277,7 +277,7 @@
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7jX-Vk-MfL">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7jX-Vk-MfL">
                                                     <rect key="frame" x="8" y="22" width="48" height="48"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="48" id="dbB-3y-3tb"/>
@@ -589,6 +589,7 @@
         <image name="close" width="19" height="19"/>
         <image name="compose_tweet" width="19" height="19"/>
         <image name="favorite" width="16" height="15"/>
+        <image name="heart" width="16" height="15"/>
         <image name="message" width="17" height="15"/>
         <image name="reply" width="16" height="16"/>
         <image name="retweet" width="19" height="15"/>
@@ -596,6 +597,6 @@
         <image name="twitter_logo" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5dd-It-CLW"/>
+        <segue reference="T13-cK-ryU"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -213,7 +213,7 @@ extension TweetsViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate - Need this otherwise UIScrollViewDelegate methods don't fire
 extension TweetsViewController: UITableViewDelegate {
     
 }
@@ -256,7 +256,7 @@ extension TweetsViewController: UIScrollViewDelegate {
 
 extension TweetsViewController: TweetCellDelegate {
     
-    func tweetCell(_ tweetCell: TweetCell, doReplyTo tweet: Tweet) {
+    func tweetCell(_ tweetCell: TweetCell, replyTo tweet: Tweet) {
         
         // show the compose controller
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -269,6 +269,85 @@ extension TweetsViewController: TweetCellDelegate {
                 
             })
         }
+    }
+    
+    func tweetCell(_ tweetCell: TweetCell, retweet tweet: Tweet) {
+        
+        let indexPath = tableView.indexPath(for: tweetCell)!
+        let row = indexPath.row
+        
+        if let tweetId = tweet.idString {
+            
+            // Determine if this is a retweet or an unretweet action.
+            if tweet.hasRetweeted {
+                
+                // Call the unretweet api
+                TwitterClient.sharedInstance?.unretweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    self?.tweets[row] = updatedTweet
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    }                                        
+                    
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
+                })
+                
+            } else {
+                TwitterClient.sharedInstance?.retweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    self?.tweets[row] = updatedTweet
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    }
+                    
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
+                })
+            }
+        }
+    }
+    
+    func tweetCell(_ tweetCell: TweetCell, favorite tweet: Tweet) {
+
+        let indexPath = tableView.indexPath(for: tweetCell)!
+        let row = indexPath.row
+        
+        if let tweetId = tweet.idString {
+            
+            // Determine if this is a favorite or an unfavorite action.
+            if tweet.hasFavorited {
+                
+                // Call the unretweet api
+                TwitterClient.sharedInstance?.unlikeTweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    self?.tweets[row] = updatedTweet
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    }
+                    
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
+                })
+                
+            } else {
+                TwitterClient.sharedInstance?.likeTweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    self?.tweets[row] = updatedTweet
+                    
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    }
+                    
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
+                })
+            }
+        }
+
     }
 }
 
