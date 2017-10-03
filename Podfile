@@ -6,8 +6,9 @@ target 'SimpleTwitterClient' do
   use_frameworks!
 
   # Pods for SimpleTwitterClient
-  pod ‘AFNetworking’
+  pod 'AFNetworking'
   pod 'BDBOAuth1Manager’
   pod 'SwiftyBeaver'
   pod 'MBProgressHUD'
+  pod 'FLEX', '~> 2.0', :configurations => ['Debug']
 end
