@@ -189,7 +189,19 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
 
-    
+    func accountSettings(success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        get("1.1/account/settings.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask,
+                                                                                     response: Any?) in
+            print("account: \(String(describing: response))")
+            success(true)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error \(error.localizedDescription)")
+                
+                failure(error)
+        })
+    }
     
     func currentAccount(success: @escaping (User) ->(), failure: @escaping (Error) -> ()) {
         get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in

@@ -20,5 +20,11 @@ class MenuItemCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func configureForMenuItem(_ menuItem: NSDictionary) {
+        
+        textLabel?.text = menuItem["text"] as? String
+        backgroundColor = menuItem["color"] as? UIColor
+    }
 
 }

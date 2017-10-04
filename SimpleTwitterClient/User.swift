@@ -75,10 +75,15 @@ class User: NSObject {
                 let userData = defaults.object(forKey: "currentUserData") as? NSData
                 
                 if let userData = userData {
-                    let dictionary = try!
-                        JSONSerialization.jsonObject(with: userData as Data, options: []) as! NSDictionary
+                    let dictionary: NSDictionary?
+                    do {
+                        dictionary = try (JSONSerialization.jsonObject(with: userData as Data, options: []) as? NSDictionary)
+                        _currentUser = User(dictionary: dictionary!)
+                    } catch {
+                        log.error("Error parsing currentUserData")
+                        _currentUser = nil
+                    }
                     
-                    _currentUser = User(dictionary: dictionary)
                 }
                 
                 

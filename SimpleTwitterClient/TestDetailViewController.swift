@@ -9,11 +9,12 @@
 import UIKit
 
 class TestDetailViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Remove the drop shadow from the navigation bar
+        navigationController!.navigationBar.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {

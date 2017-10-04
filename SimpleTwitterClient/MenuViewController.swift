@@ -10,10 +10,19 @@ import UIKit
 
 class MenuViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    let menuItems: [NSDictionary] = [["text": "Profile", "color": UIColor.red],
+                                     ["text": "Timeline", "color": UIColor.blue],
+                                     ["text": "Mentions", "color": UIColor.green],
+                                     ["text": "Accounts", "color": UIColor.orange]]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        tableView.dataSource = self
+        tableView.delegate = self
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,14 +31,33 @@ class MenuViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension MenuViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
-    */
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return menuItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuItemCell") as! MenuItemCell
+        let menuItem = menuItems[indexPath.row]
+        
+        cell.configureForMenuItem(menuItem)
+        return cell
+    }
+}
 
+extension MenuViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+    }
 }
