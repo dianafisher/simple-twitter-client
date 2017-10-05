@@ -13,31 +13,35 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var tweetsNavigationController: UIViewController!
+    fileprivate var profileNavigationController: UIViewController!
+    fileprivate var mentionsNavigationController: UIViewController!
+    fileprivate var accountsNavigationController: UIViewController!
     
-    let menuItems: [NSDictionary] = [["text": "Profile", "color": UIColor.red],
-                                     ["text": "Timeline", "color": UIColor.blue],
-                                     ["text": "Mentions", "color": UIColor.green],
-                                     ["text": "Accounts", "color": UIColor.orange]]
+    let menuItems: [NSDictionary] = [["text": "Profile", "viewControllerIdentifier": "ProfileNavigationController"],
+                                     ["text": "Timeline", "viewControllerIdentifier": "TweetsNavigationController"],
+                                     ["text": "Mentions", "viewControllerIdentifier": "MentionsNavigationController"],
+                                     ["text": "Accounts", "viewControllerIdentifier": "AccountsNavigationController"]]
  
     var viewControllers: [UIViewController] = []
     var containerViewController: ContainerViewController?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
-        // Set estimatedRowHeight to improve performance of loading the tableView
-        tableView.estimatedRowHeight = 150
+        setupTableView()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        tweetsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
         
+        profileNavigationController = storyboard.instantiateViewController(withIdentifier: "ProfileNavigationController")
+        tweetsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+        mentionsNavigationController = storyboard.instantiateViewController(withIdentifier: "MentionsNavigationController")
+        accountsNavigationController = storyboard.instantiateViewController(withIdentifier: "AccountsNavigationController")
+        
+        viewControllers.append(profileNavigationController)
         viewControllers.append(tweetsNavigationController)
+        viewControllers.append(mentionsNavigationController)
+        viewControllers.append(accountsNavigationController)
         
         containerViewController?.contentViewController = tweetsNavigationController
         
@@ -49,6 +53,17 @@ class MenuViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    fileprivate func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        // Set estimatedRowHeight to improve performance of loading the tableView
+        tableView.estimatedRowHeight = 150
     }
     
 }

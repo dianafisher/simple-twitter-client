@@ -487,6 +487,62 @@
             </objects>
             <point key="canvasLocation" x="2721.739130434783" y="136.95652173913044"/>
         </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="61s-cj-YN3">
+            <objects>
+                <viewController storyboardIdentifier="ProfileViewController" id="xxR-pK-h7Y" customClass="ProfileViewController" customModule="SimpleTwitterClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gst-Pv-Yc8"/>
+                        <viewControllerLayoutGuide type="bottom" id="uNJ-Eu-upl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1bc-s0-D19">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Profile View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9o-8z-rIv">
+                                <rect key="frame" x="122" y="358" width="170" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="aSD-h1-1u0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ccd-ch-Eni" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4257" y="-576"/>
+        </scene>
+        <!--Accounts View Controller-->
+        <scene sceneID="K8O-4i-eP9">
+            <objects>
+                <viewController storyboardIdentifier="AccountsViewController" id="kNB-tg-h2B" customClass="AccountsViewController" customModule="SimpleTwitterClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xL0-eI-KXb"/>
+                        <viewControllerLayoutGuide type="bottom" id="m6p-rL-Jf5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="z3F-yX-a9p">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Accounts View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2B-zI-xOt">
+                                <rect key="frame" x="111" y="358" width="193" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zOG-q6-mV3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2QX-Gw-goS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4257" y="95"/>
+        </scene>
         <!--Compose View Controller-->
         <scene sceneID="X5I-nG-Dm2">
             <objects>
@@ -765,6 +821,88 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZkI-Vg-xDW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1779.7101449275365" y="-591.03260869565224"/>
+        </scene>
+        <!--Mentions View Controller-->
+        <scene sceneID="I9i-us-Ngd">
+            <objects>
+                <viewController storyboardIdentifier="MentionsViewController" id="K6a-3i-i2K" customClass="MentionsViewController" customModule="SimpleTwitterClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lw0-kB-FHT"/>
+                        <viewControllerLayoutGuide type="bottom" id="A72-oa-VJo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BWq-sq-4pj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mentions View Controller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jc6-nP-Mf5">
+                                <rect key="frame" x="122" y="358" width="192" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="N5h-rP-pce"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WUj-5z-L3O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5983" y="-576"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GXN-NW-K1Y">
+            <objects>
+                <navigationController storyboardIdentifier="ProfileNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="K7f-aW-HUi" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uh0-af-29w">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="xxR-pK-h7Y" kind="relationship" relationship="rootViewController" id="w6C-hb-Ilb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2AY-mc-0pe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3547.826086956522" y="-576.35869565217399"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="9a4-gZ-eJ9">
+            <objects>
+                <navigationController storyboardIdentifier="MentionsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="e2v-CY-Q6O" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="62Y-hP-R5d">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="K6a-3i-i2K" kind="relationship" relationship="rootViewController" id="LgS-k7-a0A"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w8Z-r5-bWx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5217.3913043478269" y="-576.35869565217399"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Cob-RC-XVc">
+            <objects>
+                <navigationController storyboardIdentifier="AccountsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="2gi-7y-QmP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="78J-5g-9Qu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kNB-tg-h2B" kind="relationship" relationship="rootViewController" id="def-QZ-1XX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TzY-jd-H5t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3548" y="95"/>
         </scene>
     </scenes>
     <resources>

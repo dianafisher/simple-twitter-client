@@ -45,7 +45,7 @@ class TweetsViewController: UIViewController {
         registerForNotifications()
     }
     
-    func setupTableView() {
+    fileprivate func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -56,7 +56,7 @@ class TweetsViewController: UIViewController {
         tableView.estimatedRowHeight = 150
     }
     
-    func setupRefreshControl() {
+    fileprivate func setupRefreshControl() {
         // Initialize a UIRefreshControl
         refreshControl = UIRefreshControl()
         
@@ -72,7 +72,7 @@ class TweetsViewController: UIViewController {
         
     }
     
-    func setupLoadingMoreView() {
+    fileprivate func setupLoadingMoreView() {
         // Set up the InfiniteScrollActivityView loading indicator
         let loadingViewFrame = CGRect(x: 0,
                                       y: tableView.contentSize.height,
@@ -90,7 +90,7 @@ class TweetsViewController: UIViewController {
 
     }
     
-    func registerForNotifications() {
+    fileprivate func registerForNotifications() {
         // Register to receive new tweet notifications
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Tweet.tweetsDidUpdateNotification),
                                                object: nil, queue: OperationQueue.main) { [weak self] (notification: Notification) in
