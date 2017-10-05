@@ -23,8 +23,7 @@ class MenuItemCell: UITableViewCell {
     
     func configureForMenuItem(_ menuItem: NSDictionary) {
         
-        textLabel?.text = menuItem["text"] as? String
-        backgroundColor = menuItem["color"] as? UIColor
+        textLabel?.text = menuItem["text"] as? String        
     }
 
 }

@@ -12,19 +12,28 @@ class MenuViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    fileprivate var tweetsNavigationController: UIViewController!
+    
     let menuItems: [NSDictionary] = [["text": "Profile", "color": UIColor.red],
                                      ["text": "Timeline", "color": UIColor.blue],
                                      ["text": "Mentions", "color": UIColor.green],
                                      ["text": "Accounts", "color": UIColor.orange]]
  
     var viewControllers: [UIViewController] = []
-    
+    var containerViewController: ContainerViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.dataSource = self
         tableView.delegate = self
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        tweetsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+        
+        viewControllers.append(tweetsNavigationController)
+        
+        containerViewController?.contentViewController = tweetsNavigationController
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,10 +65,9 @@ extension MenuViewController: UITableViewDataSource {
 extension MenuViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
         
-        
+        containerViewController?.contentViewController = viewControllers[indexPath.row]
     }
 }
 

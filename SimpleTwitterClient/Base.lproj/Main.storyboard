@@ -228,10 +228,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="z8l-QG-gIb" secondAttribute="trailing" id="0cn-L8-F95"/>
                             <constraint firstItem="z8l-QG-gIb" firstAttribute="top" secondItem="M6Q-EN-rEo" secondAttribute="top" id="8Os-YJ-czw"/>
                             <constraint firstItem="z8l-QG-gIb" firstAttribute="leading" secondItem="M6Q-EN-rEo" secondAttribute="leading" id="W2K-dz-1Y2"/>
                             <constraint firstItem="NI3-6k-pOh" firstAttribute="top" secondItem="z8l-QG-gIb" secondAttribute="bottom" id="k9e-2j-z8j"/>
-                            <constraint firstAttribute="trailing" secondItem="z8l-QG-gIb" secondAttribute="trailing" id="qSK-TR-ual"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="gNC-h0-I0S">
@@ -582,6 +582,7 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t2O-BQ-AsD" userLabel="Menu Container View">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" red="0.1148131862282753" green="0.63301128149032593" blue="0.94878464937210083" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <segue destination="u0m-wh-iOB" kind="embed" id="HlT-Gq-fLm"/>
                                 </connections>
@@ -604,13 +605,16 @@
                             <constraint firstItem="s66-Ow-gSS" firstAttribute="top" secondItem="ziu-6u-GUW" secondAttribute="top" id="Jzu-O1-tUt"/>
                             <constraint firstItem="s66-Ow-gSS" firstAttribute="leading" secondItem="ziu-6u-GUW" secondAttribute="leading" identifier="LeftMarginConstraint" id="QLN-45-Owf"/>
                             <constraint firstAttribute="trailing" secondItem="t2O-BQ-AsD" secondAttribute="trailing" id="UND-qi-XvN"/>
+                            <constraint firstItem="s66-Ow-gSS" firstAttribute="height" secondItem="ziu-6u-GUW" secondAttribute="height" id="VVX-JA-Tx5"/>
                             <constraint firstItem="t2O-BQ-AsD" firstAttribute="top" secondItem="ziu-6u-GUW" secondAttribute="top" id="gUU-qa-Pmh"/>
+                            <constraint firstItem="s66-Ow-gSS" firstAttribute="width" secondItem="ziu-6u-GUW" secondAttribute="width" id="vHt-pd-cHG"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="contentView" destination="s66-Ow-gSS" id="kuN-uX-ZmJ"/>
                         <outlet property="leftMarginConstraint" destination="QLN-45-Owf" id="B96-Ue-zbL"/>
                         <outlet property="menuView" destination="t2O-BQ-AsD" id="Q8c-2i-Zqs"/>
+                        <outlet property="panGestureRecognizer" destination="yeN-8h-z11" id="Jc5-sg-MdL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gvf-Gf-dRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -661,7 +665,7 @@
         <!--Menu View Controller-->
         <scene sceneID="9yM-YL-zFy">
             <objects>
-                <viewController id="u0m-wh-iOB" customClass="MenuViewController" customModule="SimpleTwitterClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewController" id="u0m-wh-iOB" userLabel="Menu View Controller" customClass="MenuViewController" customModule="SimpleTwitterClient" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FB7-9q-hhk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

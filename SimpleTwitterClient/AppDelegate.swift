@@ -31,9 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             log.verbose("There is a current user")
             
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
-            let vc = storyboard.instantiateViewController(withIdentifier: "ContainerViewController")
-            window?.rootViewController = vc
+            let containerViewController = storyboard.instantiateViewController(withIdentifier: "ContainerViewController") as? ContainerViewController
+            window?.rootViewController = containerViewController
+            
+            let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as? MenuViewController
+            menuViewController?.containerViewController = containerViewController
+            
+            containerViewController?.menuViewController = menuViewController
             
         } else {
             log.verbose("Nobody home")
