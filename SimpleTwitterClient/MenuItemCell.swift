@@ -10,6 +10,8 @@ import UIKit
 
 class MenuItemCell: UITableViewCell {
 
+    @IBOutlet weak var titleLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,7 +25,7 @@ class MenuItemCell: UITableViewCell {
     
     func configureForMenuItem(_ menuItem: NSDictionary) {
         
-        textLabel?.text = menuItem["text"] as? String        
+        titleLabel?.text = menuItem["text"] as? String
     }
 
 }

@@ -28,12 +28,22 @@ class MenuViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
+        // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
+        // Set estimatedRowHeight to improve performance of loading the tableView
+        tableView.estimatedRowHeight = 150
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         tweetsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
         
         viewControllers.append(tweetsNavigationController)
         
         containerViewController?.contentViewController = tweetsNavigationController
+        
+        // Set navigationBar tint colors
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.1148131862, green: 0.6330112815, blue: 0.9487846494, alpha: 1)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
     override func didReceiveMemoryWarning() {
