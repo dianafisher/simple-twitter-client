@@ -14,6 +14,7 @@
 		DF0BFB591F8604F900506F04 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0BFB581F8604F900506F04 /* ProfileViewController.swift */; };
 		DF0BFB5B1F86056700506F04 /* MentionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0BFB5A1F86056700506F04 /* MentionsViewController.swift */; };
 		DF0BFB5D1F8607E500506F04 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0BFB5C1F8607E500506F04 /* AccountsViewController.swift */; };
+		DF0BFB5F1F860A0F00506F04 /* HamburgerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0BFB5E1F860A0F00506F04 /* HamburgerView.swift */; };
 		DF0C68F81F79803100AF1037 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C68F71F79803100AF1037 /* AppDelegate.swift */; };
 		DF0C68FD1F79803100AF1037 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF0C68FB1F79803100AF1037 /* Main.storyboard */; };
 		DF0C68FF1F79803100AF1037 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF0C68FE1F79803100AF1037 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		DF0BFB581F8604F900506F04 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DF0BFB5A1F86056700506F04 /* MentionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MentionsViewController.swift; sourceTree = "<group>"; };
 		DF0BFB5C1F8607E500506F04 /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
+		DF0BFB5E1F860A0F00506F04 /* HamburgerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerView.swift; sourceTree = "<group>"; };
 		DF0C68F41F79803100AF1037 /* SimpleTwitterClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleTwitterClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF0C68F71F79803100AF1037 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF0C68FC1F79803100AF1037 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 		DF0C69161F79F26900AF1037 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DF0BFB5E1F860A0F00506F04 /* HamburgerView.swift */,
 				DF0BFB381F85676C00506F04 /* MenuItemCell.swift */,
 				DF0C69171F79F27F00AF1037 /* TweetCell.swift */,
 				DF0C69391F7C0D7500AF1037 /* TweetDetailCell.swift */,
@@ -353,6 +356,7 @@
 				DF0BFB591F8604F900506F04 /* ProfileViewController.swift in Sources */,
 				DF0C69751F7D665A00AF1037 /* Hashtag.swift in Sources */,
 				DF0BFB391F85676C00506F04 /* MenuItemCell.swift in Sources */,
+				DF0BFB5F1F860A0F00506F04 /* HamburgerView.swift in Sources */,
 				DF0C68F81F79803100AF1037 /* AppDelegate.swift in Sources */,
 				DF0C690F1F79AD4E00AF1037 /* User.swift in Sources */,
 				DF0C69791F7D69D300AF1037 /* Entity.swift in Sources */,

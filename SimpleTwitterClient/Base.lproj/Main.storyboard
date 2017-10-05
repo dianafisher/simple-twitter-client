@@ -487,7 +487,7 @@
             </objects>
             <point key="canvasLocation" x="2721.739130434783" y="136.95652173913044"/>
         </scene>
-        <!--Profile View Controller-->
+        <!--Profile-->
         <scene sceneID="61s-cj-YN3">
             <objects>
                 <viewController storyboardIdentifier="ProfileViewController" id="xxR-pK-h7Y" customClass="ProfileViewController" customModule="SimpleTwitterClient" customModuleProvider="target" sceneMemberID="viewController">
@@ -509,13 +509,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="aSD-h1-1u0"/>
+                    <navigationItem key="navigationItem" title="Profile" id="aSD-h1-1u0"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ccd-ch-Eni" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4257" y="-576"/>
         </scene>
-        <!--Accounts View Controller-->
+        <!--Accounts-->
         <scene sceneID="K8O-4i-eP9">
             <objects>
                 <viewController storyboardIdentifier="AccountsViewController" id="kNB-tg-h2B" customClass="AccountsViewController" customModule="SimpleTwitterClient" customModuleProvider="target" sceneMemberID="viewController">
@@ -537,7 +537,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zOG-q6-mV3"/>
+                    <navigationItem key="navigationItem" title="Accounts" id="zOG-q6-mV3"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QX-Gw-goS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -796,7 +796,6 @@
                     <view key="view" contentMode="scaleToFill" id="XDP-E6-JqO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.227941742" green="0.42399666879999998" blue="0.20699373099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jof-67-G2I" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -822,7 +821,7 @@
             </objects>
             <point key="canvasLocation" x="1779.7101449275365" y="-591.03260869565224"/>
         </scene>
-        <!--Mentions View Controller-->
+        <!--Mentions-->
         <scene sceneID="I9i-us-Ngd">
             <objects>
                 <viewController storyboardIdentifier="MentionsViewController" id="K6a-3i-i2K" customClass="MentionsViewController" customModule="SimpleTwitterClient" customModuleProvider="target" sceneMemberID="viewController">
@@ -844,7 +843,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="N5h-rP-pce"/>
+                    <navigationItem key="navigationItem" title="Mentions" id="N5h-rP-pce"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WUj-5z-L3O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

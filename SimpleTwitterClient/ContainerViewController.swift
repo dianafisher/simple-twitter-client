@@ -16,7 +16,7 @@ class ContainerViewController: UIViewController {
     @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
     
     var originalLeftMargin: CGFloat!
-    
+
     var menuViewController: UIViewController! {
         didSet(oldMenuViewController) {
             view.layoutIfNeeded()
@@ -56,6 +56,10 @@ class ContainerViewController: UIViewController {
         }
     }
     
+    func hideOrShowMenu() {
+        print("hide or show menu")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -72,31 +76,31 @@ class ContainerViewController: UIViewController {
 
         let translation = sender.translation(in: view)
         let velocity = sender.velocity(in: view)
-
-        switch(sender.state) {
-        case UIGestureRecognizerState.began:
+        
+        if sender.state == .began {
             originalLeftMargin = leftMarginConstraint.constant
-            break
-        case UIGestureRecognizerState.changed:
-//            log.verbose("Panning..")
+            
+        } else if sender.state == .changed {
             leftMarginConstraint.constant = originalLeftMargin + translation.x
-            break
-        case UIGestureRecognizerState.ended:
-//            log.verbose("Ended panning")
             
-            UIView.animate(withDuration: 0.3, animations: {
-                if velocity.x > 0 {
-                    self.leftMarginConstraint.constant = self.view.frame.size.width - 50
-                } else {
-                    self.leftMarginConstraint.constant = 0
-                }
-                self.view.layoutIfNeeded()
-            })
-            
-            break
-        default:
-            break
+        } else if sender.state == .ended {
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0,
+                usingSpringWithDamping: 0.5,
+                initialSpringVelocity: 2,
+                options: UIViewAnimationOptions.curveEaseIn,
+                animations: {
+                    if velocity.x > 0 {
+                        self.leftMarginConstraint.constant = self.view.frame.size.width - 50
+                    } else {
+                        self.leftMarginConstraint.constant = 0
+                    }
+                    self.view.layoutIfNeeded()
+                },
+                completion: nil)
         }
+        
     }
 }
 

@@ -28,13 +28,16 @@ class TweetsViewController: UIViewController {
     var isMoreDataLoading = false
     
     var lastLoadedTweetId: String?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set navigationBar tint colors
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.1148131862, green: 0.6330112815, blue: 0.9487846494, alpha: 1)
         navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        // Remove the drop shadow from the navigation bar
+//        navigationController!.navigationBar.clipsToBounds = true
         
         setupTableView()
         setupRefreshControl()
@@ -43,7 +46,7 @@ class TweetsViewController: UIViewController {
         requestTweets()
         
         registerForNotifications()
-    }
+    }    
     
     fileprivate func setupTableView() {
         tableView.dataSource = self
