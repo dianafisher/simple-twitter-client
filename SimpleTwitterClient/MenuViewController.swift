@@ -79,5 +79,9 @@ extension MenuViewController: UITableViewDelegate {
         
         containerViewController?.contentViewController = viewControllers[indexPath.row]
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView.bounds.size.height / CGFloat(menuItems.count)
+    }
 }
 
