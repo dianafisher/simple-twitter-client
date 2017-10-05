@@ -34,10 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let containerViewController = storyboard.instantiateViewController(withIdentifier: "ContainerViewController") as? ContainerViewController
             window?.rootViewController = containerViewController
             
-            let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as? MenuViewController
+            let menuNavController = storyboard.instantiateViewController(withIdentifier: "MenuNavigationController") as? UINavigationController
+            let menuViewController = menuNavController?.topViewController as? MenuViewController
             menuViewController?.containerViewController = containerViewController
             
-            containerViewController?.menuViewController = menuViewController
+            containerViewController?.menuViewController = menuNavController
             
         } else {
             log.verbose("Nobody home")
