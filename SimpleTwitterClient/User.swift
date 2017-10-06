@@ -10,9 +10,11 @@ import UIKit
 
 class User: NSObject {
     
+    var idStr: String?
     var name: String?
     var screenname: String?
     var profileUrl: URL?
+    var profileBackgroundUrl: URL?
     var tagline: String?
     var location: String?
     var url: URL?
@@ -22,7 +24,6 @@ class User: NSObject {
     var listedCount: Int = 0
     var favoritesCount: Int = 0
     var statusesCount: Int = 0
-    
     
     
     var dictionary: NSDictionary?
@@ -42,12 +43,20 @@ class User: NSObject {
         
         self.dictionary = dictionary
         
+        log.verbose(dictionary)
+        
         // deserialization 
+        idStr = dictionary["id_str"] as? String
         name = dictionary["name"] as? String
         screenname = dictionary["screen_name"] as? String
         let profileUrlString = dictionary["profile_image_url_https"] as? String
         if let profileUrlString = profileUrlString {
             profileUrl = URL(string: profileUrlString)
+        }
+        
+        let profileBackgroundUrlString = dictionary["profile_banner_url"] as? String
+        if let profileBackgroundUrlString = profileBackgroundUrlString {
+            profileBackgroundUrl = URL(string: profileBackgroundUrlString)
         }
         
         tagline = dictionary["description"] as? String

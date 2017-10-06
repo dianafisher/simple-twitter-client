@@ -189,6 +189,22 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
 
+    func profileBanner(user: User, success: @escaping (Bool) -> (), failure: @escaping (Error) -> ()) {
+        
+        let params: NSDictionary = ["user_id": user.idStr!, "screen_name": user.screenname!]
+        
+        get("1.1/users/profile_banner.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            
+            log.verbose(response ?? "No Response")
+            success(true)
+            
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            log.error("Error: \(error.localizedDescription)")            
+            failure(error)
+        })
+    
+    }
+    
     
     
     func currentAccount(success: @escaping (User) ->(), failure: @escaping (Error) -> ()) {

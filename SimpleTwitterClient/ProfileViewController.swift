@@ -8,9 +8,24 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+private let tweetCellIdentifier = "TweetCell"
 
+
+class ProfileViewController: UIViewController {
+    
+    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView!    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var screenNameLabel: UILabel!
+    @IBOutlet weak var taglineLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var followingCountLabel: UILabel!
+    @IBOutlet weak var followersCountLabel: UILabel!
+    @IBOutlet weak var tweetsTableView: UITableView!
+    
     var hamburgerView: HamburgerView?
+    var tweets: [Tweet]!
+        
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +43,54 @@ class ProfileViewController: UIViewController {
         hamburgerView!.addGestureRecognizer(tapGestureRecognizer)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerView!)
         
+        
+        if User.currentUser != nil {
+            
+            let user = User.currentUser!
+            
+            nameLabel.text = user.name
+            screenNameLabel.text = "@\(user.screenname ?? "")"
+            taglineLabel.text = user.tagline
+            followersCountLabel.text = "\(user.followersCount)"
+            followingCountLabel.text = "\(user.friendsCount)"
+            locationLabel.text = user.location
+            
+            
+            if let profileImageUrl = user.profileUrl
+            {
+                let imageRequest = URLRequest(url: profileImageUrl)
+                profileImageView.setImageWith(imageRequest, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), success: { (imageRequest, imageResponse, image) in
+                    self.profileImageView.alpha = 0.0
+                    self.profileImageView.image = image
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.profileImageView.alpha = 1.0
+                    })
+                }, failure: { (imageRequest, imageResponse, error) in
+                    log.error(error)
+                    self.profileImageView.image = #imageLiteral(resourceName: "placeholder_profile")
+                })
+            } else {
+                // Use a placeholder image instead.
+                profileImageView.image = #imageLiteral(resourceName: "placeholder_profile")
+            }
+            
+            if let headerImageUrl = user.profileBackgroundUrl {
+                let imageRequest = URLRequest(url: headerImageUrl)
+                headerImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
+                    self.headerImageView.alpha = 0.0
+                    self.headerImageView.image = image
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.headerImageView.alpha = 1.0
+                    })
+                }, failure: { (imageRequest, imageResponse, error) in
+                    log.error(error)
+                })
+            }
+        }
+        
+        // Set the corner radius to 50% of width to get round profile image
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        profileImageView.clipsToBounds = true
     
     }
     
@@ -59,4 +122,23 @@ class ProfileViewController: UIViewController {
     }
     */
 
+}
+
+extension ProfileViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let tweets = self.tweets else {
+            return 0
+        }
+        return tweets.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: tweetCellIdentifier, for: indexPath) as! TweetCell
+        cell.mediaImageView.image = nil
+        cell.tweet = tweets[indexPath.row]
+        
+        return cell
+    }
+    
 }

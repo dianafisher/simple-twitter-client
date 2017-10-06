@@ -32,7 +32,9 @@ class LoginViewController: UIViewController {
         
         client?.login(success: {
             log.info("I've logged in! 🎉")
+                        
             self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            
             
         }, failure: { (error: Error) in
             log.error("Error: \(error.localizedDescription)")
