@@ -43,7 +43,7 @@ class User: NSObject {
         
         self.dictionary = dictionary
         
-        log.verbose(dictionary)
+//        log.verbose(dictionary)
         
         // deserialization 
         idStr = dictionary["id_str"] as? String

@@ -1,44 +1,45 @@
 //
-//  TweetCell.swift
+//  TweetTableViewCell.swift
 //  SimpleTwitterClient
 //
-//  Created by Diana Fisher on 9/25/17.
+//  Created by Diana Fisher on 10/6/17.
 //  Copyright © 2017 Diana Fisher. All rights reserved.
 //
 
 import UIKit
 
-@objc protocol TweetCellDelegate {
+@objc protocol TweetTableViewCellDelegate {
     
-    @objc optional func tweetCell(_ tweetCell: TweetCell, replyTo tweet: Tweet)
-    @objc optional func tweetCell(_ tweetCell: TweetCell, retweet tweet: Tweet)
-    @objc optional func tweetCell(_ tweetCell: TweetCell, favorite tweet: Tweet)
+    @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, replyTo tweet: Tweet)
+    @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, retweet tweet: Tweet)
+    @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, favorite tweet: Tweet)
 }
 
-class TweetCell: UITableViewCell {
+class TweetTableViewCell: UITableViewCell {
 
     @IBOutlet weak var profileImageView: UIImageView!
-    
+    @IBOutlet weak var mediaImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var tweetContentLabel: UILabel!
-    @IBOutlet weak var replyCountLabel: UILabel!
-    @IBOutlet weak var retweetCountLabel: UILabel!
-    @IBOutlet weak var favoriteCountLabel: UILabel!
     @IBOutlet weak var retweetedLabel: UILabel!
     @IBOutlet weak var retweetedImageView: UIImageView!
+    
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var mediaImageView: UIImageView!
+    @IBOutlet weak var retweetedCountLabel: UILabel!
+    @IBOutlet weak var favoriteCountLabel: UILabel!
     
-    weak var delegate: TweetCellDelegate?
+    
+    
+    weak var delegate: TweetTableViewCellDelegate?
     
     var tweet: Tweet! {
         didSet {
             
-//            log.verbose("setting tweet data: \(tweet.debugDescription)")
+            log.verbose("tweet data: \(tweet.debugDescription)")
             var displayedTweet: Tweet = tweet
             
             // Is this a retweet?
@@ -65,33 +66,18 @@ class TweetCell: UITableViewCell {
                 
                 timestampLabel.text = displayedTweet.timeAgoSinceNowString
                 
-                if let profileImageUrl = user?.profileUrl
-                {
+                if let profileImageUrl = user?.profileUrl {
                     Utils.fadeInImageAt(url: profileImageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: profileImageView)
                 }
             }
             
             if let mediaUrl = tweet.mediaUrl {
                 Utils.fadeInImageAt(url: mediaUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: mediaImageView)
-//                let imageRequest = URLRequest(url: mediaUrl)
-//                mediaImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (request, response, image) in
-//
-//                    self.mediaImageView.alpha = 0.0
-//                    self.mediaImageView.image = image
-//                    UIView.animate(withDuration: 0.3, animations: {
-//                        self.mediaImageView.alpha = 1.0
-////                        print("loaded image for \(String(describing: request.url))")
-//                        self.mediaImageView.setNeedsDisplay()
-//                    })
-//
-//                }, failure: { (request, response, error) in
-//                    log.error(error)
-//                })
             }
             
-            tweetContentLabel.text = tweet.text
+            statusLabel.text = tweet.text
             
-            retweetCountLabel.text = "\(displayedTweet.retweetCount)"
+            retweetedCountLabel.text = "\(displayedTweet.retweetCount)"
             favoriteCountLabel.text = "\(displayedTweet.favoriteCount)"
             
             // Set the favorited image
@@ -110,6 +96,8 @@ class TweetCell: UITableViewCell {
         }
     }
     
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -118,29 +106,34 @@ class TweetCell: UITableViewCell {
         profileImageView.clipsToBounds = true
         
         mediaImageView.clipsToBounds = true
-
+        
+        // Add a tap gesture recognizer to the profile image view.
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped(_:)))
+        profileImageView.addGestureRecognizer(tapGestureRecognizer)
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
+    }
+    
+    func profileImageTapped(_ sender: UITapGestureRecognizer) {
+        print("Profile image tapped!")
     }
     
     @IBAction func replyButtonPressed(_ sender: Any) {
         
-        delegate?.tweetCell!(self, replyTo: tweet)
+        delegate?.tweetTableViewCell!(self, replyTo: tweet)
     }
-    
     
     @IBAction func retweetButtonPressed(_ sender: Any) {
         
-        delegate?.tweetCell!(self, retweet: tweet)
+        delegate?.tweetTableViewCell!(self, retweet: tweet)
     }
     
     @IBAction func favoriteButtonPressed(_ sender: Any) {
         
-        delegate?.tweetCell!(self, favorite: tweet)
+        delegate?.tweetTableViewCell!(self, favorite: tweet)
     }
-    
 }

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-private let tweetCellIdentifier = "TweetCell"
+private let tweetTableViewCellIdentifier = "TweetTableViewCell"
 
 
 class ProfileViewController: UIViewController {
@@ -26,29 +27,8 @@ class ProfileViewController: UIViewController {
     
     var hamburgerView: HamburgerView?
     var tweets: [Tweet]!
-        
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Set navigationBar tint colors
-        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.1148131862, green: 0.6330112815, blue: 0.9487846494, alpha: 1)
-        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        
-        // Remove the drop shadow from the navigation bar
-//        navigationController!.navigationBar.clipsToBounds = true
-
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ProfileViewController.hamburgerViewTapped))
-        hamburgerView = HamburgerView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        hamburgerView!.addGestureRecognizer(tapGestureRecognizer)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerView!)
-        
-        
-        if User.currentUser != nil {
-            
-            let user = User.currentUser!
-            
+    var user: User! {
+        didSet {
             nameLabel.text = user.name
             screenNameLabel.text = "@\(user.screenname ?? "")"
             taglineLabel.text = user.tagline
@@ -57,43 +37,89 @@ class ProfileViewController: UIViewController {
             tweetCountLabel.text = "\(user.statusesCount)"
             locationLabel.text = user.location
             
-            
             if let profileImageUrl = user.profileUrl
             {
-                let imageRequest = URLRequest(url: profileImageUrl)
-                profileImageView.setImageWith(imageRequest, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), success: { (imageRequest, imageResponse, image) in
-                    self.profileImageView.alpha = 0.0
-                    self.profileImageView.image = image
-                    UIView.animate(withDuration: 0.3, animations: {
-                        self.profileImageView.alpha = 1.0
-                    })
-                }, failure: { (imageRequest, imageResponse, error) in
-                    log.error(error)
-                    self.profileImageView.image = #imageLiteral(resourceName: "placeholder_profile")
-                })
-            } else {
-                // Use a placeholder image instead.
-                profileImageView.image = #imageLiteral(resourceName: "placeholder_profile")
+                Utils.fadeInImageAt(url: profileImageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: profileImageView)
             }
             
             if let headerImageUrl = user.profileBackgroundUrl {
-                let imageRequest = URLRequest(url: headerImageUrl)
-                headerImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
-                    self.headerImageView.alpha = 0.0
-                    self.headerImageView.image = image
-                    UIView.animate(withDuration: 0.3, animations: {
-                        self.headerImageView.alpha = 1.0
-                    })
-                }, failure: { (imageRequest, imageResponse, error) in
-                    log.error(error)
-                })
+                Utils.fadeInImageAt(url: headerImageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: headerImageView)
             }
+            
+            
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if user == nil {
+            user = User.currentUser
+        }
+
+        // Set navigationBar tint colors
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.1148131862, green: 0.6330112815, blue: 0.9487846494, alpha: 1)
+        navigationController?.navigationBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)]
+        navigationItem.title = user.name
+        
+        
+        // Remove the drop shadow from the navigation bar
+//        navigationController!.navigationBar.clipsToBounds = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ProfileViewController.hamburgerViewTapped))
+        hamburgerView = HamburgerView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        hamburgerView!.addGestureRecognizer(tapGestureRecognizer)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerView!)
         
         // Set the corner radius to 50% of width to get round profile image
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
+        
+        setupTableView()
+        
+        requestUserTweets()
+    }
     
+    func requestUserTweets() {
+        // Display HUD right before the request is made
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        TwitterClient.sharedInstance?.userTimeline(user: user, sinceId: nil, maxId: nil, success: { [weak self] (tweets: [Tweet]) in
+            log.info("I got the tweets!")
+            log.info(tweets.count)
+            
+            
+            
+            self?.tweets = tweets
+            
+//            self?.lastLoadedTweetId = tweets.last?.idString
+            
+            self?.tweetsTableView.reloadData()
+            
+            DispatchQueue.main.async {
+//                self?.refreshControl.endRefreshing()
+//                self?.loadingMoreView?.stopAnimating()
+                MBProgressHUD.hide(for: self!.view, animated: true)
+            }
+            
+            }, failure: { (error:Error) in
+                log.error(error.localizedDescription)
+        })
+    }
+    
+    fileprivate func setupTableView() {
+        tweetsTableView.dataSource = self
+        tweetsTableView.delegate = self
+        
+        let tweetTableViewCellNib = UINib(nibName: "TweetTableViewCell", bundle: nil)
+        tweetsTableView.register(tweetTableViewCellNib, forCellReuseIdentifier: tweetTableViewCellIdentifier)
+        
+        // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
+        tweetsTableView.rowHeight = UITableViewAutomaticDimension
+        
+        // Set estimatedRowHeight to improve performance of loading the tableView
+        tweetsTableView.estimatedRowHeight = 330
     }
     
     func hamburgerViewTapped() {
@@ -132,15 +158,20 @@ extension ProfileViewController: UITableViewDataSource {
         guard let tweets = self.tweets else {
             return 0
         }
+        
         return tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: tweetCellIdentifier, for: indexPath) as! TweetCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: tweetTableViewCellIdentifier, for: indexPath) as! TweetTableViewCell
         cell.mediaImageView.image = nil
         cell.tweet = tweets[indexPath.row]
         
         return cell
     }
+    
+}
+
+extension ProfileViewController: UITableViewDelegate {
     
 }

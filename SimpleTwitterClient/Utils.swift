@@ -37,6 +37,20 @@ class Utils {
         let formatted = reformatter.string(from: date)
         return formatted
     }
+        
+    static func fadeInImageAt(url: URL, placeholderImage: UIImage, imageView:UIImageView) {
+        let imageRequest = URLRequest(url: url)
+        imageView.setImageWith(imageRequest, placeholderImage: placeholderImage, success: { (imageRequest, imageResponse, image) in
+            imageView.alpha = 0.0
+            imageView.image = image
+            UIView.animate(withDuration: 0.3, animations: {
+                imageView.alpha = 1.0
+            })
+        }) { (imageRequest, imageResponse, error) in
+            log.error(error)
+            imageView.image = placeholderImage
+        }
+    }
 }
 
 extension Date {
