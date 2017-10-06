@@ -22,6 +22,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var tweetsTableView: UITableView!
+    @IBOutlet weak var tweetCountLabel: UILabel!
     
     var hamburgerView: HamburgerView?
     var tweets: [Tweet]!
@@ -53,6 +54,7 @@ class ProfileViewController: UIViewController {
             taglineLabel.text = user.tagline
             followersCountLabel.text = "\(user.followersCount)"
             followingCountLabel.text = "\(user.friendsCount)"
+            tweetCountLabel.text = "\(user.statusesCount)"
             locationLabel.text = user.location
             
             

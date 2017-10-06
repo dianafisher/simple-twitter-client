@@ -554,13 +554,19 @@
                                     <constraint firstAttribute="width" constant="10" id="dI8-tV-elJ"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="107" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="528-Me-KhH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="107" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="528-Me-KhH">
                                 <rect key="frame" x="20" y="321" width="22" height="15.666666666666686"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Following" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smU-Aw-Wxv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="33" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yv2-oL-L6B">
+                                <rect key="frame" x="133.66666666666666" y="321" width="14.666666666666686" height="15.666666666666686"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Following" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smU-Aw-Wxv">
                                 <rect key="frame" x="48.000000000000007" y="321.33333333333331" width="55.666666666666679" height="15.333333333333371"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -587,16 +593,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="33" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yv2-oL-L6B">
-                                <rect key="frame" x="133.66666666666666" y="321" width="14.666666666666686" height="15.666666666666686"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGU-IL-hZ5">
+                                <rect key="frame" x="240.33333333333334" y="320" width="15" height="16"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                                 <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZO-zb-uFB">
+                                <rect key="frame" x="263.33333333333331" y="320.33333333333331" width="41" height="16"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="eGU-IL-hZ5" firstAttribute="leading" secondItem="ZgQ-ym-Xop" secondAttribute="trailing" constant="30" id="2bS-xf-j3e"/>
                             <constraint firstItem="ExT-b8-jwK" firstAttribute="leading" secondItem="1bc-s0-D19" secondAttribute="leading" id="5TK-6B-sjr"/>
+                            <constraint firstItem="HZO-zb-uFB" firstAttribute="baseline" secondItem="ZgQ-ym-Xop" secondAttribute="baseline" id="5iL-lo-Jok"/>
                             <constraint firstItem="gk4-zb-Bfn" firstAttribute="centerY" secondItem="5DQ-Vu-9jX" secondAttribute="centerY" id="5p5-XB-QtC"/>
                             <constraint firstItem="f85-b8-uUo" firstAttribute="top" secondItem="h1v-ZW-TFj" secondAttribute="bottom" constant="8" id="5vG-5G-4dH"/>
                             <constraint firstItem="gk4-zb-Bfn" firstAttribute="top" secondItem="0wZ-Kb-aAM" secondAttribute="bottom" constant="6" id="5vl-9N-24t"/>
@@ -612,6 +626,7 @@
                             <constraint firstItem="smU-Aw-Wxv" firstAttribute="baseline" secondItem="528-Me-KhH" secondAttribute="baseline" id="VX6-Sw-c4Z"/>
                             <constraint firstAttribute="trailing" secondItem="f85-b8-uUo" secondAttribute="trailing" constant="8" id="WOd-wI-jfz"/>
                             <constraint firstItem="gk4-zb-Bfn" firstAttribute="leading" secondItem="1bc-s0-D19" secondAttribute="leading" constant="20" id="WbC-J9-fkM"/>
+                            <constraint firstItem="eGU-IL-hZ5" firstAttribute="baseline" secondItem="yv2-oL-L6B" secondAttribute="baseline" id="XsU-4x-YcO"/>
                             <constraint firstItem="HMo-ru-E7j" firstAttribute="leading" secondItem="f85-b8-uUo" secondAttribute="leading" id="cFX-l2-bjf"/>
                             <constraint firstItem="h1v-ZW-TFj" firstAttribute="leading" secondItem="1bc-s0-D19" secondAttribute="leading" constant="20" id="chR-1f-j8w"/>
                             <constraint firstItem="ExT-b8-jwK" firstAttribute="top" secondItem="gst-Pv-Yc8" secondAttribute="bottom" id="dRv-KV-qY5"/>
@@ -620,12 +635,12 @@
                             <constraint firstItem="528-Me-KhH" firstAttribute="leading" secondItem="0wZ-Kb-aAM" secondAttribute="leading" id="eqC-uC-vWE"/>
                             <constraint firstItem="smU-Aw-Wxv" firstAttribute="leading" secondItem="528-Me-KhH" secondAttribute="trailing" constant="6" id="fTK-Q4-hci"/>
                             <constraint firstItem="0wZ-Kb-aAM" firstAttribute="top" secondItem="HMo-ru-E7j" secondAttribute="bottom" constant="4" id="hhL-6r-Iqn"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZgQ-ym-Xop" secondAttribute="trailing" constant="8" id="icu-SX-sIz"/>
                             <constraint firstItem="0wZ-Kb-aAM" firstAttribute="leading" secondItem="HMo-ru-E7j" secondAttribute="leading" id="kvd-d1-B5x"/>
                             <constraint firstItem="f85-b8-uUo" firstAttribute="leading" secondItem="1bc-s0-D19" secondAttribute="leading" constant="20" id="mYN-Ix-jFH"/>
                             <constraint firstItem="528-Me-KhH" firstAttribute="top" secondItem="gk4-zb-Bfn" secondAttribute="bottom" constant="8" id="nVu-ay-Am7"/>
                             <constraint firstItem="5DQ-Vu-9jX" firstAttribute="top" secondItem="0wZ-Kb-aAM" secondAttribute="bottom" constant="4" id="pYc-8G-dGw"/>
                             <constraint firstItem="ZgQ-ym-Xop" firstAttribute="leading" secondItem="yv2-oL-L6B" secondAttribute="trailing" constant="6" id="yKl-dd-hjZ"/>
+                            <constraint firstItem="HZO-zb-uFB" firstAttribute="leading" secondItem="eGU-IL-hZ5" secondAttribute="trailing" constant="8" id="zCC-9D-4R2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="aSD-h1-1u0"/>
@@ -638,6 +653,7 @@
                         <outlet property="profileImageView" destination="h1v-ZW-TFj" id="fTl-yX-kiy"/>
                         <outlet property="screenNameLabel" destination="HMo-ru-E7j" id="JAx-QI-xeN"/>
                         <outlet property="taglineLabel" destination="0wZ-Kb-aAM" id="gak-eN-Cwh"/>
+                        <outlet property="tweetCountLabel" destination="eGU-IL-hZ5" id="koa-Kk-OaI"/>
                         <outlet property="tweetsTableView" destination="EjR-Gu-sVa" id="Pll-0B-oEn"/>
                     </connections>
                 </viewController>
