@@ -9,8 +9,12 @@
 import UIKit
 import BDBOAuth1Manager
 
-class TwitterClient: BDBOAuth1SessionManager {
+enum TwitterAPIEndpoint {
+    case HomeTimeline
+    case MentionsTimeline
+}
 
+class TwitterClient: BDBOAuth1SessionManager {
 
     // Singleton instance
     static let sharedInstance = TwitterClient(baseURL: baseUrl, consumerKey: consumerKey, consumerSecret: consumerSecret)    
@@ -18,10 +22,23 @@ class TwitterClient: BDBOAuth1SessionManager {
     var loginSuccess: (() -> ())?
     var loginFailure: ((Error) -> ())?
     
+    func timeline(endpoint: TwitterAPIEndpoint, sinceId: String?, maxId: String?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        switch endpoint {
+        case .HomeTimeline:
+            homeTimeline(sinceId: sinceId, maxId: maxId, success: success, failure: failure)
+            break
+        case .MentionsTimeline:
+            mentionsTimeline(sinceId: sinceId, maxId: maxId, success: success, failure: failure)
+            break
+        }
+    }
     
-    func homeTimeline(sinceId: String?, maxId: String?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+    fileprivate func homeTimeline(sinceId: String?, maxId: String?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         
-        var params: [String: Any?] = ["exclude_replies": false]
+        var params: [String: Any?] = [
+            "exclude_replies": false,
+            "trim_user": false
+        ]
         
         if maxId != nil {
             params["max_id"] = maxId
@@ -39,6 +56,34 @@ class TwitterClient: BDBOAuth1SessionManager {
                                 
                 success(tweets)
             
+        }, failure: { (task:URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
+    }
+    
+    fileprivate func mentionsTimeline(sinceId: String?, maxId: String?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        
+        var params: [String: Any?] = [
+            "exclude_replies": false,
+            "trim_user": false
+        ]
+        
+        if maxId != nil {
+            params["max_id"] = maxId
+        }
+        
+        if sinceId != nil {
+            params["since_id"] = sinceId
+        }
+        
+        get("1.1/statuses/mentions_timeline.json", parameters: params, progress: nil,
+            success: { (task: URLSessionDataTask, response:Any?) in
+                
+                let dictionaries = response as! [NSDictionary]
+                let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
+                
+                success(tweets)
+                
         }, failure: { (task:URLSessionDataTask?, error: Error) in
             failure(error)
         })

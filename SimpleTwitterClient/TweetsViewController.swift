@@ -21,6 +21,8 @@ class TweetsViewController: UIViewController {
     var isMoreDataLoading = false
     
     var lastLoadedTweetId: String?
+    
+    var apiEndpoint = TwitterAPIEndpoint.HomeTimeline
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,7 +133,7 @@ class TweetsViewController: UIViewController {
         // Display HUD right before the request is made
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
-        TwitterClient.sharedInstance?.homeTimeline(sinceId: nil, maxId: nil, success: { [weak self] (tweets: [Tweet]) in
+        TwitterClient.sharedInstance?.timeline(endpoint: apiEndpoint, sinceId: nil, maxId: nil, success: { [weak self] (tweets: [Tweet]) in
             log.info("I got the tweets!")
             log.info(tweets.count)
             
@@ -156,7 +158,7 @@ class TweetsViewController: UIViewController {
         // Display HUD right before the request is made
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
-        TwitterClient.sharedInstance?.homeTimeline(sinceId: nil, maxId: lastLoadedTweetId, success: { [weak self] (tweets: [Tweet]) in
+        TwitterClient.sharedInstance?.timeline(endpoint: apiEndpoint,sinceId: nil, maxId: lastLoadedTweetId, success: { [weak self] (tweets: [Tweet]) in
             log.info("I got more tweets!")
             log.info(tweets.count)
             

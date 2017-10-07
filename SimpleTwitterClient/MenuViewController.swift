@@ -19,7 +19,7 @@ class MenuViewController: UIViewController {
     
     let menuItems: [NSDictionary] = [["text": "Profile", "viewControllerIdentifier": "ProfileNavigationController"],
                                      ["text": "Timeline", "viewControllerIdentifier": "TweetsNavigationController"],
-                                     ["text": "Mentions", "viewControllerIdentifier": "MentionsNavigationController"],
+                                     ["text": "Mentions", "viewControllerIdentifier": "TweetsNavigationController"],
                                      ["text": "Accounts", "viewControllerIdentifier": "AccountsNavigationController"]]
  
     var viewControllers: [UIViewController] = []
@@ -36,17 +36,24 @@ class MenuViewController: UIViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        profileNavigationController = storyboard.instantiateViewController(withIdentifier: "ProfileNavigationController")
-        tweetsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
-        mentionsNavigationController = storyboard.instantiateViewController(withIdentifier: "MentionsNavigationController")
-        accountsNavigationController = storyboard.instantiateViewController(withIdentifier: "AccountsNavigationController")
+        for item in menuItems {
+            let identifier = item["viewControllerIdentifier"] as! String
+            
+            let navViewController = storyboard.instantiateViewController(withIdentifier: identifier) as! UINavigationController
+            viewControllers.append(navViewController)
+        }
         
-        viewControllers.append(profileNavigationController)
-        viewControllers.append(tweetsNavigationController)
-        viewControllers.append(mentionsNavigationController)
-        viewControllers.append(accountsNavigationController)
+//        profileNavigationController = storyboard.instantiateViewController(withIdentifier: "ProfileNavigationController")
+//        tweetsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+//        mentionsNavigationController = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
+//        accountsNavigationController = storyboard.instantiateViewController(withIdentifier: "AccountsNavigationController")
+//
+//        viewControllers.append(profileNavigationController)
+//        viewControllers.append(tweetsNavigationController)
+//        viewControllers.append(mentionsNavigationController)
+//        viewControllers.append(accountsNavigationController)
         
-        containerViewController?.contentViewController = tweetsNavigationController
+        containerViewController?.contentViewController = viewControllers[1]
         
         // Set navigationBar tint colors
         navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.1148131862, green: 0.6330112815, blue: 0.9487846494, alpha: 1)
@@ -95,7 +102,22 @@ extension MenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        containerViewController?.contentViewController = viewControllers[indexPath.row]
+        let selectedItem = menuItems[indexPath.row]
+        let text = selectedItem["text"] as! String
+        
+        let navViewController = viewControllers[indexPath.row] as! UINavigationController
+        
+        if text == "Profile" {
+            
+            let pvc = navViewController.topViewController as! ProfileViewController
+            pvc.user = User.currentUser
+            
+        } else if text == "Mentions" {
+            let mvc = navViewController.topViewController as! TweetsViewController
+            mvc.apiEndpoint = TwitterAPIEndpoint.MentionsTimeline
+        }
+        
+        containerViewController?.contentViewController = navViewController
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
