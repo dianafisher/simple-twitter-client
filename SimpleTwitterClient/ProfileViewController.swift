@@ -167,7 +167,7 @@ extension ProfileViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellReuseIdentifier.TweetTableCell, for: indexPath) as! TweetTableViewCell
         cell.mediaImageView.image = nil
         cell.tweet = tweets[indexPath.row]
-        
+        cell.delegate = self
         return cell
     }
     
