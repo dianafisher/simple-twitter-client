@@ -51,6 +51,13 @@ class Utils {
             imageView.image = placeholderImage
         }
     }
+    
+    static func instantiateNavController(identifier: String) -> UINavigationController? {
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let navVC = storyboard.instantiateViewController(withIdentifier: identifier) as? UINavigationController
+        return navVC
+    }
 }
 
 extension Date {

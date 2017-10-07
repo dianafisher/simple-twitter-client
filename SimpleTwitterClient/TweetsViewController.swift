@@ -9,13 +9,6 @@
 import UIKit
 import MBProgressHUD
 
-private let detailsSegueIdentifier = "DetailsSegue"
-private let composeSegueIdentifier = "ComposeSegue"
-
-private let tweetCellIdentifier = "TweetCell"
-
-private let composeNavigationControllerIdentifier = "ComposeNavController"
-
 class TweetsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -52,11 +45,15 @@ class TweetsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
+        let tweetTableViewCellNib = UINib(nibName: Constants.NibName.TweetTableViewCell, bundle: nil)
+        tableView.register(tweetTableViewCellNib, forCellReuseIdentifier: Constants.CellReuseIdentifier.TweetTableCell)
+        
         // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
         tableView.rowHeight = UITableViewAutomaticDimension
         
         // Set estimatedRowHeight to improve performance of loading the tableView
-        tableView.estimatedRowHeight = 150
+        tableView.estimatedRowHeight = 330
+
     }
     
     fileprivate func setupRefreshControl() {
@@ -190,7 +187,7 @@ class TweetsViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        if segue.identifier == detailsSegueIdentifier {
+        if segue.identifier == Constants.SegueIdentifier.DetailsSegue {
             let cell = sender as! UITableViewCell
             let indexPath = tableView.indexPath(for: cell)
             let tweet = tweets?[indexPath!.row]
@@ -213,7 +210,7 @@ extension TweetsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: tweetCellIdentifier, for: indexPath) as! TweetCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellReuseIdentifier.TweetTableCell, for: indexPath) as! TweetTableViewCell
         cell.mediaImageView.image = nil
         cell.tweet = tweets[indexPath.row]
         cell.delegate = self
@@ -262,13 +259,12 @@ extension TweetsViewController: UIScrollViewDelegate {
     }
 }
 
-extension TweetsViewController: TweetCellDelegate {
+extension TweetsViewController: TweetTableViewCellDelegate {
     
-    func tweetCell(_ tweetCell: TweetCell, replyTo tweet: Tweet) {
+    func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, replyTo tweet: Tweet) {
         
         // show the compose controller
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let navVC = storyboard.instantiateViewController(withIdentifier: composeNavigationControllerIdentifier) as? UINavigationController
+        let navVC = Utils.instantiateNavController(identifier: Constants.ViewControllerIdentifier.ComposeNavigationController)
         
         let vc = navVC?.topViewController as? ComposeViewController
         if vc != nil {
@@ -279,9 +275,9 @@ extension TweetsViewController: TweetCellDelegate {
         }
     }
     
-    func tweetCell(_ tweetCell: TweetCell, retweet tweet: Tweet) {
+    func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, retweet tweet: Tweet) {
         
-        let indexPath = tableView.indexPath(for: tweetCell)!
+        let indexPath = tableView.indexPath(for: tweetTableViewCell)!
         let row = indexPath.row
         
         if let tweetId = tweet.idString {
@@ -326,9 +322,9 @@ extension TweetsViewController: TweetCellDelegate {
         }
     }
     
-    func tweetCell(_ tweetCell: TweetCell, favorite tweet: Tweet) {
+    func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, favorite tweet: Tweet) {
 
-        let indexPath = tableView.indexPath(for: tweetCell)!
+        let indexPath = tableView.indexPath(for: tweetTableViewCell)!
         let row = indexPath.row
         
         if let tweetId = tweet.idString {
@@ -363,7 +359,17 @@ extension TweetsViewController: TweetCellDelegate {
                 })
             }
         }
-
+    }
+    
+    func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, showUserProfile user: User) {
+        log.verbose("Show profile for user: \(String(describing: user))")
+        
+        let navVC = Utils.instantiateNavController(identifier: Constants.ViewControllerIdentifier.ProfileNavigationController)
+        let vc = navVC?.topViewController as? ProfileViewController
+        if vc != nil {
+            vc!.user = user
+            navigationController?.pushViewController(vc!, animated: true)
+        }
     }
 }
 
@@ -372,8 +378,7 @@ extension TweetsViewController: TweetOptionsCellDelegate {
     func tweetOptionsCell(_ tweetOptionsCell: TweetOptionsCell, replyTo tweet: Tweet) {
         
         // show the compose controller
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let navVC = storyboard.instantiateViewController(withIdentifier: composeNavigationControllerIdentifier) as? UINavigationController
+        let navVC = Utils.instantiateNavController(identifier: Constants.ViewControllerIdentifier.ComposeNavigationController)
         
         let vc = navVC?.topViewController as? ComposeViewController
         if vc != nil {

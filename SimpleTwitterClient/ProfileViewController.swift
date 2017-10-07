@@ -9,9 +9,6 @@
 import UIKit
 import MBProgressHUD
 
-private let tweetTableViewCellIdentifier = "TweetTableViewCell"
-
-
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var headerImageView: UIImageView!
@@ -27,28 +24,7 @@ class ProfileViewController: UIViewController {
     
     var hamburgerView: HamburgerView?
     var tweets: [Tweet]!
-    var user: User! {
-        didSet {
-            nameLabel.text = user.name
-            screenNameLabel.text = "@\(user.screenname ?? "")"
-            taglineLabel.text = user.tagline
-            followersCountLabel.text = "\(user.followersCount)"
-            followingCountLabel.text = "\(user.friendsCount)"
-            tweetCountLabel.text = "\(user.statusesCount)"
-            locationLabel.text = user.location
-            
-            if let profileImageUrl = user.profileUrl
-            {
-                Utils.fadeInImageAt(url: profileImageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: profileImageView)
-            }
-            
-            if let headerImageUrl = user.profileBackgroundUrl {
-                Utils.fadeInImageAt(url: headerImageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: headerImageView)
-            }
-            
-            
-        }
-    }
+    var user: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,19 +42,44 @@ class ProfileViewController: UIViewController {
         
         // Remove the drop shadow from the navigation bar
 //        navigationController!.navigationBar.clipsToBounds = true
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ProfileViewController.hamburgerViewTapped))
-        hamburgerView = HamburgerView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        hamburgerView!.addGestureRecognizer(tapGestureRecognizer)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerView!)
-        
+                
         // Set the corner radius to 50% of width to get round profile image
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
         
+        populateHeaderView()
         setupTableView()
-        
         requestUserTweets()
+    }
+    
+    func populateHeaderView() {
+        
+        if let user = user {
+            nameLabel.text = user.name
+            screenNameLabel.text = "@\(user.screenname ?? "")"
+            taglineLabel.text = user.tagline
+            followersCountLabel.text = "\(user.followersCount)"
+            followingCountLabel.text = "\(user.friendsCount)"
+            tweetCountLabel.text = "\(user.statusesCount)"
+            locationLabel.text = user.location
+            
+            if let profileImageUrl = user.profileUrl
+            {
+                Utils.fadeInImageAt(url: profileImageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: profileImageView)
+            }
+            
+            if let headerImageUrl = user.profileBackgroundUrl {
+                Utils.fadeInImageAt(url: headerImageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: headerImageView)
+            }
+        } else {
+            nameLabel.text = ""
+            screenNameLabel.text = ""
+            taglineLabel.text = ""
+            followersCountLabel.text = "0"
+            followingCountLabel.text = "0"
+            tweetCountLabel.text = "0"
+            locationLabel.text = "0"
+        }
     }
     
     func requestUserTweets() {
@@ -113,7 +114,7 @@ class ProfileViewController: UIViewController {
         tweetsTableView.delegate = self
         
         let tweetTableViewCellNib = UINib(nibName: "TweetTableViewCell", bundle: nil)
-        tweetsTableView.register(tweetTableViewCellNib, forCellReuseIdentifier: tweetTableViewCellIdentifier)
+        tweetsTableView.register(tweetTableViewCellNib, forCellReuseIdentifier: Constants.CellReuseIdentifier.TweetTableCell)
         
         // Set the rowHeight to UITableViewAutomaticDimension to get the self-sizing behavior we want for the cell.
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
@@ -163,7 +164,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: tweetTableViewCellIdentifier, for: indexPath) as! TweetTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellReuseIdentifier.TweetTableCell, for: indexPath) as! TweetTableViewCell
         cell.mediaImageView.image = nil
         cell.tweet = tweets[indexPath.row]
         
@@ -174,4 +175,119 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
     
+}
+
+extension ProfileViewController: TweetTableViewCellDelegate {
+    
+    func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, replyTo tweet: Tweet) {
+   
+        // show the compose controller
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let navVC = storyboard.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.ComposeNavigationController) as? UINavigationController
+        
+        let vc = navVC?.topViewController as? ComposeViewController
+        if vc != nil {
+            vc!.replyToTweet = tweet
+            present(navVC!, animated: true, completion: {
+                
+            })
+        }
+    }
+    
+    func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, retweet tweet: Tweet) {
+        
+        let indexPath = tweetsTableView.indexPath(for: tweetTableViewCell)!
+        let row = indexPath.row
+        
+        if let tweetId = tweet.idString {
+            
+            // Determine if this is a retweet or an unretweet action.
+            if tweet.hasRetweeted {
+                log.info("Calling unretweet on \(tweetId)")
+                
+                // Call the unretweet api
+                TwitterClient.sharedInstance?.unretweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    log.info("original tweet id: \(tweetId), updated tweet id: \(String(describing: updatedTweet.idString))")
+                    
+                    updatedTweet.hasRetweeted = false
+                    
+                    self?.tweets[row] = updatedTweet
+                    
+                    DispatchQueue.main.async {
+                        self?.tweetsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    }
+                    
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
+                })
+                
+            } else {
+                log.info("Calling retweet on \(tweetId)")
+                TwitterClient.sharedInstance?.retweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    log.info("original tweet id: \(tweetId), updated tweet id: \(String(describing: updatedTweet.idString))")
+                    
+                    self?.tweets[row] = updatedTweet
+                    
+                    DispatchQueue.main.async {
+                        self?.tweetsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    }
+                    
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
+                })
+            }
+        }
+    }
+    
+    func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, favorite tweet: Tweet) {
+        
+        let indexPath = tweetsTableView.indexPath(for: tweetTableViewCell)!
+        let row = indexPath.row
+        
+        if let tweetId = tweet.idString {
+            
+            // Determine if this is a favorite or an unfavorite action.
+            if tweet.hasFavorited {
+                
+                // Call the unretweet api
+                TwitterClient.sharedInstance?.unlikeTweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    self?.tweets[row] = updatedTweet
+                    
+                    DispatchQueue.main.async {
+                        self?.tweetsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    }
+                    
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
+                })
+                
+            } else {
+                TwitterClient.sharedInstance?.likeTweet(tweetId: tweetId, success: { [weak self] (updatedTweet) in
+                    
+                    self?.tweets[row] = updatedTweet
+                    
+                    DispatchQueue.main.async {
+                        self?.tweetsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                    }
+                    
+                    }, failure: { (error: Error) in
+                        log.verbose("Error: \(error.localizedDescription)")
+                })
+            }
+        }
+    }
+    
+    func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, showUserProfile user: User) {
+        log.verbose("Show profile for user: \(String(describing: user))")
+        
+        let navVC = Utils.instantiateNavController(identifier: Constants.ViewControllerIdentifier.ProfileNavigationController)
+        let vc = navVC?.topViewController as? ProfileViewController
+        if vc != nil {
+            vc!.user = user
+            navigationController?.pushViewController(vc!, animated: true)
+        }
+    }
 }

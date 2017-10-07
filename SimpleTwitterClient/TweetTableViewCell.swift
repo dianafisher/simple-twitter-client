@@ -13,6 +13,7 @@ import UIKit
     @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, replyTo tweet: Tweet)
     @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, retweet tweet: Tweet)
     @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, favorite tweet: Tweet)
+    @objc optional func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, showUserProfile user: User)
 }
 
 class TweetTableViewCell: UITableViewCell {
@@ -31,8 +32,6 @@ class TweetTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var retweetedCountLabel: UILabel!
     @IBOutlet weak var favoriteCountLabel: UILabel!
-    
-    
     
     weak var delegate: TweetTableViewCellDelegate?
     
@@ -118,8 +117,8 @@ class TweetTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func profileImageTapped(_ sender: UITapGestureRecognizer) {
-        print("Profile image tapped!")
+    func profileImageTapped(_ sender: UITapGestureRecognizer) {        
+        delegate?.tweetTableViewCell!(self, showUserProfile: tweet.user!)
     }
     
     @IBAction func replyButtonPressed(_ sender: Any) {
