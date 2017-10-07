@@ -218,9 +218,18 @@ extension TweetsViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UITableViewDelegate - Need this otherwise UIScrollViewDelegate methods don't fire
+// MARK: - UITableViewDelegate
 extension TweetsViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Show the details view for the selected tweet
+        
+        let tweet = tweets[indexPath.row]
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.DetailViewController) as? DetailViewController
+        vc?.tweet = tweet
+        
+        navigationController?.pushViewController(vc!, animated: true)
+    }
 }
 
 // MARK: - UIScrollViewDelegate

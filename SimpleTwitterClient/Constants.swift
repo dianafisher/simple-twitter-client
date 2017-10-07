@@ -22,6 +22,7 @@ struct Constants {
     struct ViewControllerIdentifier {
         static let ComposeNavigationController = "ComposeNavController"
         static let ProfileNavigationController = "ProfileNavigationController"
+        static let DetailViewController = "DetailViewController"
     }
     
     struct NibName {
