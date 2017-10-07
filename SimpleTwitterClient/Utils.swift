@@ -38,7 +38,7 @@ class Utils {
         return formatted
     }
         
-    static func fadeInImageAt(url: URL, placeholderImage: UIImage, imageView:UIImageView) {
+    static func fadeInImageAt(url: URL, placeholderImage: UIImage?, imageView:UIImageView) {
         let imageRequest = URLRequest(url: url)
         imageView.setImageWith(imageRequest, placeholderImage: placeholderImage, success: { (imageRequest, imageResponse, image) in
             imageView.alpha = 0.0

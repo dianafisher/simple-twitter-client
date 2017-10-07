@@ -69,7 +69,7 @@ class ProfileViewController: UIViewController {
             }
             
             if let headerImageUrl = user.profileBackgroundUrl {
-                Utils.fadeInImageAt(url: headerImageUrl, placeholderImage: #imageLiteral(resourceName: "placeholder_profile"), imageView: headerImageView)
+                Utils.fadeInImageAt(url: headerImageUrl, placeholderImage: nil, imageView: headerImageView)
             }
         } else {
             nameLabel.text = ""
