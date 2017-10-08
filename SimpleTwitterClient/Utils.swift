@@ -22,6 +22,12 @@ class Utils {
         return formatter
     }()
     
+    private static let dateOnlyFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "M/d/yy"
+        return formatter
+    }()
+    
     static func dateFromTimestamp(timestamp: String) -> Date {
         let date = parseDateFormatter.date(from: timestamp)!
         return date
@@ -30,6 +36,11 @@ class Utils {
     static func timeAgoSinceNowString(fromDate: Date) -> String {
         
         return fromDate.timeAgoSinceNow
+    }
+    
+    static func formattedDateOnly(date: Date) -> String {
+        let formatted = dateOnlyFormatter.string(from: date)
+        return formatted
     }
     
     static func formattedDate(date: Date) -> String {
@@ -76,7 +87,7 @@ extension Date {
         let components = timeString.components(separatedBy: " ")
         let number = components[0]
         let time = components[1]
-        
+                
         let startIndex = time.startIndex
         let endIndex = time.index(startIndex, offsetBy: 1)
         let c = time.substring(to: endIndex)

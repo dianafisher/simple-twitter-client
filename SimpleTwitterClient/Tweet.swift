@@ -73,9 +73,17 @@ class Tweet: NSObject {
         
         let timestampString = dictionary["created_at"] as? String
                 
-        if let timestampString = timestampString {            
+        if let timestampString = timestampString {
+            
             timestamp = Utils.dateFromTimestamp(timestamp: timestampString)
-            timeAgoSinceNowString = Utils.timeAgoSinceNowString(fromDate: timestamp)
+            let hoursDiff = Calendar.current.dateComponents([.hour], from: timestamp, to: Date()).hour ?? 0
+                        
+            if (hoursDiff > 24) {
+                timeAgoSinceNowString = Utils.formattedDateOnly(date: timestamp)
+            } else {
+                timeAgoSinceNowString = Utils.timeAgoSinceNowString(fromDate: timestamp)
+            }
+            
 
         } else {
             timestamp = Date()
