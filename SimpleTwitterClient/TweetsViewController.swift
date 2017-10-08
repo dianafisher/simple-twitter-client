@@ -234,8 +234,8 @@ extension TweetsViewController: UITableViewDelegate {
 extension TweetsViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Handle scroll behavior
-                
+        // Handle scroll behavior       
+        
         if (!isMoreDataLoading) {
             // Calculate the position of one screen length before the bottom of the results
             let scrollViewContentHeight = tableView.contentSize.height

@@ -23,13 +23,18 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var tweetCountLabel: UILabel!
     
     var hamburgerView: HamburgerView?
+    var blurredHeaderImageView:UIImageView?
+    var headerBlurImageView:UIImageView?
+    var loadingMoreView: InfiniteScrollActivityView?
+    
     var tweets: [Tweet]!
     var user: User!
-    
-    var refreshControl: UIRefreshControl!
-    var loadingMoreView: InfiniteScrollActivityView?
     var isMoreDataLoading = false
     var lastLoadedTweetId: String?
+
+    let offset_HeaderStop:CGFloat = 40.0 // At this offset the Header stops its transformations
+    let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
+    let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
 
     
     override func viewDidLoad() {
@@ -53,9 +58,11 @@ class ProfileViewController: UIViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
         
+        headerImageView.clipsToBounds = true
+        
         populateHeaderView()
         setupTableView()
-        setupRefreshControl()
+        
         setupLoadingMoreView()
         requestUserTweets()
     }
@@ -88,22 +95,7 @@ class ProfileViewController: UIViewController {
             tweetCountLabel.text = "0"
             locationLabel.text = "0"
         }
-    }
-    
-    fileprivate func setupRefreshControl() {
-        // Initialize a UIRefreshControl
-        refreshControl = UIRefreshControl()
-        
-        // Set the background color and tint of the refresh control
-        refreshControl.backgroundColor = UIColor.gray
-        refreshControl.tintColor = UIColor.white
-        
-        // Bind refreshControlAction as the target for our refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
-        
-        // Add the refresh control to the table view
-        tweetsTableView.refreshControl = refreshControl
-        
+                        
     }
     
     fileprivate func setupLoadingMoreView() {
@@ -137,7 +129,7 @@ class ProfileViewController: UIViewController {
             self?.tweetsTableView.reloadData()
             
             DispatchQueue.main.async {
-                self?.refreshControl.endRefreshing()
+                
                 self?.loadingMoreView?.stopAnimating()
                 MBProgressHUD.hide(for: self!.view, animated: true)
             }
@@ -162,7 +154,7 @@ class ProfileViewController: UIViewController {
             self?.isMoreDataLoading = false
             
             DispatchQueue.main.async {
-                self?.refreshControl.endRefreshing()
+                
                 self?.loadingMoreView?.stopAnimating()
                 MBProgressHUD.hide(for: self!.view, animated: true)
             }
@@ -357,6 +349,66 @@ extension ProfileViewController: TweetTableViewCellDelegate {
         if vc != nil {
             vc!.user = user
             navigationController?.pushViewController(vc!, animated: true)
+        }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+extension ProfileViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Handle scroll behavior
+        
+        var offset = scrollView.contentOffset.y
+        var avatarTransform = CATransform3DIdentity
+        var headerTransform = CATransform3DIdentity
+        
+
+        
+        // Pull Down
+        if offset < 0 {
+            
+            let headerScaleFactor:CGFloat = -(offset) / headerImageView.bounds.height
+            let headerSizevariation = ((headerImageView.bounds.height * (1.0 + headerScaleFactor)) - headerImageView.bounds.height)/2.0
+            headerTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
+            headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
+            
+            headerImageView.layer.transform = headerTransform
+        } else {
+            // Scroll up/down
+             headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
+            
+            // Apply Transformations
+            
+            headerImageView.layer.transform = headerTransform
+        }
+        
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tweetsTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tweetsTableView.bounds.size.height
+            
+            // When the user has scrolled beyond the threshold, request more data
+            if (scrollView.contentOffset.y > scrollOffsetThreshold && tweetsTableView.isDragging) {
+                
+                isMoreDataLoading = true
+                
+                // Update position of loading indicator
+                let frame = CGRect(x: 0,
+                                   y: tweetsTableView.contentSize.height,
+                                   width: tweetsTableView.bounds.size.width,
+                                   height: InfiniteScrollActivityView.defaultHeight)
+                
+                loadingMoreView?.frame = frame
+                
+                // Start loading indicator
+                loadingMoreView!.startAnimating()
+                
+                // Request more data
+                self.loadMoreData()
+                
+            }
+            
         }
     }
 }
