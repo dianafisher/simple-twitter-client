@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import FXBlurView
 
 class ProfileViewController: UIViewController {
     
@@ -21,10 +22,13 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var followersCountLabel: UILabel!
     @IBOutlet weak var tweetsTableView: UITableView!
     @IBOutlet weak var tweetCountLabel: UILabel!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerLabel: UILabel!
     
     var hamburgerView: HamburgerView?
     var blurredHeaderImageView:UIImageView?
     var headerBlurImageView:UIImageView?
+    var refreshControl: UIRefreshControl!
     var loadingMoreView: InfiniteScrollActivityView?
     
     var tweets: [Tweet]!
@@ -58,16 +62,19 @@ class ProfileViewController: UIViewController {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
         
-        headerImageView.clipsToBounds = true
-        
-        populateHeaderView()
+        setupHeaderView()
         setupTableView()
         
         setupLoadingMoreView()
+        setupRefreshControl()
         requestUserTweets()
     }
     
-    func populateHeaderView() {
+    func setupHeaderView() {
+        
+        headerBlurImageView = UIImageView(frame: headerImageView.bounds)
+        headerBlurImageView?.contentMode = UIViewContentMode.scaleAspectFill
+        headerView.insertSubview(headerBlurImageView!, belowSubview: headerLabel)
         
         if let user = user {
             nameLabel.text = user.name
@@ -84,8 +91,21 @@ class ProfileViewController: UIViewController {
             }
             
             if let headerImageUrl = user.profileBackgroundUrl {
-                Utils.fadeInImageAt(url: headerImageUrl, placeholderImage: nil, imageView: headerImageView)
+
+                let imageRequest = URLRequest(url: headerImageUrl)
+                headerImageView.setImageWith(imageRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) in
+                    self.headerImageView.alpha = 0.0
+                    self.headerImageView.image = image
+                    self.headerBlurImageView?.image = image.blurredImage(withRadius: 10, iterations: 20, tintColor: UIColor.clear)
+                    UIView.animate(withDuration: 0.3, animations: {
+                        self.headerImageView.alpha = 1.0
+                    })
+                }) { (imageRequest, imageResponse, error) in
+                    log.error(error)
+                    self.headerImageView.image = nil
+                }
             }
+            
         } else {
             nameLabel.text = ""
             screenNameLabel.text = ""
@@ -95,7 +115,30 @@ class ProfileViewController: UIViewController {
             tweetCountLabel.text = "0"
             locationLabel.text = "0"
         }
+        
+        headerBlurImageView?.alpha = 0.0
+        
+
+        headerImageView.clipsToBounds = true
+        
+        
                         
+    }
+    
+    fileprivate func setupRefreshControl() {
+        // Initialize a UIRefreshControl
+        refreshControl = UIRefreshControl()
+        
+        // Set the background color and tint of the refresh control
+        refreshControl.backgroundColor = UIColor.white
+        refreshControl.tintColor = #colorLiteral(red: 0.1148131862, green: 0.6330112815, blue: 0.9487846494, alpha: 1)
+        
+        // Bind refreshControlAction as the target for our refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        
+        // Add the refresh control to the table view
+        tweetsTableView.refreshControl = refreshControl
+        
     }
     
     fileprivate func setupLoadingMoreView() {
@@ -129,7 +172,7 @@ class ProfileViewController: UIViewController {
             self?.tweetsTableView.reloadData()
             
             DispatchQueue.main.async {
-                
+                self?.refreshControl.endRefreshing()
                 self?.loadingMoreView?.stopAnimating()
                 MBProgressHUD.hide(for: self!.view, animated: true)
             }
@@ -154,7 +197,7 @@ class ProfileViewController: UIViewController {
             self?.isMoreDataLoading = false
             
             DispatchQueue.main.async {
-                
+                self?.refreshControl.endRefreshing()
                 self?.loadingMoreView?.stopAnimating()
                 MBProgressHUD.hide(for: self!.view, animated: true)
             }
@@ -359,17 +402,14 @@ extension ProfileViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Handle scroll behavior
         
-        var offset = scrollView.contentOffset.y
+        let offset = scrollView.contentOffset.y
         var avatarTransform = CATransform3DIdentity
         var headerTransform = CATransform3DIdentity
         
-
-        
         // Pull Down
         if offset < 0 {
-            
-            let headerScaleFactor:CGFloat = -(offset) / headerImageView.bounds.height
-            let headerSizevariation = ((headerImageView.bounds.height * (1.0 + headerScaleFactor)) - headerImageView.bounds.height)/2.0
+            let headerScaleFactor:CGFloat = -(offset) / headerView.bounds.height
+            let headerSizevariation = ((headerView.bounds.height * (1.0 + headerScaleFactor)) - headerView.bounds.height)/2.0
             headerTransform = CATransform3DTranslate(headerTransform, 0, headerSizevariation, 0)
             headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
             
@@ -377,10 +417,31 @@ extension ProfileViewController: UIScrollViewDelegate {
         } else {
             // Scroll up/down
              headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
+            let labelTransform = CATransform3DMakeTranslation(0, max(-distance_W_LabelHeader, offset_B_LabelHeader - offset), 0)
+            headerLabel.layer.transform = labelTransform
+            
+            headerBlurImageView?.alpha = min (1.0, (offset - offset_B_LabelHeader)/distance_W_LabelHeader)
+            
+            let avatarScaleFactor = (min(offset_HeaderStop, offset)) / profileImageView.bounds.height / 1.4 // Slow down the animation
+            let avatarSizeVariation = ((profileImageView.bounds.height * (1.0 + avatarScaleFactor)) - profileImageView.bounds.height) / 2.0
+            avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0)
+            avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
+            
+            if offset <= offset_HeaderStop {
+                if profileImageView.layer.zPosition < headerView.layer.zPosition{
+                    headerView.layer.zPosition = 0
+                }
+                
+            } else {
+                if profileImageView.layer.zPosition >= headerView.layer.zPosition{
+                    headerView.layer.zPosition = 2
+                }
+            }
             
             // Apply Transformations
             
-            headerImageView.layer.transform = headerTransform
+            headerView.layer.transform = headerTransform
+            profileImageView.layer.transform = avatarTransform
         }
         
         if (!isMoreDataLoading) {
