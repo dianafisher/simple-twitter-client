@@ -26,6 +26,12 @@ class ProfileViewController: UIViewController {
     var tweets: [Tweet]!
     var user: User!
     
+    var refreshControl: UIRefreshControl!
+    var loadingMoreView: InfiniteScrollActivityView?
+    var isMoreDataLoading = false
+    var lastLoadedTweetId: String?
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,6 +55,8 @@ class ProfileViewController: UIViewController {
         
         populateHeaderView()
         setupTableView()
+        setupRefreshControl()
+        setupLoadingMoreView()
         requestUserTweets()
     }
     
@@ -82,31 +90,90 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    func requestUserTweets() {
+    fileprivate func setupRefreshControl() {
+        // Initialize a UIRefreshControl
+        refreshControl = UIRefreshControl()
+        
+        // Set the background color and tint of the refresh control
+        refreshControl.backgroundColor = UIColor.gray
+        refreshControl.tintColor = UIColor.white
+        
+        // Bind refreshControlAction as the target for our refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        
+        // Add the refresh control to the table view
+        tweetsTableView.refreshControl = refreshControl
+        
+    }
+    
+    fileprivate func setupLoadingMoreView() {
+        // Set up the InfiniteScrollActivityView loading indicator
+        let loadingViewFrame = CGRect(x: 0,
+                                      y: tweetsTableView.contentSize.height,
+                                      width: tweetsTableView.bounds.size.width,
+                                      height: InfiniteScrollActivityView.defaultHeight)
+        
+        loadingMoreView = InfiniteScrollActivityView(frame: loadingViewFrame)
+        loadingMoreView!.isHidden = true
+        tweetsTableView.addSubview(loadingMoreView!)
+        
+        // Adjust the table view insets to make room for the activity view
+        var insets = tweetsTableView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        tweetsTableView.contentInset = insets
+        
+    }
+    
+    fileprivate func requestUserTweets() {
         // Display HUD right before the request is made
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
         TwitterClient.sharedInstance?.userTimeline(user: user, sinceId: nil, maxId: nil, success: { [weak self] (tweets: [Tweet]) in
             log.info("I got the tweets!")
             log.info(tweets.count)
+             self?.tweets = tweets
             
-            
-            
-            self?.tweets = tweets
-            
-//            self?.lastLoadedTweetId = tweets.last?.idString
+            self?.lastLoadedTweetId = tweets.last?.idString
             
             self?.tweetsTableView.reloadData()
             
             DispatchQueue.main.async {
-//                self?.refreshControl.endRefreshing()
-//                self?.loadingMoreView?.stopAnimating()
+                self?.refreshControl.endRefreshing()
+                self?.loadingMoreView?.stopAnimating()
                 MBProgressHUD.hide(for: self!.view, animated: true)
             }
             
             }, failure: { (error:Error) in
                 log.error(error.localizedDescription)
         })
+    }
+    
+    fileprivate func loadMoreData() {
+        // Display HUD right before the request is made
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        TwitterClient.sharedInstance?.userTimeline(user: user, sinceId: nil, maxId: lastLoadedTweetId, success: { [weak self] (tweets: [Tweet]) in
+            log.info("I got more tweets!")
+            log.info(tweets.count)
+            
+            self?.tweets.append(contentsOf: tweets)
+            
+            self?.lastLoadedTweetId = tweets.last?.idString
+            
+            self?.tweetsTableView.reloadData()
+            
+            self?.isMoreDataLoading = false
+            
+            DispatchQueue.main.async {
+                self?.refreshControl.endRefreshing()
+                self?.loadingMoreView?.stopAnimating()
+                MBProgressHUD.hide(for: self!.view, animated: true)
+            }
+            
+            }, failure: { (error:Error) in
+                log.error(error.localizedDescription)
+        })
+        
     }
     
     fileprivate func setupTableView() {
@@ -141,15 +208,11 @@ class ProfileViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - UIRefreshControl action
+    
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {        
+        requestUserTweets()
     }
-    */
 
 }
 

@@ -8,8 +8,13 @@
 
 import UIKit
 
-class TweetDetailCell: UITableViewCell {
+@objc protocol TweetDetailCellDelegate {
+    @objc optional func tweetDetailCell(_ tweetDetailCell: TweetDetailCell, showUserProfile user: User)
+}
 
+class TweetDetailCell: UITableViewCell {
+    
+    weak var delegate: TweetDetailCellDelegate?
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -101,12 +106,29 @@ class TweetDetailCell: UITableViewCell {
         
         mediaImageView.clipsToBounds = true
         
+        // Add a tap gesture recognizer to the profile image view.
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped(_:)))
+        profileImageView.addGestureRecognizer(tapGestureRecognizer)
+
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func profileImageTapped(_ sender: UITapGestureRecognizer) {
+        
+        var user = tweet.user!
+        
+        // Is this a retweet?
+        if (tweet.retweet != nil) {
+            user = (tweet.retweet?.user)!
+        }
+        
+        delegate?.tweetDetailCell!(self, showUserProfile: user)
     }
 
 }

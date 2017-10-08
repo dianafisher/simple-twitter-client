@@ -75,6 +75,7 @@ extension DetailViewController: UITableViewDataSource {
         if section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: tweetDetailCellIdentifier, for: indexPath) as! TweetDetailCell
             cell.tweet = tweet
+            cell.delegate = self
             return cell
         } else if section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: tweetStatsCellIdentifier, for: indexPath) as! TweetStatsCell
@@ -96,6 +97,18 @@ extension DetailViewController: UITableViewDelegate {
             return 60.0
         } else {
             return 270.0
+        }
+    }
+}
+
+extension DetailViewController: TweetDetailCellDelegate {
+    
+    func tweetDetailCell(_ tweetDetailCell: TweetDetailCell, showUserProfile user: User) {
+        let navVC = Utils.instantiateNavController(identifier: Constants.ViewControllerIdentifier.ProfileNavigationController)
+        let vc = navVC?.topViewController as? ProfileViewController
+        if vc != nil {
+            vc!.user = user
+            navigationController?.pushViewController(vc!, animated: true)
         }
     }
 }

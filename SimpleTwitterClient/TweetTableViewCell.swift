@@ -38,7 +38,7 @@ class TweetTableViewCell: UITableViewCell {
     var tweet: Tweet! {
         didSet {
             
-            log.verbose("tweet data: \(tweet.debugDescription)")
+//            log.verbose("tweet data: \(tweet.debugDescription)")
             var displayedTweet: Tweet = tweet
             
             // Is this a retweet?

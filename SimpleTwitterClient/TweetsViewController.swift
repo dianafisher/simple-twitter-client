@@ -373,7 +373,7 @@ extension TweetsViewController: TweetTableViewCellDelegate {
     }
     
     func tweetTableViewCell(_ tweetTableViewCell: TweetTableViewCell, showUserProfile user: User) {
-        log.verbose("Show profile for user: \(String(describing: user))")
+//        log.verbose("Show profile for user: \(String(describing: user))")
         
         let navVC = Utils.instantiateNavController(identifier: Constants.ViewControllerIdentifier.ProfileNavigationController)
         let vc = navVC?.topViewController as? ProfileViewController
