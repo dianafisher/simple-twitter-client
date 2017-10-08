@@ -61,7 +61,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="219" y="-739"/>
+            <point key="canvasLocation" x="4" y="-739"/>
         </scene>
         <!--Tweets View Controller-->
         <scene sceneID="23e-PE-iAq">
@@ -621,7 +621,7 @@
                     </items>
                 </toolbar>
             </objects>
-            <point key="canvasLocation" x="2561" y="1252"/>
+            <point key="canvasLocation" x="2678" y="1251"/>
         </scene>
         <!--Container View Controller-->
         <scene sceneID="hpT-fX-KYZ">
@@ -722,7 +722,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WqS-G9-fye" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2074" y="1252"/>
+            <point key="canvasLocation" x="1857" y="1251"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="9yM-YL-zFy">

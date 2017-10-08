@@ -117,8 +117,16 @@ class TweetTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func profileImageTapped(_ sender: UITapGestureRecognizer) {        
-        delegate?.tweetTableViewCell!(self, showUserProfile: tweet.user!)
+    func profileImageTapped(_ sender: UITapGestureRecognizer) {
+        
+        var user = tweet.user!
+        
+        // Is this a retweet?
+        if (tweet.retweet != nil) {
+            user = (tweet.retweet?.user)!
+        }
+        
+        delegate?.tweetTableViewCell!(self, showUserProfile: user)
     }
     
     @IBAction func replyButtonPressed(_ sender: Any) {
