@@ -134,8 +134,6 @@ class TweetsViewController: UIViewController {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
         TwitterClient.sharedInstance?.timeline(endpoint: apiEndpoint, sinceId: nil, maxId: nil, success: { [weak self] (tweets: [Tweet]) in
-            log.info("I got the tweets!")
-            log.info(tweets.count)
             
             self?.tweets = tweets
             
@@ -159,8 +157,6 @@ class TweetsViewController: UIViewController {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
         TwitterClient.sharedInstance?.timeline(endpoint: apiEndpoint,sinceId: nil, maxId: lastLoadedTweetId, success: { [weak self] (tweets: [Tweet]) in
-            log.info("I got more tweets!")
-            log.info(tweets.count)
             
             self?.tweets.append(contentsOf: tweets)
             

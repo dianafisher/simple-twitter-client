@@ -359,7 +359,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         let requestToken = BDBOAuth1Credential(queryString: url.query)
         
         fetchAccessToken(withPath: "https://api.twitter.com/oauth/access_token", method: "POST", requestToken: requestToken, success: { (accessToken: BDBOAuth1Credential!) in
-            log.verbose("I got the access token! 👻")
+//            log.verbose("I got the access token! 👻")
             
             self.requestSerializer.saveAccessToken(accessToken)
             

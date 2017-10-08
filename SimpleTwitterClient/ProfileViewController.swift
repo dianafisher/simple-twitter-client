@@ -129,8 +129,7 @@ class ProfileViewController: UIViewController {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
         TwitterClient.sharedInstance?.userTimeline(user: user, sinceId: nil, maxId: nil, success: { [weak self] (tweets: [Tweet]) in
-            log.info("I got the tweets!")
-            log.info(tweets.count)
+            
              self?.tweets = tweets
             
             self?.lastLoadedTweetId = tweets.last?.idString
@@ -153,8 +152,6 @@ class ProfileViewController: UIViewController {
         MBProgressHUD.showAdded(to: self.view, animated: true)
         
         TwitterClient.sharedInstance?.userTimeline(user: user, sinceId: nil, maxId: lastLoadedTweetId, success: { [weak self] (tweets: [Tweet]) in
-            log.info("I got more tweets!")
-            log.info(tweets.count)
             
             self?.tweets.append(contentsOf: tweets)
             
