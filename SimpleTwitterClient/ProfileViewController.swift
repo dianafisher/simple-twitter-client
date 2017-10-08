@@ -72,9 +72,9 @@ class ProfileViewController: UIViewController {
     
     func setupHeaderView() {
         
-        headerBlurImageView = UIImageView(frame: headerImageView.bounds)
+        headerBlurImageView = UIImageView(frame: headerView.bounds)
         headerBlurImageView?.contentMode = UIViewContentMode.scaleAspectFill
-        headerView.insertSubview(headerBlurImageView!, belowSubview: headerLabel)
+        
         
         if let user = user {
             nameLabel.text = user.name
@@ -117,9 +117,8 @@ class ProfileViewController: UIViewController {
         }
         
         headerBlurImageView?.alpha = 0.0
-        
-
-        headerImageView.clipsToBounds = true
+        headerView.insertSubview(headerBlurImageView!, belowSubview: headerLabel)
+        headerView.clipsToBounds = true
         
         
                         
@@ -416,7 +415,7 @@ extension ProfileViewController: UIScrollViewDelegate {
             headerImageView.layer.transform = headerTransform
         } else {
             // Scroll up/down
-             headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
+            headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
             let labelTransform = CATransform3DMakeTranslation(0, max(-distance_W_LabelHeader, offset_B_LabelHeader - offset), 0)
             headerLabel.layer.transform = labelTransform
             
