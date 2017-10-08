@@ -36,8 +36,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1.  I would like to see a good example of code structure for an app like this where many of the screens are essentially the same except for a unique API endpoint supplying the data.
+2.  
 
 
 ## Video Walkthrough
@@ -50,7 +50,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I wasted a bit of time trying to reuse the same UIViewController class for each screen instead of having a unique class for each.  It seems like there should be a way to do this, but my UINavigationController did not behave as expected when I attempted to push two instances of the same UIViewController class onto the stack.  So I have a bunch of duplicate code in my ProfileViewController that is also in the TweetsViewController.
 
 ## License
 
