@@ -36,9 +36,9 @@ class ProfileViewController: UIViewController {
     var isMoreDataLoading = false
     var lastLoadedTweetId: String?
 
-    let offset_HeaderStop:CGFloat = 40.0 // At this offset the Header stops its transformations
-    let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
-    let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
+    let offset_HeaderStop:CGFloat = 40.0
+    let offset_B_LabelHeader:CGFloat = 95.0
+    let distance_W_LabelHeader:CGFloat = 35.0
 
     
     override func viewDidLoad() {
@@ -420,6 +420,7 @@ extension ProfileViewController: UIScrollViewDelegate {
             headerLabel.layer.transform = labelTransform
             
             headerBlurImageView?.alpha = min (1.0, (offset - offset_B_LabelHeader)/distance_W_LabelHeader)
+            
             
             let avatarScaleFactor = (min(offset_HeaderStop, offset)) / profileImageView.bounds.height / 1.4 // Slow down the animation
             let avatarSizeVariation = ((profileImageView.bounds.height * (1.0 + avatarScaleFactor)) - profileImageView.bounds.height) / 2.0
